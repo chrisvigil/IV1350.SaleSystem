@@ -9,6 +9,7 @@ import se.kth.iv1350.salesystem.model.Store;
 import se.kth.iv1350.salesystem.integration.ExternalDBHandler;
 import se.kth.iv1350.salesystem.model.CashRegister;
 import se.kth.iv1350.salesystem.integration.Printer;
+import se.kth.iv1350.salesystem.model.Sale;
 
 /**
  * This is the application's controller class, all calls from view to the model
@@ -18,7 +19,9 @@ import se.kth.iv1350.salesystem.integration.Printer;
 public class Controller {
     private final ExternalDBHandler dbhandler;
     private final CashRegister register;
+    private final Store store;
     private Printer printer;
+    private Sale sale;
     /**
      * Creates a new controller
      * 
@@ -26,8 +29,16 @@ public class Controller {
      * takes place.
      */
     public Controller(Store store){
+        this.store = store;
         dbhandler = new ExternalDBHandler();
         register = new CashRegister(); 
         printer = new Printer();
+    }
+    
+    /**
+     * Starts a new sale instance
+     */
+    public void startNewSale(){
+        sale = new Sale(store);
     }
 }
