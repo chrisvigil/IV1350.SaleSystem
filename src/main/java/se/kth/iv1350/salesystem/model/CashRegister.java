@@ -6,11 +6,16 @@
 package se.kth.iv1350.salesystem.model;
 
 /**
+ * Represents the cash register at the point of sale 
+ * where physical cash is kept.
  *
  * @author christopher.vigil
  */
 public class CashRegister {
     
+    /**
+     * creates a new CashRegister object
+     */
     public CashRegister(){
         
     }
