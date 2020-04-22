@@ -12,6 +12,7 @@ package se.kth.iv1350.salesystem.model;
  */
 public class Sale {
     private final Store store;
+    private Basket basket;
     
     /**
      * Creates a new store object
@@ -19,5 +20,6 @@ public class Sale {
      */
     public Sale(Store store){
         this.store = store;
+        basket = new Basket();
     }
 }
