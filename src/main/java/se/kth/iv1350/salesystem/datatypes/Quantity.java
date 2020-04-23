@@ -12,7 +12,7 @@ package se.kth.iv1350.salesystem.datatypes;
  */
 public class Quantity {
     
-    private float value;
+    private double value;
     
     /**
      * creates a zero Quantity
@@ -35,7 +35,7 @@ public class Quantity {
      * 
      * @param value initial value of quality.
      */
-    public Quantity(float value){
+    public Quantity(double value){
         this.value = value;
     }
     
@@ -44,7 +44,7 @@ public class Quantity {
      * 
      * @return the quantity value as a float
      */
-    public float getFloatQuantity(){
+    public double getQuantityAsDouble(){
         return this.value;
     }
     
@@ -54,7 +54,7 @@ public class Quantity {
      * @param increase The value which to increase the quantity.
      */
     public void addQuantity(Quantity increase){
-        this.value += increase.getFloatQuantity();
+        this.value += increase.value;
     }
     
     /**
@@ -65,6 +65,26 @@ public class Quantity {
     @Override
     public String toString(){
         return String.valueOf(value);
+    }
+    
+    @Override
+    public boolean equals(Object obj){
+        boolean isEqual = false;
+        if (this.getClass() == obj.getClass())
+        {
+            Quantity quantity = (Quantity) obj;
+            if (quantity.value == this.value)
+                isEqual = true;
+        }
+        
+        return isEqual;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 37 * hash + (int) (Double.doubleToLongBits(this.value) ^ (Double.doubleToLongBits(this.value) >>> 32));
+        return hash;
     }
     
     

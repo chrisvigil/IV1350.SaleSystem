@@ -6,6 +6,7 @@
 package se.kth.iv1350.salesystem.datatypes;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * Represents a monetary value
@@ -37,7 +38,7 @@ public class MonetaryValue {
      * @param increase the MonetaryValue which to increase with
      */
     public void add(MonetaryValue increase){
-        this.value = this.value.add( increase.toBigDecimal() );
+        this.value = this.value.add(increase.value);
     }
     
     public BigDecimal toBigDecimal(){
@@ -48,5 +49,25 @@ public class MonetaryValue {
     @Override
     public String toString(){
         return value.toString();
+    }
+    
+    @Override
+    public boolean equals(Object obj){
+        boolean isEqual = false;
+        if (this.getClass() == obj.getClass())
+        {
+            MonetaryValue monetaryValue = (MonetaryValue) obj;
+            if ((monetaryValue.value).equals(this.value))
+                isEqual = true;
+        }
+        
+        return isEqual;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.value);
+        return hash;
     }
 }
