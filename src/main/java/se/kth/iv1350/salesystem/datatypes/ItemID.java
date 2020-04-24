@@ -8,7 +8,7 @@ package se.kth.iv1350.salesystem.datatypes;
 import java.util.Objects;
 
 /**
- * Represents a unique itemID
+ * Represents a unique itemID, the itemID is immutable.
  * 
  * @author christopher.vigil
  */

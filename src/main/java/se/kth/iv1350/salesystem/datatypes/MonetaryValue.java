@@ -14,7 +14,10 @@ import java.util.Objects;
  * @author christopher.vigil
  */
 public class MonetaryValue {
-    BigDecimal value;
+    private BigDecimal value;
+    
+    private final BigDecimal ONEHUNDRED = new BigDecimal("100");
+    
     
     /**
      * Creates a MonetaryValue with the value of 0
@@ -33,12 +36,45 @@ public class MonetaryValue {
     }
     
     /**
+     * Creates a new MonetaryValue from a BigDecimal value
+     * @param value 
+     */
+    public MonetaryValue(BigDecimal value){
+        this.value = value;
+    }
+    
+    /**
+     * Creates a new MonetaryValue from existing MonetaryValue
+     * 
+     * @param monetaryValue The MonetaryValue to duplicate
+     */
+    public MonetaryValue(MonetaryValue monetaryValue){
+        this.value = monetaryValue.value;
+    }
+    
+    /**
      * Increases the MonetaryValue by another MonetaryValue.
      * 
      * @param increase the MonetaryValue which to increase with
      */
     public void add(MonetaryValue increase){
         this.value = this.value.add(increase.value);
+    }
+    
+    public MonetaryValue multiplíedByQuantity(Quantity quantity){
+        BigDecimal total = this.value.multiply(quantity.toBigDecimal());
+        return new MonetaryValue(total);
+    }
+    
+    /**
+     * Returns the MonetaryValue with a VATRate applied
+     * @param vatRate VAT rate as a percentage, ie 50%
+     * @return the MonetaryValue with a VATRate applied
+     */
+    public MonetaryValue valueWithVAT(MonetaryValue vatRate){
+        BigDecimal vatRateAsADecimal = vatRate.value.divide(ONEHUNDRED);
+        BigDecimal valueWithVAT = this.value.multiply(vatRateAsADecimal);
+        return new MonetaryValue(valueWithVAT);
     }
     
     public BigDecimal toBigDecimal(){

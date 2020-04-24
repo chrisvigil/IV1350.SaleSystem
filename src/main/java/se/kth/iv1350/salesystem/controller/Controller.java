@@ -5,6 +5,10 @@
  */
 package se.kth.iv1350.salesystem.controller;
 
+import se.kth.iv1350.salesystem.datatypes.ItemID;
+import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
+import se.kth.iv1350.salesystem.datatypes.Quantity;
+import se.kth.iv1350.salesystem.dto.ItemDTO;
 import se.kth.iv1350.salesystem.model.Store;
 import se.kth.iv1350.salesystem.integration.ExternalDBHandler;
 import se.kth.iv1350.salesystem.model.CashRegister;
@@ -41,4 +45,42 @@ public class Controller {
     public void startNewSale(){
         sale = new Sale(store);
     }
+    
+    /**
+     * Attempts to add an item to the sale
+     * @param itemID The item identifier of the item to be added
+     * @param quantity the Quantity of the item to be added
+     * @return A message containing sales data or notification of 
+     * invalid item identifier.
+     */
+    public AddItemReturnMessage addItemToSale(ItemID itemID, Quantity quantity){
+        return internalAddItem(itemID, quantity);
+    }
+    
+    /**
+     * Attempts to add an item to the sale. Quantity is assumed to be 1.
+     * @param itemID The item identifier of the item to be added
+     * @return A message containing sales data or notification of 
+     * invalid item identifier.
+     */
+    public AddItemReturnMessage addItemToSale(ItemID itemID){
+        Quantity quantity = new Quantity(1);
+        return internalAddItem(itemID, quantity); 
+    }
+    
+    private AddItemReturnMessage internalAddItem(ItemID itemID, Quantity quantity){
+        ItemDTO foundItem = dbhandler.getItemData(itemID);
+        
+        AddItemReturnMessage returnMessage;
+        if (foundItem == null){
+            returnMessage = new AddItemReturnMessage();
+        }
+        else{
+            MonetaryValue runningTotal = sale.addItemToBasket(foundItem, quantity);
+            returnMessage = new AddItemReturnMessage(foundItem, runningTotal);
+        }
+        
+        return returnMessage;
+    }
+            
 }

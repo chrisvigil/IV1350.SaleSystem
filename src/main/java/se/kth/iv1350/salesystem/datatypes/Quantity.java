@@ -5,6 +5,8 @@
  */
 package se.kth.iv1350.salesystem.datatypes;
 
+import java.math.BigDecimal;
+
 /**
  * Represents a quantity value
  * 
@@ -40,8 +42,16 @@ public class Quantity {
     }
     
     /**
-     * Returns the quantity as a float primitive data type
+     * Creates a new Quantity from another Quantity
      * 
+     * @param quantity the quantity which to duplicate
+     */
+    public Quantity(Quantity quantity){
+        this.value = quantity.value;
+    }
+    
+    /**
+     * Returns the quantity as a float primitive data type
      * @return the quantity value as a float
      */
     public double getQuantityAsDouble(){
@@ -50,16 +60,30 @@ public class Quantity {
     
     /**
      * Increases the value of the quantity with another Quantity.
-     * 
-     * @param increase The value which to increase the quantity.
+     * @param increase The value with which to increase the quantity.
      */
     public void addQuantity(Quantity increase){
         this.value += increase.value;
     }
     
     /**
+     * Decreases the value of the quantity with another Quantity
+     * @param decrease The value with which to decrease the quantity.
+     */
+    public void removeQuantity(Quantity decrease){
+        this.value -= decrease.value;
+    }
+    
+    /**
+     * Converts quantity to BigDecimal
+     * @return Quantity as BigDecimal
+     */
+    public BigDecimal toBigDecimal(){
+        return new BigDecimal(value);
+    }
+    
+    /**
      * Returns the value as a string
-     * 
      * @return the value as a String
      */
     @Override
@@ -67,6 +91,11 @@ public class Quantity {
         return String.valueOf(value);
     }
     
+    /**
+     * Compares Quantity with another object to determine if they are equal
+     * @param obj The Object with which to compare
+     * @return Returns boolean value True equal, else False
+     */
     @Override
     public boolean equals(Object obj){
         boolean isEqual = false;
