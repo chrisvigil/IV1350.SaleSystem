@@ -19,6 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class ItemIDTest {
     private final String INIT_STRING = "123456789";
+    private final String ANOTHER_STRING = "987654321";
     private final int INIT_INT = 123456789;
     private ItemID itemID;
     
@@ -60,6 +61,13 @@ public class ItemIDTest {
         ItemID anotherID = new ItemID(INIT_STRING);
         boolean isEqual = itemID.equals(anotherID);
         assertTrue(isEqual, "Two items with the same value are not equal");
+    }
+    
+    @Test
+    public void testNotEqual(){
+        ItemID anotherID = new ItemID(ANOTHER_STRING);
+        boolean isEqual = itemID.equals(anotherID);
+        assertFalse(isEqual, "Two different items appear equal");
     }
 
     /**

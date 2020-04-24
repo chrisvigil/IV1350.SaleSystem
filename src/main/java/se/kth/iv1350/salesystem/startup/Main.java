@@ -21,6 +21,7 @@ public class Main {
         Store store = new Store(storeName,storeAddress);
         Controller contr = new Controller(store);
         View view = new View(contr);
+        view.runFakeExecution();
     }
     
 }
