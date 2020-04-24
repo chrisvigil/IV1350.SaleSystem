@@ -5,21 +5,23 @@
  */
 package se.kth.iv1350.salesystem.model;
 
+import se.kth.iv1350.salesystem.datatypes.Address;
+
 /**
  *
  * @author christopher.vigil
  */
 public class Store {
     private String name;
-    private String address;
+    private Address address;
    /**
     * Container for store name and address.
     * @param storeName The store's name.
     * @param storeAddress The store's address.
     */
-    public Store(String storeName, String storeAddress){
+    public Store(String storeName, Address storeAddress){
         this.name = storeName;
-        this.address = storeAddress;
+        this.address = new Address(storeAddress);
     }
     
 }

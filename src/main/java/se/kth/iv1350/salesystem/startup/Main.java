@@ -2,6 +2,7 @@ package se.kth.iv1350.salesystem.startup;
 
 import se.kth.iv1350.salesystem.model.Store;
 import se.kth.iv1350.salesystem.controller.Controller;
+import se.kth.iv1350.salesystem.datatypes.Address;
 import se.kth.iv1350.salesystem.view.View;
 
 /**
@@ -10,18 +11,29 @@ import se.kth.iv1350.salesystem.view.View;
  * @author christopher.vigil
  */
 public class Main {
-    static private String storeName = "Some Store";
-    static private String storeAddress = "Somestreet 42, 111111, SomeCity, SomeCounrty";
+    private static final String PLACEHOLDER_STORENAME = "Some Store";
+    private static final Address PLACEHOLDER_ADDRESS = new Address("Somestreet",42,11122,"SomeCity", "SomeCountry");
+    
     /**
      * Starts the application 
      * 
      * @param args does not take any command line parameters.
      */
     public static void main(String[] args){
-        Store store = new Store(storeName,storeAddress);
+        Store store = setupStore();
         Controller contr = new Controller(store);
         View view = new View(contr);
         view.runFakeExecution();
+    }
+    
+    /**
+     * This is a placeholder for store setup, ideally the store name and address
+     * should defined in a config file or similar.
+     * 
+     * @return a object of class Store
+     */
+    private static Store setupStore(){
+        return new Store(PLACEHOLDER_STORENAME,PLACEHOLDER_ADDRESS);
     }
     
 }
