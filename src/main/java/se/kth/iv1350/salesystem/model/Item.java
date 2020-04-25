@@ -10,6 +10,7 @@ import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 import se.kth.iv1350.salesystem.datatypes.Quantity;
 import se.kth.iv1350.salesystem.datatypes.VATRate;
 import se.kth.iv1350.salesystem.dto.ItemDTO;
+import se.kth.iv1350.salesystem.dto.SoldItemDTO;
 
 /**
  * 
@@ -19,15 +20,15 @@ import se.kth.iv1350.salesystem.dto.ItemDTO;
 class Item {
     private final ItemID itemID;
     private MonetaryValue pricePerUnit;
-    //private MonetaryValue vatRate;
-    private final Quantity quantity;
     private VATRate vatRate;
+    private String itemDescription;
+    private final Quantity quantity;
     
     Item(ItemDTO itemDTO, Quantity quantity){
         this.itemID = itemDTO.getItemID();
         this.pricePerUnit = itemDTO.getPricePerUnit();
-        //this.vatRate = itemDTO.getVATRate();
-        vatRate = itemDTO.getVATRate();
+        this.vatRate = itemDTO.getVATRate();
+        this.itemDescription = itemDTO.getItemDescription();
         this.quantity = quantity;
     }
     
@@ -75,6 +76,10 @@ class Item {
      */
     void decreaseQuantity(Quantity decrease){
         quantity.removeQuantity(decrease);
+    }
+    
+    SoldItemDTO generateSoldItemDTO(){
+        return new SoldItemDTO(itemID, pricePerUnit, vatRate, itemDescription, quantity);
     }
     
     

@@ -12,8 +12,8 @@ import se.kth.iv1350.salesystem.datatypes.Address;
  * @author christopher.vigil
  */
 public class Store {
-    private String name;
-    private Address address;
+    private final String name;
+    private final Address address;
    /**
     * Container for store name and address.
     * @param storeName The store's name.
@@ -22,6 +22,14 @@ public class Store {
     public Store(String storeName, Address storeAddress){
         this.name = storeName;
         this.address = new Address(storeAddress);
+    }
+    
+    public String getName(){
+        return name;
+    }
+    
+    public Address getAddress(){
+        return new Address(address);
     }
     
 }

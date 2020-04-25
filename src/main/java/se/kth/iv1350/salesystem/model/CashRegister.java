@@ -5,6 +5,8 @@
  */
 package se.kth.iv1350.salesystem.model;
 
+import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
+
 /**
  * Represents the cash register at the point of sale 
  * where physical cash is kept.
@@ -17,6 +19,10 @@ public class CashRegister {
      * creates a new CashRegister object
      */
     public CashRegister(){
+        
+    }
+    
+    public void updateBalance(MonetaryValue balanceChange){
         
     }
 }

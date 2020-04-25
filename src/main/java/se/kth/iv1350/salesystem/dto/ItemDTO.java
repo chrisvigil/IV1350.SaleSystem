@@ -17,14 +17,13 @@ import se.kth.iv1350.salesystem.datatypes.VATRate;
 public class ItemDTO {
     private final ItemID itemID;
     private final MonetaryValue pricePerUnit;
-    //private final MonetaryValue vatRate;
     private final VATRate vatRate;
     private final String itemDescription;
     
     public ItemDTO(ItemID itemID, MonetaryValue pricePerUnit, VATRate vatRate,
             String itemDescription){
         this.itemID = itemID;
-        this.pricePerUnit = pricePerUnit;
+        this.pricePerUnit = new MonetaryValue(pricePerUnit);
         this.vatRate = vatRate;
         this.itemDescription = itemDescription;
     }

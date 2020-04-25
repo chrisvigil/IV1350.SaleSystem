@@ -63,6 +63,22 @@ public class MonetaryValue {
         this.value = this.value.add(increase.value);
     }
     
+    /**
+     * Returns the difference between the MonetaryValue and another
+     * @param subtractor The MonetaryValue to subtract with
+     * @return The difference
+     */
+    public MonetaryValue difference(MonetaryValue subtractor){
+        BigDecimal difference = this.value.subtract(subtractor.toBigDecimal());
+        return new MonetaryValue(difference);
+    }
+    
+    /**
+     * Calculates the <code>MonetaryValue</code> multiplied by a <code>Quantity</code>
+     * and returns it as a new <code>MonetaryValue</code>
+     * @param quantity The quantity with which to multiply with
+     * @return the product of the MonetaryValue and Quantity
+     */
     public MonetaryValue multiplíedByQuantity(Quantity quantity){
         BigDecimal total = this.value.multiply(quantity.toBigDecimal());
         return new MonetaryValue(total);

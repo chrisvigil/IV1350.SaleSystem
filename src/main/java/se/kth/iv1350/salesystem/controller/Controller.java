@@ -9,6 +9,7 @@ import se.kth.iv1350.salesystem.datatypes.ItemID;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 import se.kth.iv1350.salesystem.datatypes.Quantity;
 import se.kth.iv1350.salesystem.dto.ItemDTO;
+import se.kth.iv1350.salesystem.dto.SaleDTO;
 import se.kth.iv1350.salesystem.model.Store;
 import se.kth.iv1350.salesystem.integration.ExternalDBHandler;
 import se.kth.iv1350.salesystem.model.CashRegister;
@@ -83,5 +84,16 @@ public class Controller {
         
         return returnMessage;
     }
+    
+    public MonetaryValue makeCashPayment(MonetaryValue payment){
+        MonetaryValue cashBack = sale.makeCashPayment(payment);
+        SaleDTO saleLog = sale.endSale();
+        dbhandler.logSale(saleLog);
+        register.updateBalance(payment.difference(cashBack));
+        sale.printRepiect(printer);
+        
+        
+        return cashBack;
+    } 
             
 }

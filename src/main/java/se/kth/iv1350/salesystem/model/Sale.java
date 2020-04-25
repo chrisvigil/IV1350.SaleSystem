@@ -5,10 +5,15 @@
  */
 package se.kth.iv1350.salesystem.model;
 
+import java.time.LocalTime;
+import java.util.List;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 import se.kth.iv1350.salesystem.datatypes.Quantity;
 import se.kth.iv1350.salesystem.datatypes.VATRate;
 import se.kth.iv1350.salesystem.dto.ItemDTO;
+import se.kth.iv1350.salesystem.dto.SaleDTO;
+import se.kth.iv1350.salesystem.dto.SoldItemDTO;
+import se.kth.iv1350.salesystem.integration.Printer;
 
 /**
  * Represents a compleat sale
@@ -18,8 +23,10 @@ import se.kth.iv1350.salesystem.dto.ItemDTO;
 public class Sale {
     private final Store store;
     private final Basket basket;
+    private Reciept reciept;
     private MonetaryValue saleTotal;
     private MonetaryValue saleVAT;
+    private LocalTime timeOfSale;
     
     /**
      * Creates a new store object
@@ -27,10 +34,12 @@ public class Sale {
      */
     public Sale(Store store){
         this.store = store;
+        reciept = new Reciept(store);
         this.basket = new Basket();
         saleTotal = new MonetaryValue();
         saleVAT = new MonetaryValue();
     }
+    
     
     /**
      * Adds an item to the sale basket
@@ -63,5 +72,42 @@ public class Sale {
         saleTotalwithVAT.add(saleVAT);
         
         return saleTotalwithVAT;
+    }
+    
+    public MonetaryValue makeCashPayment(MonetaryValue payment){
+        MonetaryValue saleTotalWithVAT = calculateSaleTotalWithVAT();
+        MonetaryValue cashBack = saleTotalWithVAT.difference(payment);
+        reciept.setPayment(payment);
+        reciept.setSaleTotal(saleTotal);
+        reciept.setSaleVAT(saleVAT);
+        reciept.setChange(cashBack);
+        
+        return cashBack;
+    }
+    
+    private void logTimeOfSale(){
+        timeOfSale = LocalTime.now();
+        reciept.setTimeOfSale(timeOfSale);
+    }
+    
+    public SaleDTO endSale(){
+        logTimeOfSale();
+        SaleDTO saleLog = generateSaleLog();
+        reciept.addItems(saleLog.getItems());
+        
+        return saleLog;
+    }
+    
+    private SaleDTO generateSaleLog(){
+        List<SoldItemDTO> soldItems = basket.getSoldItems();
+        
+        SaleDTO saleLog = new SaleDTO(soldItems, saleTotal, saleVAT,
+                timeOfSale,store.getName(), store.getAddress());
+        
+        return saleLog;
+    }
+    
+    public void printRepiect(Printer printer){
+        reciept.print(printer);
     }
 }

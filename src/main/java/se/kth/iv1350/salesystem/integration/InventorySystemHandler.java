@@ -9,6 +9,7 @@ import se.kth.iv1350.salesystem.datatypes.ItemID;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 import se.kth.iv1350.salesystem.datatypes.VATRate;
 import se.kth.iv1350.salesystem.dto.ItemDTO;
+import se.kth.iv1350.salesystem.dto.SaleDTO;
 
 /**
  * Handles calls to an external inventory system. This class is not yet
@@ -52,6 +53,15 @@ class InventorySystemHandler {
         ItemDTO itemDTO = new ItemDTO(itemID,pricePerUnit,vatRate, itemDescription);
         
         return itemDTO;
+    }
+    
+    /**
+     *  Sends sale data to external inventory system. This is a placeholder 
+     *  method that does not do anything
+     *  @param saleLog Log of sale
+     */
+    void updateInventory(SaleDTO saleLog){
+        
     }
     
 }

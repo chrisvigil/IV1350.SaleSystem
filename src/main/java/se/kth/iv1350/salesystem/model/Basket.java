@@ -1,10 +1,13 @@
 package se.kth.iv1350.salesystem.model;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import se.kth.iv1350.salesystem.datatypes.ItemID;
 import se.kth.iv1350.salesystem.datatypes.Quantity;
 import se.kth.iv1350.salesystem.dto.ItemDTO;
+import se.kth.iv1350.salesystem.dto.SoldItemDTO;
 
 /**
  * Collects all items added to sale
@@ -43,8 +46,19 @@ class Basket {
         return isItemInBasket;
     }
     
-    private void updateItemQuantity(ItemID itemID, Quantity quantity)
+    void updateItemQuantity(ItemID itemID, Quantity quantity)
     {
         contents.get(itemID).addQuanity(quantity);
+    }
+    
+    List<SoldItemDTO> getSoldItems(){
+        
+        List soldItems = new LinkedList<SoldItemDTO>();
+        for(Map.Entry<ItemID, Item> entry : contents.entrySet()){
+            Item item = entry.getValue();
+            soldItems.add(item.generateSoldItemDTO());
+        }
+        
+        return soldItems;
     }
 }

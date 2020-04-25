@@ -7,6 +7,7 @@ package se.kth.iv1350.salesystem.integration;
 
 import se.kth.iv1350.salesystem.datatypes.ItemID;
 import se.kth.iv1350.salesystem.dto.ItemDTO;
+import se.kth.iv1350.salesystem.dto.SaleDTO;
 
 /**
  * This class is responsible for coordinating communication to and from 
@@ -36,6 +37,12 @@ public class ExternalDBHandler {
      */
     public ItemDTO getItemData(ItemID itemID){
         return inventoryDBHandler.getItemData(itemID);
+    }
+    
+    public void logSale(SaleDTO saleLog){
+        saleLogHandler.LogSale(saleLog);
+        accountingDBHandler.LogSale(saleLog);
+        inventoryDBHandler.updateInventory(saleLog);
     }
 }
 

@@ -3,6 +3,7 @@ package se.kth.iv1350.salesystem.view;
 import se.kth.iv1350.salesystem.controller.AddItemReturnMessage;
 import se.kth.iv1350.salesystem.controller.Controller;
 import se.kth.iv1350.salesystem.datatypes.ItemID;
+import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 
 /**
  * Placeholder view class
@@ -33,6 +34,9 @@ public class View {
        ItemID dummyItem = new ItemID("0");
        AddItemReturnMessage returnMessage = contr.addItemToSale(dummyItem);
        System.out.println(returnMessage.toString());
+       
+       MonetaryValue payment = new MonetaryValue("10");
+       contr.makeCashPayment(payment);
    }
    
    public String formatedReturnMessage(AddItemReturnMessage message){

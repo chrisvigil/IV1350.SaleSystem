@@ -94,7 +94,13 @@ public class Quantity {
      */
     @Override
     public String toString(){
-        return String.valueOf(value);
+        String ValueAsString;
+        if (value % 1 == 0)
+            ValueAsString = String.valueOf((int)value);
+        else
+            ValueAsString = String.valueOf(value);
+        
+        return ValueAsString;
     }
     
     /**
