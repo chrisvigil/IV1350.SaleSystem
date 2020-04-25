@@ -70,18 +70,11 @@ public class ItemIDTest {
         assertFalse(isEqual, "Two different items appear equal");
     }
 
-    /**
-     * Test of hashCode method, of class ItemID.
-     */
-    @Disabled("Not implemented")
     @Test
     public void testHashCode() {
-        ItemID instance = null;
-        int expResult = 0;
-        int result = instance.hashCode();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
+        ItemID duplicateItemID = new ItemID(INIT_STRING);
+        if (itemID.hashCode() != duplicateItemID.hashCode())
+            fail("Hash codes of two identical itemIDs do not match");
     }
     
 }

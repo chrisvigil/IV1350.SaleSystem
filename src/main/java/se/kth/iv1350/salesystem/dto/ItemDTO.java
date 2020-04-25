@@ -7,6 +7,7 @@ package se.kth.iv1350.salesystem.dto;
 
 import se.kth.iv1350.salesystem.datatypes.ItemID;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
+import se.kth.iv1350.salesystem.datatypes.VATRate;
 
 /**
  * A Data transfer object for item data
@@ -16,10 +17,11 @@ import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 public class ItemDTO {
     private final ItemID itemID;
     private final MonetaryValue pricePerUnit;
-    private final MonetaryValue vatRate;
+    //private final MonetaryValue vatRate;
+    private final VATRate vatRate;
     private final String itemDescription;
     
-    public ItemDTO(ItemID itemID, MonetaryValue pricePerUnit, MonetaryValue vatRate,
+    public ItemDTO(ItemID itemID, MonetaryValue pricePerUnit, VATRate vatRate,
             String itemDescription){
         this.itemID = itemID;
         this.pricePerUnit = pricePerUnit;
@@ -35,8 +37,8 @@ public class ItemDTO {
         return new MonetaryValue(pricePerUnit);
     }
     
-    public MonetaryValue getVATRate(){
-        return new MonetaryValue(vatRate);
+    public VATRate getVATRate(){
+        return vatRate;
     }
     
     public String getItemDescription(){

@@ -6,6 +6,8 @@
 package se.kth.iv1350.salesystem.datatypes;
 
 import java.math.BigDecimal;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -67,26 +69,46 @@ public class MonetaryValue {
     }
     
     /**
-     * Returns the MonetaryValue with a VATRate applied
+     * Calculates VAT from MonetaryValue
      * @param vatRate VAT rate as a percentage, ie 50%
      * @return the MonetaryValue with a VATRate applied
      */
-    public MonetaryValue valueWithVAT(MonetaryValue vatRate){
-        BigDecimal vatRateAsADecimal = vatRate.value.divide(ONEHUNDRED);
-        BigDecimal valueWithVAT = this.value.multiply(vatRateAsADecimal);
-        return new MonetaryValue(valueWithVAT);
+    public MonetaryValue calculateVAT(VATRate vatRate){
+        BigDecimal vatRateAsADecimal = new BigDecimal(vatRate.getValue()).divide(ONEHUNDRED);
+        BigDecimal vat = this.value.multiply(vatRateAsADecimal);
+        return new MonetaryValue(vat);
     }
     
+    /**
+     * Creates <code>BigDecimal</code> value from <code>MonetaryValue</code>
+     * @return <code>MonetaryValue</code> as <code>BigDecimal</code>
+     */
     public BigDecimal toBigDecimal(){
         return value;
     }            
     
- 
+    /**
+     * Creates <code>String</code> value from <code>MonetaryValue</code>
+     * @return <code>MonetaryValue</code> as <code>String</code>
+     */
     @Override
     public String toString(){
-        return value.toString();
+        Locale swedish = new Locale("sv", "SE");
+        //NumberFormat CostFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
+        
+        NumberFormat CostFormat = NumberFormat.getCurrencyInstance(swedish);
+        CostFormat.setMinimumFractionDigits( 1 );
+        CostFormat.setMaximumFractionDigits( 2 );
+        String formatedValue  = CostFormat.format(value.doubleValue());
+        return formatedValue;
     }
     
+    /**
+     * Compares a  <code>MonetaryValue</code> to another object to determine
+     * if they are equal
+     * @param obj
+     * @return 
+     */
     @Override
     public boolean equals(Object obj){
         boolean isEqual = false;

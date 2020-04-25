@@ -26,6 +26,7 @@ public class Controller {
     private final Store store;
     private Printer printer;
     private Sale sale;
+    
     /**
      * Creates a new controller
      * 

@@ -7,6 +7,7 @@ package se.kth.iv1350.salesystem.integration;
 
 import se.kth.iv1350.salesystem.datatypes.ItemID;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
+import se.kth.iv1350.salesystem.datatypes.VATRate;
 import se.kth.iv1350.salesystem.dto.ItemDTO;
 
 /**
@@ -46,7 +47,7 @@ class InventorySystemHandler {
     
     private ItemDTO createDummyItemDTO(ItemID itemID){
         MonetaryValue pricePerUnit = new MonetaryValue("10.59");
-        MonetaryValue vatRate = new MonetaryValue("25");
+        VATRate vatRate = VATRate.TWENTYFIVE;
         String itemDescription = "This is a dummy item";
         ItemDTO itemDTO = new ItemDTO(itemID,pricePerUnit,vatRate, itemDescription);
         

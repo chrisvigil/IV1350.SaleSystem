@@ -8,6 +8,7 @@ package se.kth.iv1350.salesystem.model;
 import se.kth.iv1350.salesystem.datatypes.ItemID;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 import se.kth.iv1350.salesystem.datatypes.Quantity;
+import se.kth.iv1350.salesystem.datatypes.VATRate;
 import se.kth.iv1350.salesystem.dto.ItemDTO;
 
 /**
@@ -18,13 +19,15 @@ import se.kth.iv1350.salesystem.dto.ItemDTO;
 class Item {
     private final ItemID itemID;
     private MonetaryValue pricePerUnit;
-    private MonetaryValue vatRate;
+    //private MonetaryValue vatRate;
     private final Quantity quantity;
+    private VATRate vatRate;
     
     Item(ItemDTO itemDTO, Quantity quantity){
         this.itemID = itemDTO.getItemID();
         this.pricePerUnit = itemDTO.getPricePerUnit();
-        this.vatRate = itemDTO.getVATRate();
+        //this.vatRate = itemDTO.getVATRate();
+        vatRate = itemDTO.getVATRate();
         this.quantity = quantity;
     }
     
@@ -52,8 +55,8 @@ class Item {
      * Set at new VAT rate for the item
      * @param newVATRate  The items new VAT rate
      */
-    void changeVATRate(MonetaryValue newVATRate){
-        vatRate = new MonetaryValue(newVATRate);
+    void changeVATRate(VATRate newVATRate){
+        vatRate = newVATRate;
     }
     
     /**

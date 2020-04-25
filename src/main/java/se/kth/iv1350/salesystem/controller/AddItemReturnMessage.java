@@ -56,4 +56,19 @@ public class AddItemReturnMessage {
     public String getRunningTotal(){
         return runningTotal;
     }
+    
+    @Override
+    public String toString(){
+        String messageAsString;
+        if (isValid){
+            messageAsString = "Item: " + itemDescription +
+                              ", Price: " + itemPrice +
+                              ", Runnning Total: " + runningTotal;
+        }
+        else{
+            messageAsString = itemDescription;
+        }
+        
+        return messageAsString;
+    }
 }

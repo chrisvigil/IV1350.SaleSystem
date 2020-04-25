@@ -24,26 +24,32 @@ public class Quantity {
     }
     
     /**
-     * Creates a new quantity from an int primitive data type 
-     * 
-     * @param value initial value of quality.
+     * Creates a new quantity from an int primitive data type.
+     * @param value Initial value of quantity
+     * .
      */
     public Quantity(int value){
         this.value = value;
     }
     
     /**
-     *  Creates a new quantity from a float primitive data type 
-     * 
-     * @param value initial value of quality.
+     *  Creates a new quantity from a float primitive data type.
+     * @param value Initial value of quantity
      */
     public Quantity(double value){
         this.value = value;
     }
     
     /**
+     *  Creates a new quantity from a String
+     * @param value Initial value of quantity
+     */
+    public Quantity(String value){
+        this.value = Double.parseDouble(value);
+    }
+    
+    /**
      * Creates a new Quantity from another Quantity
-     * 
      * @param quantity the quantity which to duplicate
      */
     public Quantity(Quantity quantity){

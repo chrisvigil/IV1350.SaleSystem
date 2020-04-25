@@ -41,6 +41,11 @@ public class Address {
         setAddress(street, number, postalCode, city, nullCountry);
     }
     
+    /**
+     * Constructor creates a new <code>Address</code> from another
+     * <code>Address</code> object.
+     * @param address The <code>Address</code> to duplicate
+     */
     public Address(Address address){
         this.street = address.street;
         this.number = address.number;
@@ -57,6 +62,10 @@ public class Address {
         this.country = country;
     }
     
+    /**
+     * Creates <code>String</code> from <code>Address</code>
+     * @return <code>Address</code> as <code>String</code>
+     */
     @Override
     public String toString(){
         String addressAsString = street + ", " + number + ", " + postalCode + ", " + city;

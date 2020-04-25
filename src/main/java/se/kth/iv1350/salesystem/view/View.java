@@ -32,7 +32,7 @@ public class View {
        
        ItemID dummyItem = new ItemID("0");
        AddItemReturnMessage returnMessage = contr.addItemToSale(dummyItem);
-       System.out.println(formatedReturnMessage(returnMessage));
+       System.out.println(returnMessage.toString());
    }
    
    public String formatedReturnMessage(AddItemReturnMessage message){
