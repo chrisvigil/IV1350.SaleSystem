@@ -45,8 +45,8 @@ public class ControllerTest {
         
         AddItemReturnMessage message = instance.addItemToSale(DUMMY_ITEM);
         
-        if(!message.itemIDisValid())
-            fail("Did not create a valid item");
+        if(message == null)
+            fail("Did not create a valid item"); 
     }
     
      @Test
@@ -55,8 +55,8 @@ public class ControllerTest {
         
         AddItemReturnMessage message = instance.addItemToSale(DUMMY_ITEM,QUANTITY);
         
-        if(!message.itemIDisValid())
-            fail("Did not create a valid item");
+        if(message == null)
+            fail("Did not create a valid item"); 
     }
     
     

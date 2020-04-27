@@ -52,8 +52,8 @@ public class Controller {
      * Attempts to add an item to the sale
      * @param itemID The item identifier of the item to be added
      * @param quantity the Quantity of the item to be added
-     * @return A message containing sales data or notification of 
-     * invalid item identifier.
+     * @return A <code>AddItemReturnMessage</code> containing sales data or
+     * <code>null</code> if item was not found.
      */
     public AddItemReturnMessage addItemToSale(ItemID itemID, Quantity quantity){
         return internalAddItem(itemID, quantity);
@@ -62,8 +62,8 @@ public class Controller {
     /**
      * Attempts to add an item to the sale. Quantity is assumed to be 1.
      * @param itemID The item identifier of the item to be added
-     * @return A message containing sales data or notification of 
-     * invalid item identifier.
+     * @return A <code>AddItemReturnMessage</code> containing sales data or
+     * <code>null</code> if item was not found.
      */
     public AddItemReturnMessage addItemToSale(ItemID itemID){
         Quantity quantity = new Quantity(1);
@@ -75,7 +75,7 @@ public class Controller {
         
         AddItemReturnMessage returnMessage;
         if (foundItem == null){
-            returnMessage = new AddItemReturnMessage();
+            returnMessage = null;
         }
         else{
             MonetaryValue runningTotal = sale.addItemToBasket(foundItem, quantity);
