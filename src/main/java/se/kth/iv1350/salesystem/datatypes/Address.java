@@ -6,9 +6,7 @@
 package se.kth.iv1350.salesystem.datatypes;
 
 /**
- * Stores and address
- *
- * @author christopher.vigil
+ * Stores an address
  */
 public class Address {
     private String street;
@@ -83,7 +81,7 @@ public class Address {
     }
     
     /**
-     * Creates <code>String</code> from <code>Address</code>
+     * Creates a comma separated <code>String</code> from <code>Address</code>
      * @return <code>Address</code> as <code>String</code>
      */
     @Override

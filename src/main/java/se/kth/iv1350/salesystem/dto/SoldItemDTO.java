@@ -11,12 +11,19 @@ import se.kth.iv1350.salesystem.datatypes.Quantity;
 import se.kth.iv1350.salesystem.datatypes.VATRate;
 
 /**
- *
- * @author christopher.vigil
+ * Contains information about one particular quantity of a sold item
  */
 public class SoldItemDTO extends ItemDTO{
     private final Quantity quantity;
     
+    /**
+     * Creates a new instance representing a particular quantity of a sold item.
+     * @param itemID The item types unique identifier. 
+     * @param pricePerUnit The item's price per unit.
+     * @param vatRate The VAT rate of the item.
+     * @param itemDescription A short description of the item.
+     * @param quantity The quantity of the sold item.
+     */
     public SoldItemDTO(ItemID itemID, MonetaryValue pricePerUnit, VATRate vatRate, 
             String itemDescription, Quantity quantity){
         super(itemID, pricePerUnit, vatRate, itemDescription);

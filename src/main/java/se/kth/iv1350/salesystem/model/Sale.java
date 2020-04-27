@@ -23,9 +23,9 @@ import se.kth.iv1350.salesystem.integration.Printer;
 public class Sale {
     private final Store store;
     private final Basket basket;
-    private Receipt receipt;
-    private MonetaryValue saleTotal;
-    private MonetaryValue saleVAT;
+    private final Receipt receipt;
+    private final MonetaryValue saleTotal;
+    private final MonetaryValue saleVAT;
     private LocalTime timeOfSale;
     
     /**

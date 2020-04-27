@@ -12,8 +12,7 @@ import se.kth.iv1350.salesystem.datatypes.Address;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 
 /**
- *
- * @author christopher.vigil
+ * Contains information about a single sale.
  */
 public class SaleDTO {
     private final List<SoldItemDTO> items;
@@ -23,6 +22,15 @@ public class SaleDTO {
     private final String storeName;
     private final Address storeAddress;
     
+    /**
+     * Creates a new instance representing a particular sale.
+     * @param items A list of sold items.
+     * @param saleTotal The total cost of the sale excluding VAT.
+     * @param saleVAT The total VAT of the sale.
+     * @param timeOfSale The time the sale was completed.
+     * @param storeName The name of the store where the sale occurred.
+     * @param storeAddress The address of the store where the sale occurred.
+     */
     public SaleDTO(List<SoldItemDTO> items, MonetaryValue saleTotal, MonetaryValue saleVAT,
             LocalTime timeOfSale, String storeName, Address storeAddress){
         this.items = new LinkedList<>(items);

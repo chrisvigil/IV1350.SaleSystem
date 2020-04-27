@@ -13,21 +13,22 @@ import se.kth.iv1350.salesystem.dto.SaleDTO;
 
 /**
  * Handles calls to an external inventory system. This class is not yet
- * implemented and is only a placeholder. Class is package private.
- * @author christopher.vigil
+ * implemented and is only a placeholder.
  */
 class InventorySystemHandler {
     private final String DUMMY_ID = "0";
     
     /**
-     * Creates a new InventorySystemHandler
+     * Creates a new InventorySystemHandler instance.
      */
     InventorySystemHandler(){
         
     }
     
     /**
-     * Searches an external inventory database for requested item
+     * Searches an external inventory database for requested item. 
+     * The <code>ItemID</code> representing a <code>String</code> value of 
+     * 0 is reserved for testing purposes.
      * @param itemID The item identifier of the requested item
      * @return If an item is found then an itemDTO with the items 
      * details is returned. If no item is found return value is null.

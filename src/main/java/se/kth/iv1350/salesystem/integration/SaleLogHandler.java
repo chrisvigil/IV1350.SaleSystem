@@ -9,13 +9,12 @@ import se.kth.iv1350.salesystem.dto.SaleDTO;
 
 /**
  * Handles calls to an an external sale log. This class is not yet
- * implemented and is only a placeholder. Class is package private.
- * @author christopher.vigil
+ * implemented and is only a placeholder.
  */
 class SaleLogHandler {
     
     /**
-     * Creates a new SaleLogHandler
+     * Creates a new SaleLogHandler instance.
      */
     SaleLogHandler(){
         
@@ -23,8 +22,8 @@ class SaleLogHandler {
     
     /**
      *  Sends sale data to external sale log. This is a placeholder method
-     *  that does not do anything
-     * @param saleLog Log of sale
+     *  that does not do anything.
+     * @param saleLog Log of sale.
      */
     void LogSale(SaleDTO saleLog){
         

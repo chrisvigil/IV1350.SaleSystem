@@ -18,7 +18,7 @@ class Basket {
     private final Map<ItemID, Item> contents;
     
     /**
-     * Creates a new basket
+     * Creates a new basket instance.
      */
     Basket(){
         contents = new HashMap<>();
@@ -36,8 +36,7 @@ class Basket {
         if (itemIsInBasket(itemID))
             updateItemQuantity(itemID, quantity);
         else{
-            Item item = new Item(itemDTO,quantity);
-            contents.put(itemID, item);
+            addNewItemToBasket(itemDTO, quantity);
         }
     }
     
@@ -46,11 +45,20 @@ class Basket {
         return isItemInBasket;
     }
     
-    void updateItemQuantity(ItemID itemID, Quantity quantity)
+    private void updateItemQuantity(ItemID itemID, Quantity quantity)
     {
         contents.get(itemID).addQuanity(quantity);
     }
     
+    private void addNewItemToBasket(ItemDTO itemDTO, Quantity quantity){
+        Item item = new Item(itemDTO,quantity);
+        contents.put(itemDTO.getItemID(), item);
+    }
+    
+    /**
+     * Returns a list of items in the <code>Basket</code>.
+     * @return  Items in the basket.
+     */
     List<SoldItemDTO> getSoldItems(){
         
         List soldItems = new LinkedList<SoldItemDTO>();

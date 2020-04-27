@@ -7,9 +7,8 @@ package se.kth.iv1350.salesystem.datatypes;
 
 /**
  * Defines VAT rate, there are 3 possible values <code>TWENTYFIVE</code>,
- * <code>TWELVE</code>, or <code>SIX</code>
- * 
- * @author christopher.vigil
+ * <code>TWELVE</code>, or <code>SIX</code>. Each represents a percentage
+ * value as an integer (not a fraction of 100).
  */
 public enum VATRate {
     TWENTYFIVE(25),TWELVE(12),SIX(6);

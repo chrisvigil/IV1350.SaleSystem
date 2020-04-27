@@ -11,17 +11,15 @@ import se.kth.iv1350.salesystem.dto.SaleDTO;
 
 /**
  * This class is responsible for coordinating communication to and from 
- * external databases, 
- * 
- * @author christopher.vigil
+ * external databases.
  */
 public class ExternalDBHandler {
-    private AccountingSystemHandler accountingDBHandler;
-    private InventorySystemHandler inventoryDBHandler;
-    private SaleLogHandler saleLogHandler;
+    private final AccountingSystemHandler accountingDBHandler;
+    private final InventorySystemHandler inventoryDBHandler;
+    private final SaleLogHandler saleLogHandler;
     
     /**
-     * Creates a new ExternalDBHandler
+     * Creates a new ExternalDBHandler instance.
      */
     public ExternalDBHandler(){
         accountingDBHandler = new AccountingSystemHandler();
@@ -39,6 +37,10 @@ public class ExternalDBHandler {
         return inventoryDBHandler.getItemData(itemID);
     }
     
+    /**
+     * Logs a completed sale. 
+     * @param saleLog Contains record of completed sale.
+     */
     public void logSale(SaleDTO saleLog){
         saleLogHandler.LogSale(saleLog);
         accountingDBHandler.LogSale(saleLog);

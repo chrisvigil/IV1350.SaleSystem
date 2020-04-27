@@ -13,17 +13,21 @@ import se.kth.iv1350.salesystem.dto.ItemDTO;
 import se.kth.iv1350.salesystem.dto.SoldItemDTO;
 
 /**
- * 
- * 
- * @author christopher.vigil
+ * Represents a quantity of a single type of item available for purchase
  */
 class Item {
     private final ItemID itemID;
-    private MonetaryValue pricePerUnit;
-    private VATRate vatRate;
-    private String itemDescription;
+    private final MonetaryValue pricePerUnit;
+    private final VATRate vatRate;
+    private final String itemDescription;
     private final Quantity quantity;
     
+    
+    /**
+     * Creates an instance of a quantity of a purchased item.
+     * @param itemDTO Describes the item.
+     * @param quantity The quantity of the item.
+     */
     Item(ItemDTO itemDTO, Quantity quantity){
         this.itemID = itemDTO.getItemID();
         this.pricePerUnit = itemDTO.getPricePerUnit();
@@ -45,22 +49,6 @@ class Item {
     }
     
     /**
-     * Replaces the items price with a new price
-     * @param newPrice The items new price
-     */
-    void setNewPrice(MonetaryValue newPrice){
-        pricePerUnit = new MonetaryValue(newPrice);
-    }
-    
-    /**
-     * Set at new VAT rate for the item
-     * @param newVATRate  The items new VAT rate
-     */
-    void changeVATRate(VATRate newVATRate){
-        vatRate = newVATRate;
-    }
-    
-    /**
      * Increases the quantity of an item
      * @param increase The value with which to increase the quantity
      */
@@ -68,8 +56,7 @@ class Item {
         quantity.addQuantity(increase);
     }
     
-    
-    /**
+   /**
      * Decreases the quantity of the item
      * 
      * @param decrease The value with which to increase the quantity
@@ -78,6 +65,10 @@ class Item {
         quantity.removeQuantity(decrease);
     }
     
+    /**
+     * Generates a <code>SoldItemDTO</code> from the <code>Item</code>.
+     * @return A <code>SoldItemDTO</code> representing the item.
+     */
     SoldItemDTO generateSoldItemDTO(){
         return new SoldItemDTO(itemID, pricePerUnit, vatRate, itemDescription, quantity);
     }

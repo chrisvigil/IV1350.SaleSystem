@@ -12,61 +12,70 @@ import java.util.Objects;
 
 /**
  * Represents a monetary value
- *
- * @author christopher.vigil
  */
 public class MonetaryValue {
     private BigDecimal value;
     
     private final BigDecimal ONEHUNDRED = new BigDecimal("100");
+    private final BigDecimal ZERO = new BigDecimal("0");
     
     
     /**
-     * Creates a MonetaryValue with the value of 0
+     * Creates a <code>MonetaryValue</code> with the value of 0.
      */
     public MonetaryValue(){
-        this.value = new BigDecimal("0");
+        this.value = ZERO;
     }
     
     /**
-     * Creates a new MonetaryValue form a string
+     * Creates a new <code>MonetaryValue</code> form a string.
      * 
-     * @param value The MonetaryValue's initial value as a string
+     * @param value The <code>MonetaryValue</code>'s initial value as a string.
      */
     public MonetaryValue(String value){
         this.value = new BigDecimal(value);
     }
     
     /**
-     * Creates a new MonetaryValue from a BigDecimal value
-     * @param value 
+     * Creates a new <code>MonetaryValue</code> from a BigDecimal value.
+     * 
+     * @param value The <code>MonetaryValue</code>'s initial value as a BigDecimal.
      */
     public MonetaryValue(BigDecimal value){
         this.value = value;
     }
     
     /**
-     * Creates a new MonetaryValue from existing MonetaryValue
+     * Creates a new <code>MonetaryValue</code> from existing <code>MonetaryValue</code>.
      * 
-     * @param monetaryValue The MonetaryValue to duplicate
+     * @param monetaryValue The <code>MonetaryValue</code> to duplicate.
      */
     public MonetaryValue(MonetaryValue monetaryValue){
         this.value = monetaryValue.value;
     }
     
     /**
-     * Increases the MonetaryValue by another MonetaryValue.
+     * Increases the <code>MonetaryValue</code> by another MonetaryValue.
      * 
-     * @param increase the MonetaryValue which to increase with
+     * @param increase the <code>MonetaryValue</code> which to increase with.
      */
     public void add(MonetaryValue increase){
         this.value = this.value.add(increase.value);
     }
     
     /**
-     * Returns the difference between the MonetaryValue and another
-     * @param subtractor The MonetaryValue to subtract with
-     * @return The difference
+     * Decreases the <code>MonetaryValue</code> by another MonetaryValue.
+     * 
+     * @param decrease the <code>MonetaryValue</code> which to decrease with.
+     */
+    public void subtract(MonetaryValue decrease){
+        this.value = this.value.subtract(decrease.value);
+    }
+    
+    /**
+     * Returns the difference between the <code>MonetaryValue</code> and another.
+     * @param subtractor The <code>MonetaryValue</code> to subtract with.
+     * @return The difference.
      */
     public MonetaryValue difference(MonetaryValue subtractor){
         BigDecimal difference = this.value.subtract(subtractor.toBigDecimal());
@@ -75,9 +84,9 @@ public class MonetaryValue {
     
     /**
      * Calculates the <code>MonetaryValue</code> multiplied by a <code>Quantity</code>
-     * and returns it as a new <code>MonetaryValue</code>
-     * @param quantity The quantity with which to multiply with
-     * @return the product of the MonetaryValue and Quantity
+     * and returns it as a new <code>MonetaryValue</code>.
+     * @param quantity The quantity with which to multiply with.
+     * @return the product of the MonetaryValue and Quantity.
      */
     public MonetaryValue multiplíedByQuantity(Quantity quantity){
         BigDecimal total = this.value.multiply(quantity.toBigDecimal());
@@ -85,9 +94,9 @@ public class MonetaryValue {
     }
     
     /**
-     * Calculates VAT from MonetaryValue
-     * @param vatRate VAT rate as a percentage, ie 50%
-     * @return the MonetaryValue with a VATRate applied
+     * Calculates VAT from  <code>MonetaryValue</code>.
+     * @param vatRate The VAT rate.
+     * @return the MonetaryValue with a <code>VATRate</code> applied.
      */
     public MonetaryValue calculateVAT(VATRate vatRate){
         BigDecimal vatRateAsADecimal = new BigDecimal(vatRate.getValue()).divide(ONEHUNDRED);
@@ -96,16 +105,16 @@ public class MonetaryValue {
     }
     
     /**
-     * Creates <code>BigDecimal</code> value from <code>MonetaryValue</code>
-     * @return <code>MonetaryValue</code> as <code>BigDecimal</code>
+     * Creates <code>BigDecimal</code> value from <code>MonetaryValue</code>.
+     * @return <code>MonetaryValue</code> as <code>BigDecimal</code>.
      */
     public BigDecimal toBigDecimal(){
         return value;
     }            
     
     /**
-     * Creates <code>String</code> value from <code>MonetaryValue</code>
-     * @return <code>MonetaryValue</code> as <code>String</code>
+     * Creates <code>String</code> value from <code>MonetaryValue</code>.
+     * @return <code>MonetaryValue</code> as <code>String</code>.
      */
     @Override
     public String toString(){
@@ -121,9 +130,9 @@ public class MonetaryValue {
     
     /**
      * Compares a  <code>MonetaryValue</code> to another object to determine
-     * if they are equal
-     * @param obj
-     * @return 
+     * if they are equal.
+     * @param obj The object with which to compare.
+     * @return <code>true</code> if equal, otherwise <code>false</code>.
      */
     @Override
     public boolean equals(Object obj){

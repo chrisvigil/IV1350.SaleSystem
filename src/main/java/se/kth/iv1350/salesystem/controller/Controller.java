@@ -19,7 +19,6 @@ import se.kth.iv1350.salesystem.model.Sale;
 /**
  * This is the application's controller class, all calls from view to the model
  * and database handler go through here
- * @author christopher.vigil
  */
 public class Controller {
     private final ExternalDBHandler dbhandler;
@@ -85,15 +84,27 @@ public class Controller {
         return returnMessage;
     }
     
+    /**
+     * Makes a cash payment of sale.
+     * @param payment The cash amount made as payment
+     * @return The amount in change
+     */
     public MonetaryValue makeCashPayment(MonetaryValue payment){
         MonetaryValue cashBack = sale.makeCashPayment(payment);
+        
         SaleDTO saleLog = sale.endSale();
         dbhandler.logSale(saleLog);
-        register.updateBalance(payment.difference(cashBack));
+        
+        updateCashRegister(payment, cashBack);
+        
         sale.printRepiect(printer);
         
-        
         return cashBack;
-    } 
+    }
+    
+    private void updateCashRegister(MonetaryValue payment, MonetaryValue cashBack){
+        MonetaryValue netCashToRegister = new MonetaryValue(payment.difference(cashBack));
+        register.addToBalance(netCashToRegister);
+    }
             
 }

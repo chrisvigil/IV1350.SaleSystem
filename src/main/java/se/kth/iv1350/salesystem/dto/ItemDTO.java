@@ -11,8 +11,6 @@ import se.kth.iv1350.salesystem.datatypes.VATRate;
 
 /**
  * A Data transfer object for item data
- *
- * @author christopher.vigil
  */
 public class ItemDTO {
     private final ItemID itemID;
@@ -20,6 +18,13 @@ public class ItemDTO {
     private final VATRate vatRate;
     private final String itemDescription;
     
+    /**
+     * Creates a new instance representing an item.
+     * @param itemID The item types unique identifier. 
+     * @param pricePerUnit The item's price per unit.
+     * @param vatRate The VAT rate of the item.
+     * @param itemDescription A short description of the item.
+     */
     public ItemDTO(ItemID itemID, MonetaryValue pricePerUnit, VATRate vatRate,
             String itemDescription){
         this.itemID = itemID;

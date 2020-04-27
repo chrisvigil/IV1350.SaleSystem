@@ -9,8 +9,6 @@ import java.util.Objects;
 
 /**
  * Represents a unique itemID, the itemID is immutable.
- * 
- * @author christopher.vigil
  */
 public class ItemID {
     private final String id;
@@ -32,6 +30,12 @@ public class ItemID {
         return id;
     }
     
+     /**
+     * Compares a  <code>itemID</code> to another object to determine
+     * if they are equal.
+     * @param obj The object with which to compare.
+     * @return <code>true</code> if equal, otherwise <code>false</code>.
+     */
     @Override
     public boolean equals(Object obj){
         boolean isEqual = false;

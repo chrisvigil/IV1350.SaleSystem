@@ -19,6 +19,10 @@ public class Printer {
         
     }
     
+    /**
+     * Prints a <code>String</code> to <code>System.out</code>
+     * @param output The <code>String</code> to print.
+     */
     public void print(String output){
         System.out.println(output);
     }
