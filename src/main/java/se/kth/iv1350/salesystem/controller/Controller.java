@@ -103,7 +103,7 @@ public class Controller {
     }
     
     private void updateCashRegister(MonetaryValue payment, MonetaryValue cashBack){
-        MonetaryValue netCashToRegister = new MonetaryValue(payment.difference(cashBack));
+        MonetaryValue netCashToRegister = new MonetaryValue(payment.subtract(cashBack));
         register.addToBalance(netCashToRegister);
     }
             

@@ -24,8 +24,8 @@ public class Sale {
     private final Store store;
     private final Basket basket;
     private Receipt receipt;
-    private final MonetaryValue subTotal;
-    private final MonetaryValue saleVAT;
+    private MonetaryValue subTotal;
+    private MonetaryValue saleVAT;
     private LocalTime timeOfSale;
     private MonetaryValue payment;
     private MonetaryValue change;
@@ -51,7 +51,7 @@ public class Sale {
     public MonetaryValue addItemToBasket(ItemDTO itemDTO, Quantity quantity){
         basket.addItem(itemDTO, quantity);
         MonetaryValue itemTotal = calculateItemTotal(itemDTO, quantity);
-        subTotal.add(itemTotal);
+        subTotal = subTotal.add(itemTotal);
         addItemsVATtoSaleVAT(itemTotal, itemDTO.getVATRate());
         
         MonetaryValue saleTotalwithVAT = calculateSaleTotalWithVAT();
@@ -60,7 +60,7 @@ public class Sale {
     }
     
     private void addItemsVATtoSaleVAT(MonetaryValue itemTotal , VATRate vatRate){
-        saleVAT.add(itemTotal.calculateVAT(vatRate));
+        saleVAT = saleVAT.add(itemTotal.calculateVAT(vatRate));
     }
     
     private MonetaryValue calculateItemTotal(ItemDTO itemDTO, Quantity quantity){
@@ -69,15 +69,14 @@ public class Sale {
     }
     
     private MonetaryValue calculateSaleTotalWithVAT(){
-        MonetaryValue saleTotalwithVAT = new MonetaryValue(subTotal);
-        saleTotalwithVAT.add(saleVAT);
+        MonetaryValue saleTotalwithVAT = subTotal.add(saleVAT);
         
         return saleTotalwithVAT;
     }
     
     public MonetaryValue makeCashPayment(MonetaryValue payment){
         MonetaryValue saleTotalWithVAT = calculateSaleTotalWithVAT();
-        this.change = saleTotalWithVAT.difference(payment);
+        this.change = saleTotalWithVAT.subtract(payment);
         
         this.payment = payment;
         

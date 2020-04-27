@@ -13,7 +13,7 @@ import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
  * is only a placeholder.
  */
 public class CashRegister {
-    private final MonetaryValue registerCash;
+    private MonetaryValue registerCash;
     private final MonetaryValue PLACEHOLDER_CASH = new MonetaryValue("100");
     
     /**
@@ -28,7 +28,7 @@ public class CashRegister {
      * @param netCashToAdd The amount added to register.
      */
     public void addToBalance(MonetaryValue netCashToAdd){
-        registerCash.add(netCashToAdd);
+        registerCash = registerCash.add(netCashToAdd);
     }
     
     /**
@@ -36,6 +36,6 @@ public class CashRegister {
      * @param netCashToRemove The amount removed from register.
      */
     public void removedFromBalance(MonetaryValue netCashToRemove){
-        registerCash.add(netCashToRemove);
+        registerCash = registerCash.subtract(netCashToRemove);
     }
 }

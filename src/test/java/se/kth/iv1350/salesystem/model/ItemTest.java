@@ -48,17 +48,6 @@ public class ItemTest {
         MonetaryValue expected = price.multiplíedByQuantity(quantity);
         MonetaryValue actual = instance.getTotalPrice();
     }
-
-    @Test
-    public void testSetNewPrice() {
-        MonetaryValue newPrice = new MonetaryValue(PRICE);
-        newPrice.add(new MonetaryValue(PRICE));
-        
-        instance.setNewPrice(newPrice);
-        MonetaryValue actual = instance.getPricePerUnit();
-        
-        assertEquals(newPrice,actual,"New price not as expected");
-    }
     
     
     /* NOT COMPLEAT!

@@ -28,7 +28,7 @@ public class ItemDTO {
     public ItemDTO(ItemID itemID, MonetaryValue pricePerUnit, VATRate vatRate,
             String itemDescription){
         this.itemID = itemID;
-        this.pricePerUnit = new MonetaryValue(pricePerUnit);
+        this.pricePerUnit = pricePerUnit;
         this.vatRate = vatRate;
         this.itemDescription = itemDescription;
     }
@@ -38,7 +38,7 @@ public class ItemDTO {
     }
     
     public MonetaryValue getPricePerUnit(){
-        return new MonetaryValue(pricePerUnit);
+        return pricePerUnit;
     }
     
     public VATRate getVATRate(){

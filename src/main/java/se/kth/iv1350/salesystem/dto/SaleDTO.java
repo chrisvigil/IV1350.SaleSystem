@@ -41,9 +41,9 @@ public class SaleDTO {
             MonetaryValue saleTotal, LocalTime timeOfSale, String storeName, Address storeAddress,
             MonetaryValue payment, MonetaryValue change){
         this.items = new LinkedList<>(items);
-        this.subTotal = new MonetaryValue(subTotal);
-        this.saleVAT = new MonetaryValue(saleVAT);
-        this.saleTotal = new MonetaryValue(saleTotal);
+        this.subTotal = subTotal;
+        this.saleVAT = saleVAT;
+        this.saleTotal = saleTotal;
         this.timeOfSale = timeOfSale;
         this.storeName = storeName;
         this.storeAddress = new Address(storeAddress);
@@ -56,15 +56,15 @@ public class SaleDTO {
     }
     
     public MonetaryValue getSaleSubTotal(){
-        return new MonetaryValue(subTotal);
+        return subTotal;
     } 
     
     public MonetaryValue getSaleVAT(){
-        return new MonetaryValue(saleVAT);
+        return saleVAT;
     }
     
     public MonetaryValue getSaleTotal(){
-        return new MonetaryValue(saleTotal);
+        return saleTotal;
     }
     
     public LocalTime getTimeOfSale(){
@@ -80,10 +80,10 @@ public class SaleDTO {
     }
     
     public MonetaryValue getPayment(){
-        return new MonetaryValue(payment);
+        return payment;
     }
     
     public MonetaryValue getChange(){
-        return new MonetaryValue(change);
+        return change;
     }
 }

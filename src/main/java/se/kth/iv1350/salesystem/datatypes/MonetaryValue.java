@@ -11,10 +11,10 @@ import java.util.Locale;
 import java.util.Objects;
 
 /**
- * Represents a monetary value
+ * Represents a monetary value as an immutable object.
  */
 public class MonetaryValue {
-    private BigDecimal value;
+    private final BigDecimal value;
     
     private final BigDecimal ONEHUNDRED = new BigDecimal("100");
     private final BigDecimal ZERO = new BigDecimal("0");
@@ -54,30 +54,45 @@ public class MonetaryValue {
         this.value = monetaryValue.value;
     }
     
+     /**
+     * Creates <code>BigDecimal</code> value from <code>MonetaryValue</code>.
+     * @return <code>MonetaryValue</code> as <code>BigDecimal</code>.
+     */
+    public BigDecimal toBigDecimal(){
+        return value;
+    }  
+    
     /**
-     * Increases the <code>MonetaryValue</code> by another MonetaryValue.
-     * 
+     * Creates a new <code>MonetaryValue</code> by adding another 
+     * <code>MonetaryValue</code>.
      * @param increase the <code>MonetaryValue</code> which to increase with.
+     * @return The sum of the two values
      */
-    public void add(MonetaryValue increase){
-        this.value = this.value.add(increase.value);
+    public MonetaryValue add(MonetaryValue increase){
+        BigDecimal newValue = this.value.add(increase.value);
+        
+        return new MonetaryValue(newValue);
     }
     
-    /**
-     * Decreases the <code>MonetaryValue</code> by another MonetaryValue.
-     * 
+    
+    /*
+     *  Creates a new <code>MonetaryValue</code> by subtracting another 
+     * <code>MonetaryValue</code>.
      * @param decrease the <code>MonetaryValue</code> which to decrease with.
-     */
-    public void subtract(MonetaryValue decrease){
-        this.value = this.value.subtract(decrease.value);
-    }
+     * @return The subtract of the two values
+     *
+    public MonetaryValue subtract(MonetaryValue decrease){
+        BigDecimal newValue  = this.value.subtract(decrease.value);
+        
+        return new MonetaryValue(newValue);
+    } */
     
     /**
-     * Returns the difference between the <code>MonetaryValue</code> and another.
+     * Returns the subtract between the <code>MonetaryValue</code> and another.
      * @param subtractor The <code>MonetaryValue</code> to subtract with.
-     * @return The difference.
+     * @return The subtract.
      */
-    public MonetaryValue difference(MonetaryValue subtractor){
+    public MonetaryValue subtract(MonetaryValue subtractor){
         BigDecimal difference = this.value.subtract(subtractor.toBigDecimal());
         return new MonetaryValue(difference);
     }
@@ -102,15 +117,7 @@ public class MonetaryValue {
         BigDecimal vatRateAsADecimal = new BigDecimal(vatRate.getValue()).divide(ONEHUNDRED);
         BigDecimal vat = this.value.multiply(vatRateAsADecimal);
         return new MonetaryValue(vat);
-    }
-    
-    /**
-     * Creates <code>BigDecimal</code> value from <code>MonetaryValue</code>.
-     * @return <code>MonetaryValue</code> as <code>BigDecimal</code>.
-     */
-    public BigDecimal toBigDecimal(){
-        return value;
-    }            
+    }     
     
     /**
      * Creates <code>String</code> value from <code>MonetaryValue</code>.
