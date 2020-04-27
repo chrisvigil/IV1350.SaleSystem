@@ -23,7 +23,7 @@ import se.kth.iv1350.salesystem.integration.Printer;
 public class Sale {
     private final Store store;
     private final Basket basket;
-    private Reciept reciept;
+    private Receipt receipt;
     private MonetaryValue saleTotal;
     private MonetaryValue saleVAT;
     private LocalTime timeOfSale;
@@ -34,7 +34,7 @@ public class Sale {
      */
     public Sale(Store store){
         this.store = store;
-        reciept = new Reciept(store);
+        receipt = new Receipt(store);
         this.basket = new Basket();
         saleTotal = new MonetaryValue();
         saleVAT = new MonetaryValue();
@@ -77,23 +77,24 @@ public class Sale {
     public MonetaryValue makeCashPayment(MonetaryValue payment){
         MonetaryValue saleTotalWithVAT = calculateSaleTotalWithVAT();
         MonetaryValue cashBack = saleTotalWithVAT.difference(payment);
-        reciept.setPayment(payment);
-        reciept.setSaleTotal(saleTotal);
-        reciept.setSaleVAT(saleVAT);
-        reciept.setChange(cashBack);
+        receipt.setPayment(payment);
+        receipt.setSubTotal(saleTotal);
+        receipt.setSaleVAT(saleVAT);
+        receipt.setSaleTotal(saleTotalWithVAT);
+        receipt.setChange(cashBack);
         
         return cashBack;
     }
     
     private void logTimeOfSale(){
         timeOfSale = LocalTime.now();
-        reciept.setTimeOfSale(timeOfSale);
+        receipt.setTimeOfSale(timeOfSale);
     }
     
     public SaleDTO endSale(){
         logTimeOfSale();
         SaleDTO saleLog = generateSaleLog();
-        reciept.addItems(saleLog.getItems());
+        receipt.addItems(saleLog.getItems());
         
         return saleLog;
     }
@@ -108,6 +109,6 @@ public class Sale {
     }
     
     public void printRepiect(Printer printer){
-        reciept.print(printer);
+        receipt.print(printer);
     }
 }
