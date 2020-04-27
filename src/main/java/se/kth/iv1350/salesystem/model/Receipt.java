@@ -27,6 +27,7 @@ class Receipt {
     private final String saleTotal;
     private final String payment;
     private final String change;
+    private final String paymentType;
     
     /**
      * Creates a new instance of a receipt.
@@ -43,6 +44,7 @@ class Receipt {
         saleTotal = saleDTO.getSaleTotal().toString();
         payment = saleDTO.getPayment().toString();
         change = saleDTO.getChange().toString();
+        paymentType = saleDTO.getPaymentType();
     }
     
     /**
@@ -95,7 +97,8 @@ class Receipt {
         sb.append("\nSubtotal: ").append(subTotal).append("\n");
         sb.append("VAT: ").append(saleVAT).append("\n\n");
         sb.append("\nTotal: ").append(saleTotal).append("\n");
-        sb.append("Payed: ").append(payment).append("\n");
+        sb.append("Payed: ").append(payment).append(" ");
+        sb.append(paymentType).append("\n");
         sb.append("Change: ").append(change);
         
         return sb.toString();

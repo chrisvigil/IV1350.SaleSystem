@@ -24,6 +24,7 @@ public class SaleDTO {
     private final Address storeAddress;
     private final MonetaryValue payment;
     private final MonetaryValue change;
+    private final String paymentType;
     
     /**
      * Creates a new instance representing a particular sale.
@@ -36,10 +37,11 @@ public class SaleDTO {
      * @param storeAddress The address of the store where the sale occurred.
      * @param payment The amount payed
      * @param change The change customer received
+     * @param paymentType The type of payment
      */
     public SaleDTO(List<SoldItemDTO> items, MonetaryValue subTotal, MonetaryValue saleVAT,
             MonetaryValue saleTotal, LocalTime timeOfSale, String storeName, Address storeAddress,
-            MonetaryValue payment, MonetaryValue change){
+            MonetaryValue payment, MonetaryValue change, String paymentType){
         this.items = new LinkedList<>(items);
         this.subTotal = subTotal;
         this.saleVAT = saleVAT;
@@ -49,6 +51,7 @@ public class SaleDTO {
         this.storeAddress = new Address(storeAddress);
         this.payment = payment;
         this.change = change;
+        this.paymentType = paymentType;
     }
     
     public List<SoldItemDTO>getItems(){
@@ -85,5 +88,9 @@ public class SaleDTO {
     
     public MonetaryValue getChange(){
         return change;
+    }
+    
+    public String getPaymentType(){
+        return paymentType;
     }
 }

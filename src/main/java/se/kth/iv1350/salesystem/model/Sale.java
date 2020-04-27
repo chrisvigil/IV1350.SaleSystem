@@ -14,6 +14,7 @@ import se.kth.iv1350.salesystem.dto.ItemDTO;
 import se.kth.iv1350.salesystem.dto.SaleDTO;
 import se.kth.iv1350.salesystem.dto.SoldItemDTO;
 import se.kth.iv1350.salesystem.integration.Printer;
+import static se.kth.iv1350.salesystem.model.Payment.Type.*;
 
 /**
  * Represents a compleat sale
@@ -23,8 +24,8 @@ public class Sale {
     private final Basket basket;
     private MonetaryValue subTotal;
     private MonetaryValue saleVAT;
-    private MonetaryValue payment;
-    private MonetaryValue change;
+    private Payment payment;
+    //private MonetaryValue change;
     private Receipt receipt;
     private LocalTime timeOfSale;
     
@@ -67,9 +68,10 @@ public class Sale {
      */
     public MonetaryValue makeCashPayment(MonetaryValue payment){
         MonetaryValue saleTotalWithVAT = calculateSaleTotalWithVAT();
-        this.change = saleTotalWithVAT.subtract(payment);
         
-        this.payment = payment;
+        this.payment = new Payment(payment,CASH);
+        
+        MonetaryValue change = this.payment.calculateChange(saleTotalWithVAT);
         
         return change;
     }
@@ -120,7 +122,7 @@ public class Sale {
         
         SaleDTO saleLog = new SaleDTO(soldItems, subTotal, saleVAT,
                 saleTotalWithVAT, timeOfSale,store.getName(), store.getAddress(), 
-                payment, change);
+                payment.getAmmount(), payment.getChange(), payment.getType().name());
         
         return saleLog;
     }
