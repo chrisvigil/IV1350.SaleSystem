@@ -10,12 +10,12 @@ import java.util.LinkedList;
 import java.util.List;
 import se.kth.iv1350.salesystem.datatypes.Address;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
+import se.kth.iv1350.salesystem.dto.SaleDTO;
 import se.kth.iv1350.salesystem.dto.SoldItemDTO;
 import se.kth.iv1350.salesystem.integration.Printer;
 
 /**
- *
- * @author christopher.vigil
+ * Contains all data needed to print a receipt.
  */
 class Receipt {
     private String timeOfSale;
@@ -25,15 +25,26 @@ class Receipt {
     private String storeAddressLineThree;
     private final List<String> items;
     private String subTotal;
-    private String saleTotal;
     private String saleVAT;
+    private String saleTotal;
     private String payment;
     private String change;
     
-    Receipt(Store store){
-        storeName = store.getName();
-        setAddress(store.getAddress());
+    /**
+     * Creates a new instance of a receipt.
+     * @param saleDTO 
+     */
+    Receipt(SaleDTO saleDTO){
+        timeOfSale = saleDTO.getTimeOfSale().toString();
+        storeName = saleDTO.getStoreName();
+        setAddress(saleDTO.getStoreAddess());
         items = new LinkedList<>();
+        addItems(saleDTO.getItems());
+        subTotal = saleDTO.getSaleSubTotal().toString();
+        saleVAT = saleDTO.getSaleVAT().toString();
+        saleTotal = saleDTO.getSaleTotal().toString();
+        payment = saleDTO.getPayment().toString();
+        change = saleDTO.getChange().toString();
     }
     
     private void setAddress(Address address){
@@ -48,30 +59,6 @@ class Receipt {
         storeAddressLineTwo = sb.toString();
         
         storeAddressLineThree = address.getCountry();
-    }
-    
-    void setTimeOfSale(LocalTime timeOfSale){
-        this.timeOfSale = timeOfSale.toString();
-    }
-    
-    void setSubTotal(MonetaryValue subTotal){
-        this.subTotal = subTotal.toString();
-    }
-    
-    void setSaleTotal(MonetaryValue saleTotal){
-        this.saleTotal = saleTotal.toString();
-    }
-    
-    void setSaleVAT(MonetaryValue saleVAT){
-        this.saleVAT = saleVAT.toString();
-    }
-    
-    void setPayment(MonetaryValue payment){
-        this.payment = payment.toString();
-    }
-    
-    void setChange(MonetaryValue change){
-        this.change = change.toString();
     }
     
     void addItems(List<SoldItemDTO> itemsInDTO){
@@ -99,6 +86,7 @@ class Receipt {
         sb.append(storeAddressLineTwo).append("\n");
         if (storeAddressLineThree != null)
             sb.append(storeAddressLineThree).append("\n");
+        sb.append("Sale Date: ").append(timeOfSale).append("\n");
         sb.append("\n\n");
         for(String item : items)
             sb.append(item).append("\n");

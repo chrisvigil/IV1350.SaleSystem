@@ -23,10 +23,12 @@ import se.kth.iv1350.salesystem.integration.Printer;
 public class Sale {
     private final Store store;
     private final Basket basket;
-    private final Receipt receipt;
-    private final MonetaryValue saleTotal;
+    private Receipt receipt;
+    private final MonetaryValue subTotal;
     private final MonetaryValue saleVAT;
     private LocalTime timeOfSale;
+    private MonetaryValue payment;
+    private MonetaryValue change;
     
     /**
      * Creates a new store object
@@ -34,9 +36,8 @@ public class Sale {
      */
     public Sale(Store store){
         this.store = store;
-        receipt = new Receipt(store);
         this.basket = new Basket();
-        saleTotal = new MonetaryValue();
+        subTotal = new MonetaryValue();
         saleVAT = new MonetaryValue();
     }
     
@@ -45,12 +46,12 @@ public class Sale {
      * Adds an item to the sale basket
      * @param itemDTO The item to add.
      * @param quantity The item's quantity.
-     * @return saleTotal The current running total of the sale.
+     * @return subTotal The current running subtotal of the sale.
      */
     public MonetaryValue addItemToBasket(ItemDTO itemDTO, Quantity quantity){
         basket.addItem(itemDTO, quantity);
         MonetaryValue itemTotal = calculateItemTotal(itemDTO, quantity);
-        saleTotal.add(itemTotal);
+        subTotal.add(itemTotal);
         addItemsVATtoSaleVAT(itemTotal, itemDTO.getVATRate());
         
         MonetaryValue saleTotalwithVAT = calculateSaleTotalWithVAT();
@@ -68,7 +69,7 @@ public class Sale {
     }
     
     private MonetaryValue calculateSaleTotalWithVAT(){
-        MonetaryValue saleTotalwithVAT = new MonetaryValue(saleTotal);
+        MonetaryValue saleTotalwithVAT = new MonetaryValue(subTotal);
         saleTotalwithVAT.add(saleVAT);
         
         return saleTotalwithVAT;
@@ -76,39 +77,41 @@ public class Sale {
     
     public MonetaryValue makeCashPayment(MonetaryValue payment){
         MonetaryValue saleTotalWithVAT = calculateSaleTotalWithVAT();
-        MonetaryValue cashBack = saleTotalWithVAT.difference(payment);
-        receipt.setPayment(payment);
-        receipt.setSubTotal(saleTotal);
-        receipt.setSaleVAT(saleVAT);
-        receipt.setSaleTotal(saleTotalWithVAT);
-        receipt.setChange(cashBack);
+        this.change = saleTotalWithVAT.difference(payment);
         
-        return cashBack;
+        this.payment = payment;
+        
+        return change;
     }
     
     private void logTimeOfSale(){
         timeOfSale = LocalTime.now();
-        receipt.setTimeOfSale(timeOfSale);
     }
     
     public SaleDTO endSale(){
         logTimeOfSale();
         SaleDTO saleLog = generateSaleLog();
-        receipt.addItems(saleLog.getItems());
+        createReceipt(saleLog);
         
         return saleLog;
     }
     
     private SaleDTO generateSaleLog(){
         List<SoldItemDTO> soldItems = basket.getSoldItems();
+        MonetaryValue saleTotalWithVAT = calculateSaleTotalWithVAT();
         
-        SaleDTO saleLog = new SaleDTO(soldItems, saleTotal, saleVAT,
-                timeOfSale,store.getName(), store.getAddress());
+        SaleDTO saleLog = new SaleDTO(soldItems, subTotal, saleVAT,
+                saleTotalWithVAT, timeOfSale,store.getName(), store.getAddress(), 
+                payment, change);
         
         return saleLog;
     }
     
-    public void printRepiect(Printer printer){
+    private void createReceipt(SaleDTO saleLog){
+        receipt = new Receipt(saleLog);
+    }
+    
+    public void printRepeict(Printer printer){
         receipt.print(printer);
     }
 }

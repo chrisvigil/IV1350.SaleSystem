@@ -97,7 +97,7 @@ public class Controller {
         
         updateCashRegister(payment, cashBack);
         
-        sale.printRepiect(printer);
+        sale.printRepeict(printer);
         
         return cashBack;
     }
