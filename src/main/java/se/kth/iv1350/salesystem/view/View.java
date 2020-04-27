@@ -12,7 +12,7 @@ import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
  */
 public class View {
    
-    private Controller contr;
+    private final Controller contr;
     
    /**
     * Create a new controller
@@ -35,7 +35,7 @@ public class View {
        AddItemReturnMessage returnMessage = contr.addItemToSale(dummyItem);
        System.out.println(returnMessage.toString());
        
-       MonetaryValue payment = new MonetaryValue("10");
+       MonetaryValue payment = new MonetaryValue("13");
        contr.makeCashPayment(payment);
    }
    
