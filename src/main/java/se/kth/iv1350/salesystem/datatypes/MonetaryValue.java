@@ -111,13 +111,25 @@ public class MonetaryValue {
     /**
      * Calculates VAT from  <code>MonetaryValue</code>.
      * @param vatRate The VAT rate.
-     * @return the MonetaryValue with a <code>VATRate</code> applied.
+     * @return The calculated VAT.
      */
     public MonetaryValue calculateVAT(VATRate vatRate){
         BigDecimal vatRateAsADecimal = new BigDecimal(vatRate.getValue()).divide(ONEHUNDRED);
         BigDecimal vat = this.value.multiply(vatRateAsADecimal);
         return new MonetaryValue(vat);
-    }     
+    }
+
+    /**
+     * Calculates value plus <code>VATRate</code>
+     * @param vatRate The VAT rate
+     * @return the MonetaryValue with a <code>VATRate</code> applied.
+     */
+    public MonetaryValue includingVAT(VATRate vatRate){
+        MonetaryValue vat = calculateVAT(vatRate);
+        MonetaryValue valueWithVAT = this.add(vat);
+        
+        return valueWithVAT;
+    }
     
     /**
      * Creates <code>String</code> value from <code>MonetaryValue</code>.
