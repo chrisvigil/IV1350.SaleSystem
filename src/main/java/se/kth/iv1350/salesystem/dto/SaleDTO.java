@@ -16,41 +16,55 @@ import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
  */
 public class SaleDTO {
     private final List<SoldItemDTO> items;
-    private final MonetaryValue saleTotal;
+    private final MonetaryValue subTotal;
     private final MonetaryValue saleVAT;
+    private final MonetaryValue saleTotal;
     private final LocalTime timeOfSale;
     private final String storeName;
     private final Address storeAddress;
+    private final MonetaryValue payment;
+    private final MonetaryValue change;
     
     /**
      * Creates a new instance representing a particular sale.
      * @param items A list of sold items.
-     * @param saleTotal The total cost of the sale excluding VAT.
+     * @param subTotal The total cost of the sale excluding VAT.
      * @param saleVAT The total VAT of the sale.
+     * @param saleTotal The sale total including VAT.
      * @param timeOfSale The time the sale was completed.
      * @param storeName The name of the store where the sale occurred.
      * @param storeAddress The address of the store where the sale occurred.
+     * @param payment The amount payed
+     * @param change The change customer received
      */
-    public SaleDTO(List<SoldItemDTO> items, MonetaryValue saleTotal, MonetaryValue saleVAT,
-            LocalTime timeOfSale, String storeName, Address storeAddress){
+    public SaleDTO(List<SoldItemDTO> items, MonetaryValue subTotal, MonetaryValue saleVAT,
+            MonetaryValue saleTotal, LocalTime timeOfSale, String storeName, Address storeAddress,
+            MonetaryValue payment, MonetaryValue change){
         this.items = new LinkedList<>(items);
-        this.saleTotal = new MonetaryValue(saleTotal);
+        this.subTotal = new MonetaryValue(subTotal);
         this.saleVAT = new MonetaryValue(saleVAT);
+        this.saleTotal = new MonetaryValue(saleTotal);
         this.timeOfSale = timeOfSale;
         this.storeName = storeName;
         this.storeAddress = new Address(storeAddress);
+        this.payment = payment;
+        this.change = change;
     }
     
     public List<SoldItemDTO>getItems(){
         return new LinkedList<>(items);
     }
     
-    public MonetaryValue getSaleTotal(){
-        return new MonetaryValue(saleTotal);
+    public MonetaryValue getSaleSubTotal(){
+        return new MonetaryValue(subTotal);
     } 
     
     public MonetaryValue getSaleVAT(){
         return new MonetaryValue(saleVAT);
+    }
+    
+    public MonetaryValue getSaleTotal(){
+        return new MonetaryValue(saleTotal);
     }
     
     public LocalTime getTimeOfSale(){
@@ -63,5 +77,13 @@ public class SaleDTO {
     
     public Address getStoreAddess(){
         return new Address(storeAddress);
+    }
+    
+    public MonetaryValue getPayment(){
+        return new MonetaryValue(payment);
+    }
+    
+    public MonetaryValue getChange(){
+        return new MonetaryValue(change);
     }
 }
