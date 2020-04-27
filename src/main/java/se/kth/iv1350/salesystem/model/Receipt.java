@@ -8,6 +8,7 @@ package se.kth.iv1350.salesystem.model;
 import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
+import se.kth.iv1350.salesystem.datatypes.Address;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 import se.kth.iv1350.salesystem.dto.SoldItemDTO;
 import se.kth.iv1350.salesystem.integration.Printer;
@@ -16,24 +17,45 @@ import se.kth.iv1350.salesystem.integration.Printer;
  *
  * @author christopher.vigil
  */
-class Reciept {
+class Receipt {
     private String timeOfSale;
-    private String storeName;
-    private String storeAddress;
-    private List<String> items;
+    private final String storeName;
+    private String storeAddressLineOne;
+    private String storeAddressLineTwo;
+    private String storeAddressLineThree;
+    private final List<String> items;
+    private String subTotal;
     private String saleTotal;
     private String saleVAT;
     private String payment;
     private String change;
     
-    Reciept(Store store){
+    Receipt(Store store){
         storeName = store.getName();
-        storeAddress = store.getAddress().toString();
+        setAddress(store.getAddress());
         items = new LinkedList<>();
+    }
+    
+    private void setAddress(Address address){
+        StringBuilder sb = new StringBuilder();
+        sb.append(address.getStreet()).append(" ");
+        sb.append(address.getNumber());
+        storeAddressLineOne = sb.toString();
+        
+        sb = new StringBuilder();
+        sb.append(address.getPostalCode()).append(", ");
+        sb.append(address.getCity());
+        storeAddressLineTwo = sb.toString();
+        
+        storeAddressLineThree = address.getCountry();
     }
     
     void setTimeOfSale(LocalTime timeOfSale){
         this.timeOfSale = timeOfSale.toString();
+    }
+    
+    void setSubTotal(MonetaryValue subTotal){
+        this.subTotal = subTotal.toString();
     }
     
     void setSaleTotal(MonetaryValue saleTotal){
@@ -73,12 +95,16 @@ class Reciept {
         StringBuilder sb = new StringBuilder();
         sb.append("RECIEPT\n");
         sb.append(storeName).append("\n");
-        sb.append(storeAddress);
+        sb.append(storeAddressLineOne).append("\n");
+        sb.append(storeAddressLineTwo).append("\n");
+        if (storeAddressLineThree != null)
+            sb.append(storeAddressLineThree).append("\n");
         sb.append("\n\n");
         for(String item : items)
             sb.append(item).append("\n");
-        sb.append("\nTotal: ").append(saleTotal).append("\n");
+        sb.append("\nSubtotal: ").append(subTotal).append("\n");
         sb.append("VAT: ").append(saleVAT).append("\n\n");
+        sb.append("\nTotal: ").append(saleTotal).append("\n");
         sb.append("Payed: ").append(payment).append("\n");
         sb.append("Change: ").append(change);
         
