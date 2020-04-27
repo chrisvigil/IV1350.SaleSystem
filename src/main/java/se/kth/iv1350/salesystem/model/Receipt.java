@@ -5,11 +5,9 @@
  */
 package se.kth.iv1350.salesystem.model;
 
-import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
 import se.kth.iv1350.salesystem.datatypes.Address;
-import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 import se.kth.iv1350.salesystem.dto.SaleDTO;
 import se.kth.iv1350.salesystem.dto.SoldItemDTO;
 import se.kth.iv1350.salesystem.integration.Printer;
@@ -18,21 +16,21 @@ import se.kth.iv1350.salesystem.integration.Printer;
  * Contains all data needed to print a receipt.
  */
 class Receipt {
-    private String timeOfSale;
+    private final String timeOfSale;
     private final String storeName;
     private String storeAddressLineOne;
     private String storeAddressLineTwo;
     private String storeAddressLineThree;
     private final List<String> items;
-    private String subTotal;
-    private String saleVAT;
-    private String saleTotal;
-    private String payment;
-    private String change;
+    private final String subTotal;
+    private final String saleVAT;
+    private final String saleTotal;
+    private final String payment;
+    private final String change;
     
     /**
      * Creates a new instance of a receipt.
-     * @param saleDTO 
+     * @param saleDTO The log of completed sale.
      */
     Receipt(SaleDTO saleDTO){
         timeOfSale = saleDTO.getTimeOfSale().toString();
@@ -45,6 +43,14 @@ class Receipt {
         saleTotal = saleDTO.getSaleTotal().toString();
         payment = saleDTO.getPayment().toString();
         change = saleDTO.getChange().toString();
+    }
+    
+    /**
+     * Sends the receipt as a formed <code>String</code> to a printer.
+     * @param printer The printer to print to
+     */
+    void print(Printer printer){
+        printer.print(createStringForPrinting());
     }
     
     private void setAddress(Address address){
@@ -61,7 +67,7 @@ class Receipt {
         storeAddressLineThree = address.getCountry();
     }
     
-    void addItems(List<SoldItemDTO> itemsInDTO){
+    private void addItems(List<SoldItemDTO> itemsInDTO){
         for(SoldItemDTO item : itemsInDTO){
             this.items.add(itemAsString(item));
         }
@@ -72,10 +78,6 @@ class Receipt {
         sb.append(item.getItemDescription()).append(" - ");
         sb.append(item.getPricePerUnit()).append(" each");
         return sb.toString();
-    }
-    
-    void print(Printer printer){
-        printer.print(createStringForPrinting());
     }
     
     private String createStringForPrinting(){

@@ -8,14 +8,14 @@ package se.kth.iv1350.salesystem.model;
 import se.kth.iv1350.salesystem.datatypes.Address;
 
 /**
- *
- * @author christopher.vigil
+ * Container for store name and address.
  */
 public class Store {
     private final String name;
     private final Address address;
    /**
-    * Container for store name and address.
+    * Creates and instance of a store.
+    * 
     * @param storeName The store's name.
     * @param storeAddress The store's address.
     */

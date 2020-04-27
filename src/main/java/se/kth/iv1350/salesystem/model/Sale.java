@@ -17,28 +17,26 @@ import se.kth.iv1350.salesystem.integration.Printer;
 
 /**
  * Represents a compleat sale
- * 
- * @author christopher.vigil
  */
 public class Sale {
     private final Store store;
     private final Basket basket;
-    private Receipt receipt;
     private MonetaryValue subTotal;
     private MonetaryValue saleVAT;
-    private LocalTime timeOfSale;
     private MonetaryValue payment;
     private MonetaryValue change;
+    private Receipt receipt;
+    private LocalTime timeOfSale;
     
     /**
-     * Creates a new store object
+     * Creates a new instance representing one sale.
      * @param store The store at which the sale takes place 
      */
     public Sale(Store store){
         this.store = store;
         this.basket = new Basket();
-        subTotal = new MonetaryValue();
-        saleVAT = new MonetaryValue();
+        this.subTotal = new MonetaryValue();
+        this.saleVAT = new MonetaryValue();
     }
     
     
@@ -59,6 +57,44 @@ public class Sale {
         return saleTotalwithVAT;
     }
     
+    
+    // TODO: create a class for payment with payment type?
+    
+    /**
+     * Makes a payment of the sale with cash amount
+     * @param payment The amount payed
+     * @return payment The amount to return in change
+     */
+    public MonetaryValue makeCashPayment(MonetaryValue payment){
+        MonetaryValue saleTotalWithVAT = calculateSaleTotalWithVAT();
+        this.change = saleTotalWithVAT.subtract(payment);
+        
+        this.payment = payment;
+        
+        return change;
+    }
+    
+    /**
+     * Ends the current sale and returns a sale log.
+     * 
+     * @return The sale log
+     */
+    public SaleDTO endSale(){
+        logTimeOfSale();
+        SaleDTO saleLog = generateSaleLog();
+        createReceipt(saleLog);
+        
+        return saleLog;
+    }
+    
+    /**
+     * Prints a receipt
+     * @param printer The printer where the receipt is sent.
+     */
+    public void printRepeict(Printer printer){
+        receipt.print(printer);
+    }
+    
     private void addItemsVATtoSaleVAT(MonetaryValue itemTotal , VATRate vatRate){
         saleVAT = saleVAT.add(itemTotal.calculateVAT(vatRate));
     }
@@ -74,25 +110,8 @@ public class Sale {
         return saleTotalwithVAT;
     }
     
-    public MonetaryValue makeCashPayment(MonetaryValue payment){
-        MonetaryValue saleTotalWithVAT = calculateSaleTotalWithVAT();
-        this.change = saleTotalWithVAT.subtract(payment);
-        
-        this.payment = payment;
-        
-        return change;
-    }
-    
     private void logTimeOfSale(){
         timeOfSale = LocalTime.now();
-    }
-    
-    public SaleDTO endSale(){
-        logTimeOfSale();
-        SaleDTO saleLog = generateSaleLog();
-        createReceipt(saleLog);
-        
-        return saleLog;
     }
     
     private SaleDTO generateSaleLog(){
@@ -108,9 +127,5 @@ public class Sale {
     
     private void createReceipt(SaleDTO saleLog){
         receipt = new Receipt(saleLog);
-    }
-    
-    public void printRepeict(Printer printer){
-        receipt.print(printer);
     }
 }
