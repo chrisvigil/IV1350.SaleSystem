@@ -17,10 +17,10 @@ public class Quantity {
     private double value;
     
     /**
-     * creates a zero Quantity
+     * creates a single Quantity
      */
     public Quantity(){
-        value = 0;
+        value = 1;
     }
     
     /**
@@ -28,7 +28,10 @@ public class Quantity {
      * @param value Initial value of quantity
      * .
      */
-    public Quantity(int value){
+    public Quantity(int value) throws IllegalArgumentException{
+        if (value <= 0){
+            throw new IllegalArgumentException("Quantities must be greater then 0");
+        }
         this.value = value;
     }
     
@@ -36,7 +39,10 @@ public class Quantity {
      *  Creates a new quantity from a float primitive data type.
      * @param value Initial value of quantity
      */
-    public Quantity(double value){
+    public Quantity(double value) throws IllegalArgumentException{
+        if (value <= 0){
+            throw new IllegalArgumentException("Quantities must be greater then 0");
+        }
         this.value = value;
     }
     
@@ -44,8 +50,19 @@ public class Quantity {
      *  Creates a new quantity from a String
      * @param value Initial value of quantity
      */
-    public Quantity(String value){
-        this.value = Double.parseDouble(value);
+    public Quantity(String value)throws IllegalArgumentException{
+        double asDouble;
+        try{
+            asDouble = Double.parseDouble(value);
+        }
+        catch(NumberFormatException ex){
+            throw new IllegalArgumentException("String must represent a number");
+        }
+        if (asDouble <= 0){
+            throw new IllegalArgumentException("Quantities must be greater then 0");
+        }
+        
+        this.value = asDouble;
     }
     
     /**
