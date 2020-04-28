@@ -6,6 +6,7 @@
 package se.kth.iv1350.salesystem.controller;
 
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
+import se.kth.iv1350.salesystem.datatypes.Quantity;
 import se.kth.iv1350.salesystem.dto.ItemDTO;
 
 /**
@@ -15,6 +16,7 @@ import se.kth.iv1350.salesystem.dto.ItemDTO;
  */
 public class AddItemReturnMessage {
     private final String itemDescription;
+    private final String itemQuantity;
     private final String itemPrice;
     private final String runningTotal;
     
@@ -23,9 +25,10 @@ public class AddItemReturnMessage {
      * @param itemDTO Contains data describing an item
      * @param runningTotal Contains running total of sale.
      */
-    AddItemReturnMessage(ItemDTO itemDTO, MonetaryValue runningTotal){
+    AddItemReturnMessage(ItemDTO itemDTO, Quantity quantity, MonetaryValue runningTotal){
         this.itemDescription = itemDTO.getItemDescription();
-        this.itemPrice = itemDTO.getPricePerUnit().toString();
+        this.itemQuantity = quantity.toString();
+        this.itemPrice = itemDTO.getPricePerUnit().includingVAT(itemDTO.getVATRate()).toString();
         this.runningTotal = runningTotal.toString();
     }
     
@@ -42,8 +45,12 @@ public class AddItemReturnMessage {
     }
     
     @Override
+    /**
+     * Returns a <code>String</code> with format "Item: DESCRIPTION, 
+     * Price: PRICE, Running Total: RUNNINGTOTAL"
+     */
     public String toString(){
-        String messageAsString = "Item: " + itemDescription +
+        String messageAsString = "Item: " + itemQuantity + " " + itemDescription +
                               ", Price: " + itemPrice +
                               ", Runnning Total: " + runningTotal;
         
