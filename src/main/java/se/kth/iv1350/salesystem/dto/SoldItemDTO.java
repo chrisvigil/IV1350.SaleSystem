@@ -33,4 +33,27 @@ public class SoldItemDTO extends ItemDTO{
     public Quantity getQuantity(){
         return new Quantity(quantity);
     }
+    
+    @Override
+    public boolean equals(Object obj){
+        boolean isEqual = false;
+        if (this.getClass() == obj.getClass())
+        {
+            SoldItemDTO soldItemDTO = (SoldItemDTO) obj;
+            if (!soldItemDTO.getItemDescription().equals(this.getItemDescription()))
+                isEqual = false;
+            else if (!soldItemDTO.getPricePerUnit().equals(this.getPricePerUnit()))
+                isEqual = false;
+            else if (!soldItemDTO.getVATRate().equals(this.getVATRate()))
+                isEqual = false;
+            else if (!soldItemDTO.getItemDescription().equals(this.getItemDescription()))
+                isEqual = false;
+            else if (!soldItemDTO.quantity.equals(this.quantity))
+                isEqual = false;
+            else
+                isEqual = true;
+        }
+        
+        return isEqual;
+    }
 }

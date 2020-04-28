@@ -37,16 +37,94 @@ public class MonetaryValueTest {
                                             + "not produce zero MonetaryValue");
     }
     
-    /*
+    @Test
+    public void testConstructorWithNegativeStringValue(){
+        boolean causedException = false;
+        try{
+            instance = new MonetaryValue("-1");
+        }
+        catch(IllegalArgumentException ex){
+            causedException = true;
+        }
+        catch(Exception ex){
+            causedException = true;
+        }
+        
+        assertTrue(causedException, "Creating with negative vaule did not cuase exception");
+    }
+    @Test
+    public void testConstructorWithNegativeMonetaryValueValue(){
+        boolean causedException = false;
+        try{
+            instance = new MonetaryValue("-1");
+        }
+        catch(IllegalArgumentException ex){
+            causedException = true;
+        }
+        catch(Exception ex){
+            causedException = true;
+        }
+        
+        assertTrue(causedException, "Creating with negative value did not cuase exception");
+    }
+    
+    @Test
+    public void testConstructorWithNegativeBigDecimalValue(){
+        boolean causedException = false;
+        try{
+            instance = new MonetaryValue(new BigDecimal(-1));
+        }
+        catch(IllegalArgumentException ex){
+            causedException = true;
+        }
+        catch(Exception ex){
+            causedException = true;
+        }
+        
+        assertTrue(causedException, "Creating with negative value did not cuase exception");
+    }
+    
     @Test
     public void testAdd() {
-        MonetaryValue anotherValue = new MonetaryValue(INIT_VALUE);
-        instance.add(anotherValue);
+        BigDecimal expected = new BigDecimal(INIT_VALUE);
+        expected = expected.add(expected);
         
-        BigDecimal expected = new BigDecimal("20");
-        BigDecimal actual = instance.toBigDecimal();
+        BigDecimal actual = instance.add(instance).toBigDecimal();
+        
         assertEquals(expected, actual, "Wrong value after adding another MonetaryValue");
-    }*/
+    }
+    
+    @Test
+    public void testSubtractResultZero(){
+        MonetaryValue result = null;
+        try{
+            result = instance.subtract(instance);
+        }
+        catch(Exception ex){
+            fail("Subtracing by itself caused " + ex.toString());
+        }
+        
+        if (result != null){
+            if (result.toBigDecimal().compareTo(BigDecimal.ZERO) != 0)
+                fail("Subtracing by itself did not result in 0");
+        }
+    }
+    
+    @Test
+    public void testSubtractWithNegativeResult(){
+        boolean casuedException = false;
+        MonetaryValue largerThenInstance = instance.add(instance);
+        try{
+            MonetaryValue result = instance.subtract(largerThenInstance);
+        }
+        catch(Exception ex){
+            casuedException = true;
+            if (!ex.getMessage().startsWith("subtractor"))
+                fail("Subtracting with a larger value did not cause expected exception");
+        }
+        
+        assertTrue(casuedException, "Subtracting with a larger value did not cause exception");
+    }
     
     @Test
     public void testMultiplíedByQuantity(){

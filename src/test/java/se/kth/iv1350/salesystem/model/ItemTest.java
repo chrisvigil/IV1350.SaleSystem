@@ -9,6 +9,7 @@ import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 import se.kth.iv1350.salesystem.datatypes.Quantity;
 import se.kth.iv1350.salesystem.datatypes.VATRate;
 import se.kth.iv1350.salesystem.dto.ItemDTO;
+import se.kth.iv1350.salesystem.dto.SoldItemDTO;
 
 public class ItemTest {
     private Item instance;
@@ -51,7 +52,7 @@ public class ItemTest {
         assertEquals(expected, actual, "Total price for multiple quantities not returned as expected");
     }
     
-     @Test
+    @Test
     public void testGetTotalPriceSingle() {
         MonetaryValue expected = instance.getPricePerUnit();
         MonetaryValue actual = instance.getTotalPrice();
@@ -69,17 +70,16 @@ public class ItemTest {
         Quantity expected = new Quantity(QUANTITY+QUANTITY);
         assertEquals(expected, actual, "Adding quantity does not work as expected");
     }
- /* NOT COMPLEAT!
+    
+    
     @Test
-    public void testDecreaseQuantity() {
-        System.out.println("decreaseQuantity");
-        Quantity decrease = null;
-        Item instance = null;
-        instance.decreaseQuantity(decrease);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    public void testgenerateSoldItemDTO(){
+        SoldItemDTO actual = instance.generateSoldItemDTO();
+        SoldItemDTO expected = new SoldItemDTO(new ItemID(ITEMID), new MonetaryValue(PRICE),
+                               VATRATE, DESCRIPTION, new Quantity(QUANTITY));
+        assertEquals(expected, actual, "SoldItemDTO not generated correctly");
     }
-    */
+    
     private ItemDTO createItemDTO(ItemID itemID){
         MonetaryValue pricePerUnit = new MonetaryValue(PRICE);
         String itemDescription = DESCRIPTION;

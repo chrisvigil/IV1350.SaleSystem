@@ -5,7 +5,7 @@
  */
 package se.kth.iv1350.salesystem.model;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 import se.kth.iv1350.salesystem.datatypes.Quantity;
@@ -27,7 +27,7 @@ public class Sale {
     private Payment payment;
     //private MonetaryValue change;
     private Receipt receipt;
-    private LocalTime timeOfSale;
+    private LocalDateTime timeOfSale;
     
     /**
      * Creates a new instance representing one sale.
@@ -42,7 +42,7 @@ public class Sale {
     
     
     /**
-     * Adds an item to the sale basket
+     * Adds an item to the sale basket and updates sale total.
      * @param itemDTO The item to add.
      * @param quantity The item's quantity.
      * @return subTotal The current running subtotal of the sale.
@@ -58,9 +58,6 @@ public class Sale {
         return saleTotalwithVAT;
     }
     
-    
-    // TODO: create a class for payment with payment type?
-    
     /**
      * Makes a payment of the sale with cash amount
      * @param payment The amount payed
@@ -68,7 +65,12 @@ public class Sale {
      */
     public MonetaryValue makeCashPayment(MonetaryValue payment){
         MonetaryValue saleTotalWithVAT = calculateSaleTotalWithVAT();
-        
+        try{
+            payment.subtract(saleTotalWithVAT);
+        }
+        catch(IllegalArgumentException ex){
+            throw new IllegalArgumentException("Payment value insufficient");
+        }
         this.payment = new Payment(payment,CASH);
         
         MonetaryValue change = this.payment.calculateChange(saleTotalWithVAT);
@@ -113,7 +115,7 @@ public class Sale {
     }
     
     private void logTimeOfSale(){
-        timeOfSale = LocalTime.now();
+        timeOfSale = LocalDateTime.now();
     }
     
     private SaleDTO generateSaleLog(){

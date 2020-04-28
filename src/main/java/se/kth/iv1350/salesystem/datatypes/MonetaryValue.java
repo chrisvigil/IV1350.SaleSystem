@@ -17,14 +17,13 @@ public class MonetaryValue {
     private final BigDecimal value;
     
     private final BigDecimal ONEHUNDRED = new BigDecimal("100");
-    private final BigDecimal ZERO = new BigDecimal("0");
     
     
     /**
      * Creates a <code>MonetaryValue</code> with the value of 0.
      */
     public MonetaryValue(){
-        this.value = ZERO;
+        this.value = BigDecimal.ZERO;
     }
     
     /**
@@ -32,7 +31,10 @@ public class MonetaryValue {
      * 
      * @param value The <code>MonetaryValue</code>'s initial value as a string.
      */
-    public MonetaryValue(String value){
+    public MonetaryValue(String value) throws IllegalArgumentException{
+        if (Double.parseDouble(value) < 0){
+            throw new IllegalArgumentException("Monetary Values may not be less then 0");
+        }
         this.value = new BigDecimal(value);
     }
     
@@ -41,7 +43,10 @@ public class MonetaryValue {
      * 
      * @param value The <code>MonetaryValue</code>'s initial value as a BigDecimal.
      */
-    public MonetaryValue(BigDecimal value){
+    public MonetaryValue(BigDecimal value) throws IllegalArgumentException{
+        if (value.compareTo(BigDecimal.ZERO) < 0){
+            throw new IllegalArgumentException("Monetary Values may not be less then 0");
+        }
         this.value = value;
     }
     
@@ -74,25 +79,15 @@ public class MonetaryValue {
         return new MonetaryValue(newValue);
     }
     
-    
-    /*
-     *  Creates a new <code>MonetaryValue</code> by subtracting another 
-     * <code>MonetaryValue</code>.
-     * @param decrease the <code>MonetaryValue</code> which to decrease with.
-     * @return The subtract of the two values
-     *
-    public MonetaryValue subtract(MonetaryValue decrease){
-        BigDecimal newValue  = this.value.subtract(decrease.value);
-        
-        return new MonetaryValue(newValue);
-    } */
-    
     /**
      * Returns the subtract between the <code>MonetaryValue</code> and another.
      * @param subtractor The <code>MonetaryValue</code> to subtract with.
      * @return The subtract.
      */
     public MonetaryValue subtract(MonetaryValue subtractor){
+        if(this.value.compareTo(subtractor.value) < 0){
+            throw new IllegalArgumentException("subtractor may not be larger then value");
+        }
         BigDecimal difference = this.value.subtract(subtractor.toBigDecimal());
         return new MonetaryValue(difference);
     }

@@ -33,7 +33,13 @@ class Payment {
      * @return 
      */
     MonetaryValue calculateChange(MonetaryValue saleTotal){
-        this.change = saleTotal.subtract(ammount);
+        try{
+            this.change = ammount.subtract(saleTotal);
+        }
+        catch(IllegalArgumentException ex){
+            throw new IllegalArgumentException("saleTotal must be less then or equal to payment ammount");
+        }
+        
         return change;
     }
     

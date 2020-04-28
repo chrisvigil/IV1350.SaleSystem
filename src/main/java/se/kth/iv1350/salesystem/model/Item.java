@@ -64,14 +64,6 @@ class Item {
         quantity.addQuantity(increase);
     }
     
-   /**
-     * Decreases the quantity of the item
-     * 
-     * @param decrease The value with which to increase the quantity
-     */
-    void decreaseQuantity(Quantity decrease){
-        quantity.removeQuantity(decrease);
-    }
     
     /**
      * Generates a <code>SoldItemDTO</code> from the <code>Item</code>.

@@ -35,7 +35,7 @@ public class View {
        AddItemReturnMessage returnMessage = contr.addItemToSale(dummyItem);
        System.out.println(returnMessage.toString());
        
-       MonetaryValue payment = new MonetaryValue("13");
+       MonetaryValue payment = new MonetaryValue("14");
        contr.makeCashPayment(payment);
    }
    
