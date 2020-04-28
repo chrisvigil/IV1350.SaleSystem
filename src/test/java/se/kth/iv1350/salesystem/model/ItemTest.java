@@ -40,33 +40,36 @@ public class ItemTest {
     }
 
     @Test
-    public void testGetTotalPrice() {
+    public void testGetTotalPriceMuliple() {
         instance.addQuanity(new Quantity(QUANTITY));
         Quantity quantity = new Quantity(QUANTITY+QUANTITY);
         MonetaryValue price = new MonetaryValue(PRICE);
         
         MonetaryValue expected = price.multiplíedByQuantity(quantity);
         MonetaryValue actual = instance.getTotalPrice();
-    }
-    
-    
-    /* NOT COMPLEAT!
-    @Test
-    public void testChangeVATRate() {
         
+        assertEquals(expected, actual, "Total price for multiple quantities not returned as expected");
     }
-
+    
+     @Test
+    public void testGetTotalPriceSingle() {
+        MonetaryValue expected = instance.getPricePerUnit();
+        MonetaryValue actual = instance.getTotalPrice();
+        
+        if (instance.getQuantity().getQuantityAsDouble() == (double) 1)
+            assertEquals(expected, actual, "Total price not returned as expected when quantity is 1");
+        else
+            fail("Testing constant assumed to equal 1 is no longer one");
+    }
     
     @Test
     public void testAddQuanity() {
-        System.out.println("addQuanity");
-        Quantity increase = null;
-        Item instance = null;
-        instance.addQuanity(increase);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.addQuanity(new Quantity(QUANTITY));
+        Quantity actual = instance.getQuantity();
+        Quantity expected = new Quantity(QUANTITY+QUANTITY);
+        assertEquals(expected, actual, "Adding quantity does not work as expected");
     }
-
+ /* NOT COMPLEAT!
     @Test
     public void testDecreaseQuantity() {
         System.out.println("decreaseQuantity");

@@ -30,6 +30,110 @@ public class QuantityTest {
     public void tearDown() {
         quantity = null;
     }
+    
+    @Test
+    public void testCreateNegativeDoubleQuantity(){
+        boolean failed = false;
+        
+        try{
+            quantity = new Quantity(-INIT_DOUBLE);
+        }
+        
+        catch(IllegalArgumentException ex){
+            failed = true;
+        }
+        
+        assertTrue(failed, "Negative double value did not cause exception");
+    }
+    
+    @Test
+    public void testCreateNegativeIntQuantity(){
+        boolean failed = false;
+        
+        try{
+            quantity = new Quantity(-1);
+        }
+        
+        catch(IllegalArgumentException ex){
+            failed = true;
+        }
+        
+        assertTrue(failed, "Negative int value did not cause exception");
+    }
+    
+    @Test
+    public void testCreateNegativeStringQuantity(){
+        boolean failed = false;
+        
+        try{
+            quantity = new Quantity("-1");
+        }
+        
+        catch(IllegalArgumentException ex){
+            failed = true;
+        }
+        
+        assertTrue(failed, "Negative String value did not cause exception");
+    }
+    
+    @Test
+    public void testCreateZeroDoubleQuantity(){
+        boolean failed = false;
+        
+        try{
+            quantity = new Quantity((double)0);
+        }
+        
+        catch(IllegalArgumentException ex){
+            failed = true;
+        }
+        
+        assertTrue(failed, "Zero double value did not cause exception");
+    }
+    
+    @Test
+    public void testCreateZeroIntQuantity(){
+        boolean failed = false;
+        
+        try{
+            quantity = new Quantity(0);
+        }
+        
+        catch(IllegalArgumentException ex){
+            failed = true;
+        }
+        
+        assertTrue(failed, "Zero int value did not cause exception");
+    }
+    
+    @Test
+    public void testCreateZeroStringQuantity(){
+        boolean failed = false;
+        
+        try{
+            quantity = new Quantity("0");
+        }
+        
+        catch(IllegalArgumentException ex){
+            failed = true;
+        }
+        
+        assertTrue(failed, "Zero String value did not cause exception");
+    }
+    
+    @Test void testCreateInvalidStringQuanity(){
+        boolean failed = false;
+        
+        try{
+            quantity = new Quantity("x");
+        }
+        
+        catch(IllegalArgumentException ex){
+            failed = true;
+        }
+        
+        assertTrue(failed, "Non number String value did not cause exception");
+    }
 
     @Test
     public void testGetQuantityAsDouble() {
@@ -57,7 +161,7 @@ public class QuantityTest {
     public void testToString() {
         String expected = Double.toString(INIT_DOUBLE);
         String actual = quantity.toString();
-        assertEquals(expected,actual,"toString method doe snot return expected string");
+        assertEquals(expected,actual,"toString method does not return expected string");
     }
     
     @Test
@@ -84,7 +188,7 @@ public class QuantityTest {
     public void testHashCode() {
         Quantity duplicateQuantity = new Quantity(INIT_DOUBLE);
         if (quantity.hashCode() != duplicateQuantity.hashCode())
-            fail("Hash codes of two identical Quantityies do not match");
+            fail("Hash codes of two identical Quantities do not match");
     }
     
 }
