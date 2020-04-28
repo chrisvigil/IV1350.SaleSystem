@@ -50,7 +50,7 @@ public class SaleTest {
         
         instance.makeCashPayment(PRICE.includingVAT(VATRATE));
         
-        SaleDTO saleDTO = instance.endSale();
+        SaleDTO saleDTO = instance.logSale();
         List<SoldItemDTO> list = saleDTO.getItems();
         
         SoldItemDTO expected = new SoldItemDTO(ITEMID,PRICE,VATRATE, DESC, QUANTITY);
@@ -67,7 +67,7 @@ public class SaleTest {
         
         instance.makeCashPayment(PRICE.includingVAT(VATRATE));
         
-        SaleDTO saleDTO = instance.endSale();
+        SaleDTO saleDTO = instance.logSale();
         
         MonetaryValue expected = new MonetaryValue(PRICE).multiplíedByQuantity(QUANTITY);
         
@@ -83,7 +83,7 @@ public class SaleTest {
         
         instance.makeCashPayment(PRICE.includingVAT(VATRATE));
         
-        SaleDTO saleDTO = instance.endSale();
+        SaleDTO saleDTO = instance.logSale();
         
         MonetaryValue expected = new MonetaryValue(PRICE).multiplíedByQuantity(QUANTITY).calculateVAT(VATRATE);
         
@@ -142,7 +142,7 @@ public class SaleTest {
         instance.makeCashPayment(PRICE.includingVAT(VATRATE));
         
         LocalDateTime expected = LocalDateTime.now();
-        SaleDTO saleDTO = instance.endSale();
+        SaleDTO saleDTO = instance.logSale();
         LocalDateTime actual = saleDTO.getTimeOfSale();
         assertEquals(expected,actual, "Did not log correct localtime");
     }
@@ -154,7 +154,7 @@ public class SaleTest {
         
         instance.makeCashPayment(PRICE.includingVAT(VATRATE));
         
-        SaleDTO saleDTO = instance.endSale();
+        SaleDTO saleDTO = instance.logSale();
         
         MonetaryValue expected = PRICE;
         MonetaryValue actual = saleDTO.getSaleSubTotal();
@@ -170,7 +170,7 @@ public class SaleTest {
         
         instance.makeCashPayment(PRICE.includingVAT(VATRATE));
         
-        SaleDTO saleDTO = instance.endSale();
+        SaleDTO saleDTO = instance.logSale();
         
         Printer printer = new Printer();
         

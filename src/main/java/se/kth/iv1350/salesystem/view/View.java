@@ -4,6 +4,7 @@ import se.kth.iv1350.salesystem.controller.AddItemReturnMessage;
 import se.kth.iv1350.salesystem.controller.Controller;
 import se.kth.iv1350.salesystem.datatypes.ItemID;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
+import se.kth.iv1350.salesystem.datatypes.Quantity;
 
 /**
  * Placeholder view class
@@ -29,21 +30,50 @@ public class View {
     */
    public void runFakeExecution(){
        contr.startNewSale();
-       System.out.println("A new sale has been started");
        
-       ItemID dummyItem = new ItemID("0");
-       AddItemReturnMessage returnMessage = contr.addItemToSale(dummyItem);
-       System.out.println(returnMessage.toString());
+       ItemID dummyItem;
+       AddItemReturnMessage returnMessage;
        
-       MonetaryValue payment = new MonetaryValue("14");
+       System.out.println("A new sale has been started\n");
+       
+       /*
+       System.out.println("Item is added with id 0:");
+       dummyItem = new ItemID("0");
+       returnMessage = contr.addItemToSale(dummyItem);
+       printReturnMessage(returnMessage);
+       System.out.println();*/
+       
+       System.out.println("3 items is added with id 3:");
+       dummyItem = new ItemID("3");
+       Quantity quantity = new Quantity("3");
+       returnMessage = contr.addItemToSale(dummyItem, quantity);
+       printReturnMessage(returnMessage);
+       System.out.println();
+       
+       
+       System.out.println("Attempt to add item with non existent ID:");
+       dummyItem = new ItemID("-1");
+       returnMessage = contr.addItemToSale(dummyItem);
+       printReturnMessage(returnMessage);
+       System.out.println();
+       
+       System.out.println("Cashier ends sale:");
+       String finalTotal = contr.endSale();
+       System.out.println("Sale Total: " + finalTotal);
+       System.out.println();
+       
+       System.out.println("a cash payment of 15 kr is made and recipt is printed: ");
+       MonetaryValue payment = new MonetaryValue("150");
        contr.makeCashPayment(payment);
    }
    
-   public String formatedReturnMessage(AddItemReturnMessage message){
-       String messageAsString = "Item: " + message.getItemDescription() +
-                                ", Price: " + message.getItemPrice() +
-                                ", Runnning Total: " + message.getRunningTotal();
-       
-       return messageAsString;
+   void printReturnMessage(AddItemReturnMessage message){
+       if (message != null){
+           System.out.println(message.toString());
+       }
+       else{
+           System.out.println("Item id invalid");
+       }
    }
+   
 }

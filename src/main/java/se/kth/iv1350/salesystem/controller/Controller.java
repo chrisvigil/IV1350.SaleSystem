@@ -85,6 +85,14 @@ public class Controller {
     }
     
     /**
+     * Presents total price of sale including VAT
+     * @return 
+     */
+    public String endSale(){
+        return sale.endSale().toString();
+    }
+    
+    /**
      * Makes a cash payment of sale.
      * @param payment The cash amount made as payment
      * @return The amount in change
@@ -99,7 +107,7 @@ public class Controller {
     }
     
     private void logSale(){
-        SaleDTO saleLog = sale.endSale();
+        SaleDTO saleLog = sale.logSale();
         dbhandler.logSale(saleLog);
     }
     

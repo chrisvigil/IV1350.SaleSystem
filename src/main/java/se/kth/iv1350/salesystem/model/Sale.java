@@ -27,6 +27,7 @@ public class Sale {
     private Payment payment;
     private Receipt receipt;
     private LocalDateTime timeOfSale;
+    private boolean saleOpen;
     
     /**
      * Creates a new instance representing one sale.
@@ -37,6 +38,7 @@ public class Sale {
         this.basket = new Basket();
         this.subTotal = new MonetaryValue();
         this.saleVAT = new MonetaryValue();
+        saleOpen = true;
     }
     
     
@@ -55,6 +57,16 @@ public class Sale {
         MonetaryValue saleTotalwithVAT = calculateSaleTotalWithVAT();
         
         return saleTotalwithVAT;
+    }
+    
+    /**
+     * closes the sale and return sale total with VAT
+     * @return The sale total with VAT.
+     */
+    public MonetaryValue endSale(){
+        saleOpen = false;
+        MonetaryValue saleTotalWithVAT = calculateSaleTotalWithVAT();
+        return saleTotalWithVAT;
     }
     
     /**
@@ -78,11 +90,11 @@ public class Sale {
     }
     
     /**
-     * Ends the current sale and returns a sale log.
+     * Generates sale logs
      * 
      * @return The sale log
      */
-    public SaleDTO endSale(){
+    public SaleDTO logSale(){
         logTimeOfSale();
         SaleDTO saleLog = generateSaleLog();
         createReceipt(saleLog);

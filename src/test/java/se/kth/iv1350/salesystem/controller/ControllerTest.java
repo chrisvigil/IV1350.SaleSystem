@@ -67,6 +67,15 @@ public class ControllerTest {
             fail("Did not create a valid item"); 
     }
     
+    @Test
+    public void testAddItemThatDoesNotExist(){
+        instance.startNewSale();
+        
+        AddItemReturnMessage message = instance.addItemToSale(new ItemID("-1"),new Quantity(QUANTITY));
+        
+        assertNull(message, "Did not return null");
+    }
+    
     
     @Test
     public void testMakeExactCashPayment(){
@@ -98,6 +107,29 @@ public class ControllerTest {
         System.out.println("Expected: " +expected);
         
         assertEquals(expected, actual, "Making an exact payment did not return zero change");
+    }
+    
+    @Test
+    public void testEndSale(){
+        instance.startNewSale();
+        AddItemReturnMessage message = instance.addItemToSale(new ItemID(ITEMID),new Quantity(QUANTITY));
+        
+        char[] itemPriceArray = message.getItemPrice().toCharArray();
+        StringBuilder sb = new StringBuilder();
+        for(char c : itemPriceArray){
+            if (Character.isDigit(c))
+                sb.append(c);
+            if((c == '.') || (c == ','))
+            {
+                sb.append('.');
+            }
+        }
+        String itemPriceAsString = sb.toString();
+        
+        String expected = new MonetaryValue(itemPriceAsString).multiplíedByQuantity(new Quantity(QUANTITY)).toString();
+        String actual = instance.endSale();
+        
+        assertEquals(expected, actual, "Did not return expected saleTotal");
     }
     
 }

@@ -146,6 +146,34 @@ public class MonetaryValueTest {
     }
     
     @Test
+    public void testIncludingVAT(){
+        VATRate vatRate = VATRate.TWENTYFIVE;
+        MonetaryValue actual = instance.includingVAT(vatRate);
+        
+        BigDecimal onehundred = new BigDecimal(100);
+        BigDecimal vatRateAsBD = new BigDecimal(vatRate.getValue()).divide(onehundred);
+        MonetaryValue calculatedVAT = new MonetaryValue(new BigDecimal(INIT_VALUE).multiply(vatRateAsBD));
+        MonetaryValue expected = instance.add(calculatedVAT);
+        
+        assertEquals(expected, actual, "Rate including VAT not calculated properly");
+    }
+    
+    @Test
+    public void testOneIncludingVAT(){
+        VATRate vatRate = VATRate.TWENTYFIVE;
+        MonetaryValue one = new MonetaryValue("1");
+        MonetaryValue actual = one.includingVAT(vatRate);
+        
+        BigDecimal onehundred = new BigDecimal(100);
+        BigDecimal vatRateAsBD = new BigDecimal(vatRate.getValue()).divide(onehundred);
+        MonetaryValue calculatedVAT = new MonetaryValue(new BigDecimal("1").multiply(vatRateAsBD));
+        MonetaryValue expected = one.add(calculatedVAT);
+        System.out.println("Expected: " + expected);
+        
+        assertEquals(expected, actual, "Rate including VAT not calculated properly");
+    }
+    
+    @Test
     public void testToBigDecimal() {
         BigDecimal expected = new BigDecimal(INIT_VALUE);
         BigDecimal actual = instance.toBigDecimal();
