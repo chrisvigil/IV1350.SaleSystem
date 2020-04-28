@@ -5,7 +5,7 @@
  */
 package se.kth.iv1350.salesystem.dto;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import se.kth.iv1350.salesystem.datatypes.Address;
@@ -19,7 +19,7 @@ public class SaleDTO {
     private final MonetaryValue subTotal;
     private final MonetaryValue saleVAT;
     private final MonetaryValue saleTotal;
-    private final LocalTime timeOfSale;
+    private final LocalDateTime timeOfSale;
     private final String storeName;
     private final Address storeAddress;
     private final MonetaryValue payment;
@@ -40,7 +40,7 @@ public class SaleDTO {
      * @param paymentType The type of payment
      */
     public SaleDTO(List<SoldItemDTO> items, MonetaryValue subTotal, MonetaryValue saleVAT,
-            MonetaryValue saleTotal, LocalTime timeOfSale, String storeName, Address storeAddress,
+            MonetaryValue saleTotal, LocalDateTime timeOfSale, String storeName, Address storeAddress,
             MonetaryValue payment, MonetaryValue change, String paymentType){
         this.items = new LinkedList<>(items);
         this.subTotal = subTotal;
@@ -70,7 +70,7 @@ public class SaleDTO {
         return saleTotal;
     }
     
-    public LocalTime getTimeOfSale(){
+    public LocalDateTime getTimeOfSale(){
         return timeOfSale;
     }
     

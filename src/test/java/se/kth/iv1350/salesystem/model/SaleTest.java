@@ -1,7 +1,7 @@
 package se.kth.iv1350.salesystem.model;
 
 import java.math.BigDecimal;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -141,9 +141,9 @@ public class SaleTest {
         
         instance.makeCashPayment(PRICE.includingVAT(VATRATE));
         
-        LocalTime excpeted = LocalTime.now();
+        LocalDateTime excpeted = LocalDateTime.now();
         SaleDTO saleDTO = instance.endSale();
-        LocalTime actual = saleDTO.getTimeOfSale();
+        LocalDateTime actual = saleDTO.getTimeOfSale();
         System.out.pri
         assertEquals(excpeted,actual, "Did not log correct localtime");
     }*/
