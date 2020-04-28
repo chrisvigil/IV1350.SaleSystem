@@ -38,4 +38,8 @@ public class CashRegister {
     public void removedFromBalance(MonetaryValue netCashToRemove){
         registerCash = registerCash.subtract(netCashToRemove);
     }
+    
+    public MonetaryValue getBalance(){
+        return registerCash;
+    }
 }

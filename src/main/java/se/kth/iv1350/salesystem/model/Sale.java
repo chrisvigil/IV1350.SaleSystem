@@ -25,7 +25,6 @@ public class Sale {
     private MonetaryValue subTotal;
     private MonetaryValue saleVAT;
     private Payment payment;
-    //private MonetaryValue change;
     private Receipt receipt;
     private LocalDateTime timeOfSale;
     

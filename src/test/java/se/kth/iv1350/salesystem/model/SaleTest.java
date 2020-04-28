@@ -133,7 +133,7 @@ public class SaleTest {
         
     }
     
-    /*
+    
     @Test
     public void testEndSaleLogsTime() {
         ItemDTO itemDTO = new ItemDTO(ITEMID,PRICE,VATRATE, DESC);
@@ -141,22 +141,46 @@ public class SaleTest {
         
         instance.makeCashPayment(PRICE.includingVAT(VATRATE));
         
-        LocalDateTime excpeted = LocalDateTime.now();
+        LocalDateTime expected = LocalDateTime.now();
         SaleDTO saleDTO = instance.endSale();
         LocalDateTime actual = saleDTO.getTimeOfSale();
-        System.out.pri
-        assertEquals(excpeted,actual, "Did not log correct localtime");
-    }*/
+        assertEquals(expected,actual, "Did not log correct localtime");
+    }
+    
+    @Test
+    public void testEndSaleGeneratesSaleLog() {
+        ItemDTO itemDTO = new ItemDTO(ITEMID,PRICE,VATRATE, DESC);
+        instance.addItemToBasket(itemDTO, QUANTITY);
+        
+        instance.makeCashPayment(PRICE.includingVAT(VATRATE));
+        
+        SaleDTO saleDTO = instance.endSale();
+        
+        MonetaryValue expected = PRICE;
+        MonetaryValue actual = saleDTO.getSaleSubTotal();
+        
+        assertEquals(expected, actual, "Did not generate expected sale log");
+    }
 
-    /*
+    
     @Test
     public void testPrintRepeict() {
-        System.out.println("printRepeict");
-        Printer printer = null;
-        Sale instance = null;
-        instance.printRepeict(printer);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }*/
+        ItemDTO itemDTO = new ItemDTO(ITEMID,PRICE,VATRATE, DESC);
+        instance.addItemToBasket(itemDTO, QUANTITY);
+        
+        instance.makeCashPayment(PRICE.includingVAT(VATRATE));
+        
+        SaleDTO saleDTO = instance.endSale();
+        
+        Printer printer = new Printer();
+        
+        try{
+            instance.printRepeict(printer);
+        }
+        catch(Exception ex){
+            fail("cuased exception");
+        }
+        
+    }
     
 }
