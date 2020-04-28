@@ -78,7 +78,7 @@ public class Controller {
         }
         else{
             MonetaryValue runningTotal = sale.addItemToBasket(foundItem, quantity);
-            returnMessage = new AddItemReturnMessage(foundItem, runningTotal);
+            returnMessage = new AddItemReturnMessage(foundItem, quantity, runningTotal);
         }
         
         return returnMessage;
@@ -91,20 +91,25 @@ public class Controller {
      */
     public MonetaryValue makeCashPayment(MonetaryValue payment){
         MonetaryValue cashBack = sale.makeCashPayment(payment);
-        
-        SaleDTO saleLog = sale.endSale();
-        dbhandler.logSale(saleLog);
-        
+        logSale();
         updateCashRegister(payment, cashBack);
-        
-        sale.printRepeict(printer);
+        printRecipt();
         
         return cashBack;
+    }
+    
+    private void logSale(){
+        SaleDTO saleLog = sale.endSale();
+        dbhandler.logSale(saleLog);
     }
     
     private void updateCashRegister(MonetaryValue payment, MonetaryValue cashBack){
         MonetaryValue netCashToRegister = new MonetaryValue(payment.subtract(cashBack));
         register.addToBalance(netCashToRegister);
+    }
+    
+    private void printRecipt(){
+        sale.printRepeict(printer);
     }
             
 }
