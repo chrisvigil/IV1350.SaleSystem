@@ -172,5 +172,12 @@ public class MonetaryValueTest {
        boolean isEqual = instance.equals(equalValue);
        assertFalse(isEqual, "Unequal MonetaryValues appear equal");
    }
+   
+   @Test
+   public void testRoundVaule(){
+       MonetaryValue actual = new MonetaryValue("1000000.000005").roundVaule();
+       MonetaryValue expected = new MonetaryValue("1000000.01");
+       assertEquals(expected, actual, "Rounding not performed correctly");
+   }
     
 }

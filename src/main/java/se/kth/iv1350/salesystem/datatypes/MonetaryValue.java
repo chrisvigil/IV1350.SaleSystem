@@ -6,6 +6,7 @@
 package se.kth.iv1350.salesystem.datatypes;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.Objects;
@@ -127,6 +128,15 @@ public class MonetaryValue {
     }
     
     /**
+     * Rounds the <code>MonetaryValue</code> to 2 decimal places, rounding up.
+     * @return The rounded value.
+     */
+    public MonetaryValue roundVaule(){
+        BigDecimal rounded = this.value.setScale(2, RoundingMode.CEILING);
+        return new MonetaryValue(rounded);
+    }
+    
+    /**
      * Creates <code>String</code> value from <code>MonetaryValue</code>.
      * @return <code>MonetaryValue</code> as <code>String</code>.
      */
@@ -160,7 +170,7 @@ public class MonetaryValue {
         
         return isEqual;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 7;
