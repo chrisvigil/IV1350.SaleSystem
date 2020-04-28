@@ -48,4 +48,26 @@ public class ItemDTO {
     public String getItemDescription(){
         return itemDescription;
     }
+    
+    /**
+     * Compares a  <code>ItemDTO</code> to another object to determine
+     * if they are equal.
+     * @param obj The object with which to compare.
+     * @return <code>true</code> if equal, otherwise <code>false</code>.
+     */
+    @Override
+    public boolean equals(Object obj){
+        boolean isEqual = false;
+        if (this.getClass() == obj.getClass())
+        {
+            ItemDTO itemDTO = (ItemDTO) obj;
+            if (itemDTO.itemDescription.equals(this.itemDescription)
+                    && itemDTO.itemID.equals(this.itemID)
+                    && itemDTO.pricePerUnit.equals(this.pricePerUnit)
+                    && itemDTO.vatRate.equals(this.vatRate))
+                isEqual = true;
+        }
+        
+        return isEqual;
+    }
 }
