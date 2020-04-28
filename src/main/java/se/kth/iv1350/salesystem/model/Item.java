@@ -41,11 +41,19 @@ class Item {
     }
     
     /**
-     * Returns the Items price per unit multiplied by the item quantity.
+     * Returns the Item's price per unit multiplied by the item quantity.
      * @return total price as MonetaryValue
      */
     MonetaryValue getTotalPrice(){
         return pricePerUnit.multiplíedByQuantity(quantity);
+    }
+    
+    /**
+     * Returns the Item's quantity.
+     * @return current <code>Item</code> quantity
+     */
+    Quantity getQuantity(){
+        return quantity;
     }
     
     /**
