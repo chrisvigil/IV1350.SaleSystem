@@ -46,5 +46,9 @@ public class ExternalDBHandler {
         accountingDBHandler.LogSale(saleLog);
         inventoryDBHandler.updateInventory(saleLog);
     }
+    
+    void readInventoryDBfromFile(String filename){
+        inventoryDBHandler.readDBFromFile(filename);
+    }
 }
 
