@@ -45,7 +45,7 @@ public class ExternalDBHandlerTest {
     
     @BeforeEach
     public void setUp() {
-        instance = new ExternalDBHandler();
+        instance = new ExternalDBHandler(DBNAME);
         instance.readInventoryDBfromFile(DBNAME);
     }
     
@@ -73,6 +73,17 @@ public class ExternalDBHandlerTest {
         ItemDTO actual = instance.getItemData(new ItemID(ITEMID+"3"));
         ItemDTO expected = null;
         assertEquals(expected, actual, "Non existent ItemID retured other value then null");
+    }
+    
+    @Test
+    public void requestingSameDataTwice(){
+        ItemID itemID = new ItemID(ITEMID);
+        ItemDTO itemDTO = instance.getItemData(itemID);
+        
+        ItemID anotheritemID = new ItemID(ITEMID);
+        ItemDTO actual = instance.getItemData(anotheritemID);
+        
+        assertNotNull(actual, "requesting the same item twice returns null");
     }
 
     

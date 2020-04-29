@@ -23,7 +23,8 @@ public class Main {
         Store store = setupStore();
         Controller contr = new Controller(store);
         View view = new View(contr);
-        view.runFakeExecution();
+        //view.runFakeExecution();
+        view.fakeInteractiveSale();
     }
     
     /**

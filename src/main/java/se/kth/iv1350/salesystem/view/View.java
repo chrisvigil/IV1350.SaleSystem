@@ -42,21 +42,28 @@ public class View {
        System.out.println("Item is added with id 0:");
        dummyItem = new ItemID("0");
        returnMessage = contr.addItemToSale(dummyItem);
-       printReturnMessage(returnMessage);
+       System.out.println(checkReturnMessage(returnMessage));
        System.out.println();
+       
        
        System.out.println("3 items is added with id 3:");
        dummyItem = new ItemID("3");
        Quantity quantity = new Quantity("3");
        returnMessage = contr.addItemToSale(dummyItem, quantity);
-       printReturnMessage(returnMessage);
+       System.out.println(checkReturnMessage(returnMessage));
+       System.out.println();
+       
+       System.out.println("Item is added with id 0:");
+       dummyItem = new ItemID("0");
+       returnMessage = contr.addItemToSale(dummyItem);
+       System.out.println(checkReturnMessage(returnMessage));
        System.out.println();
        
        
        System.out.println("Attempt to add item with non existent ID:");
        dummyItem = new ItemID("-1");
        returnMessage = contr.addItemToSale(dummyItem);
-       printReturnMessage(returnMessage);
+       System.out.println(checkReturnMessage(returnMessage));
        System.out.println();
        
        System.out.println("Cashier ends sale:");
@@ -69,15 +76,85 @@ public class View {
        contr.makeCashPayment(payment);
    }
    
-   void printReturnMessage(AddItemReturnMessage message){
+   String checkReturnMessage(AddItemReturnMessage message){
        if (message != null){
-           System.out.println(message.toString());
-           //StringBuilder sb = new StringBuilder();
-           //sb.append("Item: ").append(message.)
+           return message.toString();
        }
        else{
-           System.out.println("Item id invalid");
+           return "Item id invalid";
        }
+   }
+   
+    public void fakeInteractiveSale(){
+       Locale locale = new Locale("sv", "SE");
+       contr.startNewSale(locale);
+       
+       java.util.Scanner in = new java.util.Scanner (System.in);
+       in.useLocale (locale);
+       
+       ItemID item;
+       AddItemReturnMessage returnMessage;
+       
+       System.out.println("A new sale has been started\n");
+       boolean saleOpen = true;
+       System.out.println("Type 'end' to end sale");
+       
+       String input;
+       String id;
+       Quantity quantity;
+       while (saleOpen){
+           System.out.println("Enter an item id to add to sale: ");
+           input = in.next();
+           
+           if (input.equals("end")){
+               saleOpen = false;
+               String finalTotal = contr.endSale();
+               System.out.println("Sale Total: " + finalTotal);
+           }
+           else{
+               id = input;
+               System.out.println("Enter a quantity: ");
+               input = in.next();
+               try{
+                   item = new ItemID(id);
+                   quantity = new Quantity(input);
+                   returnMessage = contr.addItemToSale(item, quantity);
+                   
+                   if (returnMessage != null){
+                       System.out.println(returnMessage.toString());
+                   }
+                   else{
+                       System.out.println("Invalid item identifier, try again");
+                   }
+               }
+               catch(Exception ex){
+                   System.out.println("Invalid input, try again");
+               }
+           }
+           
+       }
+       
+       boolean paymentMade = false;
+       while (!paymentMade){
+            System.out.println("Please enter payment: ");
+            input = in.next();
+            try{
+                MonetaryValue payment = new MonetaryValue(input);
+                try{
+                    contr.makeCashPayment(payment);
+                    paymentMade = true;
+                }
+                catch(Exception ex){
+                    System.out.println("Payment not sufficient, try again");
+                }
+            }
+            catch(Exception ex){
+                System.out.println("Invalid value, try again");
+            }
+       }
+       
+       
+       
    }
    
 }

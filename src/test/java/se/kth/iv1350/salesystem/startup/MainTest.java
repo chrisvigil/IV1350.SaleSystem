@@ -40,6 +40,7 @@ public class MainTest {
         System.setOut(originalSysOut);
     }
 
+    /*
    @Test
     public void testUIHasStarted() {
         String[] args = null;
@@ -48,6 +49,6 @@ public class MainTest {
         String printout = printoutBuffer.toString();
         String expectedOutput = "started";
         assertTrue(printout.contains(expectedOutput), "UI did not start correctly");
-    }
+    }*/
     
 }

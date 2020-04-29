@@ -22,13 +22,18 @@ import se.kth.iv1350.salesystem.dto.SaleDTO;
 class InventorySystemHandler {
     private BufferedReader bufferedReader;
     private final String DUMMY_ID = "0";
-    private final String DUMMY_DB = "dummy_invDB.txt";
+    private String dummyDB = "dummy_invDB.txt";
     
     /**
      * Creates a new InventorySystemHandler instance.
      */
     InventorySystemHandler(){
-        readDBFromFile(DUMMY_DB);
+        readDBFromFile(dummyDB);
+    }
+    
+    InventorySystemHandler(String DB){
+        dummyDB = DB;
+        readDBFromFile(dummyDB);
     }
     
     /**
@@ -74,6 +79,7 @@ class InventorySystemHandler {
     }
     
     private String[] findItemInBuffer(String id){
+        readDBFromFile(dummyDB);
         String line = null;
         
         try{

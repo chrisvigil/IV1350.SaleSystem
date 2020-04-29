@@ -60,7 +60,7 @@ public class ControllerTest {
             fail("Did not create a valid item"); 
     }
     
-     @Test
+    @Test
     public void testAddItemToSaleWithQuantity(){
         instance.startNewSale(LOCALE);
         
@@ -68,6 +68,19 @@ public class ControllerTest {
         
         if(message == null)
             fail("Did not create a valid item"); 
+    }
+    
+    @Test
+    public void testAddItemThatAllreadyExists(){
+        instance.startNewSale(LOCALE);
+        ItemID itemID = new ItemID(ITEMID);
+        AddItemReturnMessage message = instance.addItemToSale(itemID);
+        
+        itemID = new ItemID(ITEMID);
+        
+        message = instance.addItemToSale(itemID);
+        
+        assertNotNull(message, "Returned null");
     }
     
     @Test

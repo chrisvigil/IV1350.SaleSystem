@@ -27,6 +27,12 @@ public class ExternalDBHandler {
         saleLogHandler = new SaleLogHandler();
     }
     
+    public ExternalDBHandler(String db){
+        accountingDBHandler = new AccountingSystemHandler();
+        inventoryDBHandler = new InventorySystemHandler(db);
+        saleLogHandler = new SaleLogHandler();
+    }
+    
     /**
      * Searches an external database for a requested itemID
      * @param itemID The item identifier of the requested item
