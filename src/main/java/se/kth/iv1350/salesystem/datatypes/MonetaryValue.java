@@ -132,7 +132,7 @@ public class MonetaryValue {
      * @return The rounded value.
      */
     public MonetaryValue roundVaule(){
-        BigDecimal rounded = this.value.setScale(2, RoundingMode.CEILING);
+        BigDecimal rounded = this.value.setScale(2, RoundingMode.HALF_UP);
         return new MonetaryValue(rounded);
     }
     
@@ -142,14 +142,7 @@ public class MonetaryValue {
      */
     @Override
     public String toString(){
-        Locale swedish = new Locale("sv", "SE");
-        //NumberFormat CostFormat = NumberFormat.getCurrencyInstance(Locale.getDefault());
-        
-        NumberFormat CostFormat = NumberFormat.getCurrencyInstance(swedish);
-        CostFormat.setMinimumFractionDigits( 1 );
-        CostFormat.setMaximumFractionDigits( 2 );
-        String formatedValue  = CostFormat.format(value.doubleValue());
-        return formatedValue;
+        return value.toString();
     }
     
     /**

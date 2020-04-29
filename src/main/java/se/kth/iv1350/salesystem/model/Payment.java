@@ -40,7 +40,7 @@ class Payment {
             throw new IllegalArgumentException("saleTotal must be less then or equal to payment ammount");
         }
         
-        return change;
+        return change.roundVaule();
     }
     
     MonetaryValue getAmmount(){

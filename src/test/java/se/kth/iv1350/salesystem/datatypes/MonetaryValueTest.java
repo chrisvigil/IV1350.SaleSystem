@@ -182,7 +182,7 @@ public class MonetaryValueTest {
 
    @Test
     public void testToString() {
-        String expected = INIT_VALUE +",0 kr";
+        String expected = INIT_VALUE;
         String actual = instance.toString();
         assertEquals(expected, actual, "Wrong toString value");
     }
@@ -204,7 +204,7 @@ public class MonetaryValueTest {
    @Test
    public void testRoundVaule(){
        MonetaryValue actual = new MonetaryValue("1000000.000005").roundVaule();
-       MonetaryValue expected = new MonetaryValue("1000000.01");
+       MonetaryValue expected = new MonetaryValue("1000000.00");
        assertEquals(expected, actual, "Rounding not performed correctly");
    }
     

@@ -34,7 +34,7 @@ public class PaymentTest {
     public void testCalculateChange() {
         instance = new Payment(AMMOUNT, Type.CASH);
         MonetaryValue actual = instance.calculateChange(LESSTHENAMMOUNT);
-        MonetaryValue expected = AMMOUNT.subtract(LESSTHENAMMOUNT);
+        MonetaryValue expected = AMMOUNT.subtract(LESSTHENAMMOUNT).roundVaule();
         
         assertEquals(expected, actual, "Change not correctly calculated");
     }

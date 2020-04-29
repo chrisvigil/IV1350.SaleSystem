@@ -82,17 +82,7 @@ public class ControllerTest {
         instance.startNewSale();
         AddItemReturnMessage message = instance.addItemToSale(new ItemID(ITEMID),new Quantity(QUANTITY));
         
-        char[] itemPriceArray = message.getItemPrice().toCharArray();
-        StringBuilder sb = new StringBuilder();
-        for(char c : itemPriceArray){
-            if (Character.isDigit(c))
-                sb.append(c);
-            if((c == '.') || (c == ','))
-            {
-                sb.append('.');
-            }
-        }
-        String itemPriceAsString = sb.toString();
+        String itemPriceAsString = message.getItemPrice();
         
         MonetaryValue payment = new MonetaryValue(itemPriceAsString);
         payment = payment.multiplíedByQuantity(new Quantity(QUANTITY));
@@ -103,7 +93,7 @@ public class ControllerTest {
         System.out.println("Actual: " + actual);
         
         
-        String expected = new MonetaryValue("0").toString();
+        String expected = new MonetaryValue("0").roundVaule().toString();
         System.out.println("Expected: " +expected);
         
         assertEquals(expected, actual, "Making an exact payment did not return zero change");
@@ -114,17 +104,7 @@ public class ControllerTest {
         instance.startNewSale();
         AddItemReturnMessage message = instance.addItemToSale(new ItemID(ITEMID),new Quantity(QUANTITY));
         
-        char[] itemPriceArray = message.getItemPrice().toCharArray();
-        StringBuilder sb = new StringBuilder();
-        for(char c : itemPriceArray){
-            if (Character.isDigit(c))
-                sb.append(c);
-            if((c == '.') || (c == ','))
-            {
-                sb.append('.');
-            }
-        }
-        String itemPriceAsString = sb.toString();
+        String itemPriceAsString = message.getItemPrice();
         
         String expected = new MonetaryValue(itemPriceAsString).multiplíedByQuantity(new Quantity(QUANTITY)).toString();
         String actual = instance.endSale();

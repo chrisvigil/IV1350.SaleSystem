@@ -109,7 +109,7 @@ public class SaleTest {
         MonetaryValue actual = instance.makeCashPayment(PRICE.includingVAT(VATRATE));
         
         BigDecimal PriceAsBigDecimal = PRICE.toBigDecimal();
-        MonetaryValue expected = new MonetaryValue(PriceAsBigDecimal.subtract(PriceAsBigDecimal)).includingVAT(VATRATE);
+        MonetaryValue expected = new MonetaryValue(PriceAsBigDecimal.subtract(PriceAsBigDecimal)).includingVAT(VATRATE).roundVaule();
         
         assertEquals(expected, actual, "CashPayment did not retuirn corrrect change");
     }
