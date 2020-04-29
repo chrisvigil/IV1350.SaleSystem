@@ -40,7 +40,7 @@ public class MainTest {
         System.setOut(originalSysOut);
     }
 
-    /*
+    /* Only used when calling the old runFakeExecution method in View
    @Test
     public void testUIHasStarted() {
         String[] args = null;

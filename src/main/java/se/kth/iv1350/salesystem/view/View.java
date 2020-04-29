@@ -1,7 +1,7 @@
 package se.kth.iv1350.salesystem.view;
 
 import java.util.Locale;
-import se.kth.iv1350.salesystem.controller.AddItemReturnMessage;
+import se.kth.iv1350.salesystem.controller.ReturnMessage;
 import se.kth.iv1350.salesystem.controller.Controller;
 import se.kth.iv1350.salesystem.datatypes.ItemID;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
@@ -34,7 +34,7 @@ public class View {
        contr.startNewSale(locale);
        
        ItemID dummyItem;
-       AddItemReturnMessage returnMessage;
+       ReturnMessage returnMessage;
        
        System.out.println("A new sale has been started\n");
        
@@ -73,18 +73,21 @@ public class View {
        
        System.out.println("a cash payment of 15 kr is made and recipt is printed: ");
        MonetaryValue payment = new MonetaryValue("150");
-       contr.makeCashPayment(payment);
+       contr.makeCashPaymentandLogSale(payment);
    }
    
-   String checkReturnMessage(AddItemReturnMessage message){
+    private String checkReturnMessage(ReturnMessage message){
        if (message != null){
            return message.toString();
        }
        else{
            return "Item id invalid";
        }
-   }
+    }
    
+    /**
+     * A simple placeholder CLI to test program
+     */
     public void fakeInteractiveSale(){
        Locale locale = new Locale("sv", "SE");
        contr.startNewSale(locale);
@@ -93,7 +96,7 @@ public class View {
        in.useLocale (locale);
        
        ItemID item;
-       AddItemReturnMessage returnMessage;
+       ReturnMessage returnMessage;
        
        System.out.println("A new sale has been started\n");
        boolean saleOpen = true;
@@ -103,7 +106,7 @@ public class View {
        String id;
        Quantity quantity;
        while (saleOpen){
-           System.out.println("Enter an item id to add to sale: ");
+           System.out.print("Enter an item id to add to sale: ");
            input = in.next();
            
            if (input.equals("end")){
@@ -113,7 +116,7 @@ public class View {
            }
            else{
                id = input;
-               System.out.println("Enter a quantity: ");
+               System.out.print("Enter a quantity: ");
                input = in.next();
                try{
                    item = new ItemID(id);
@@ -136,12 +139,12 @@ public class View {
        
        boolean paymentMade = false;
        while (!paymentMade){
-            System.out.println("Please enter payment: ");
+            System.out.print("Please enter payment: ");
             input = in.next();
             try{
                 MonetaryValue payment = new MonetaryValue(input);
                 try{
-                    contr.makeCashPayment(payment);
+                    contr.makeCashPaymentandLogSale(payment);
                     paymentMade = true;
                 }
                 catch(Exception ex){

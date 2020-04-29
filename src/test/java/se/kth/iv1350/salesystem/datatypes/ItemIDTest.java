@@ -69,12 +69,5 @@ public class ItemIDTest {
         boolean isEqual = itemID.equals(anotherID);
         assertFalse(isEqual, "Two different items appear equal");
     }
-
-    @Test
-    public void testHashCode() {
-        ItemID duplicateItemID = new ItemID(INIT_STRING);
-        if (itemID.hashCode() != duplicateItemID.hashCode())
-            fail("Hash codes of two identical itemIDs do not match");
-    }
     
 }

@@ -184,11 +184,4 @@ public class QuantityTest {
             fail("Non-equal quntities appear equal");
     }
     
-     @Test
-    public void testHashCode() {
-        Quantity duplicateQuantity = new Quantity(INIT_DOUBLE);
-        if (quantity.hashCode() != duplicateQuantity.hashCode())
-            fail("Hash codes of two identical Quantities do not match");
-    }
-    
 }

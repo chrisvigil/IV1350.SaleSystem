@@ -11,8 +11,6 @@ import se.kth.iv1350.salesystem.dto.SoldItemDTO;
 
 /**
  * Collects all items added to sale
- * 
- * @author christopher.vigil
  */
 class Basket {
     private final Map<ItemID, Item> contents;

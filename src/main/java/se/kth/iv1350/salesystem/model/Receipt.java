@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.kth.iv1350.salesystem.model;
 
 import java.util.LinkedList;
@@ -39,7 +34,7 @@ class Receipt {
         storeName = saleDTO.getStoreName();
         setAddress(saleDTO.getStoreAddess());
         items = new LinkedList<>();
-        addItems(saleDTO.getItems());
+        addItems(saleDTO.getItems(), locale);
         subTotal = saleDTO.getSaleSubTotal().currencyFormat(locale);
         saleVAT = saleDTO.getSaleVAT().currencyFormat(locale);
         saleTotal = saleDTO.getSaleTotal().currencyFormat(locale);
@@ -70,16 +65,16 @@ class Receipt {
         storeAddressLineThree = address.getCountry();
     }
     
-    private void addItems(List<SoldItemDTO> itemsInDTO){
+    private void addItems(List<SoldItemDTO> itemsInDTO, Locale locale){
         for(SoldItemDTO item : itemsInDTO){
-            this.items.add(itemAsString(item));
+            this.items.add(itemAsString(item, locale));
         }
     }
-    private String itemAsString(SoldItemDTO item){
+    private String itemAsString(SoldItemDTO item, Locale locale){
         StringBuilder sb = new StringBuilder();
         sb.append(item.getQuantity()).append(" - ");
         sb.append(item.getItemDescription()).append(" - ");
-        sb.append(item.getPricePerUnit()).append(" each");
+        sb.append(item.getPricePerUnit().currencyFormat(locale)).append(" each");
         return sb.toString();
     }
     

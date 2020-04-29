@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.kth.iv1350.salesystem.dto;
 
 import java.time.LocalDateTime;
@@ -54,42 +49,72 @@ public class SaleDTO {
         this.paymentType = paymentType;
     }
     
+    /**
+     * @return The list of sold items in the <code>SaleDTO</code>
+     */
     public List<SoldItemDTO>getItems(){
         return new LinkedList<>(items);
     }
     
+    /**
+     * @return The <code>SaleDTO</code> sale subtotal
+     */
     public MonetaryValue getSaleSubTotal(){
         return subTotal;
     } 
     
+     /**
+     * @return The <code>SaleDTO</code> sale VAT
+     */
     public MonetaryValue getSaleVAT(){
         return saleVAT;
     }
     
+     /**
+     * @return The <code>SaleDTO</code> sale sale total with vat
+     */
     public MonetaryValue getSaleTotal(){
         return saleTotal;
     }
     
+     /**
+     * @return The <code>SaleDTO</code> time of sale
+     */
     public LocalDateTime getTimeOfSale(){
         return timeOfSale;
     }
     
+     /**
+     * @return The <code>SaleDTO</code> store name
+     */
     public String getStoreName(){
         return storeName;
     }
     
+     /**
+     * @return The <code>SaleDTO</code> store address
+     */
     public Address getStoreAddess(){
         return new Address(storeAddress);
     }
     
+     /**
+     * @return The <code>SaleDTO</code> payment value
+     */
     public MonetaryValue getPayment(){
         return payment;
     }
     
+     /**
+     * @return The <code>SaleDTO</code> sale change
+     */
     public MonetaryValue getChange(){
         return change;
     }
     
+     /**
+     * @return The <code>SaleDTO</code> payment type
+     */
     public String getPaymentType(){
         return paymentType;
     }

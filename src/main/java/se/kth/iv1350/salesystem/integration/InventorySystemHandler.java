@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.kth.iv1350.salesystem.integration;
 
 import java.io.BufferedReader;
@@ -31,8 +26,13 @@ class InventorySystemHandler {
         readDBFromFile(dummyDB);
     }
     
-    InventorySystemHandler(String DB){
-        dummyDB = DB;
+    /**
+     * Creates a new InventorySystemHandler instance with a specified 
+     * database file.
+     * @param inventoryDB The name or path to the inventory database file
+     */
+    InventorySystemHandler(String inventoryDB){
+        dummyDB = inventoryDB;
         readDBFromFile(dummyDB);
     }
     

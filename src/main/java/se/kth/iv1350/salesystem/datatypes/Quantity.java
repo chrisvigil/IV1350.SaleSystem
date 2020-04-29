@@ -1,16 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.kth.iv1350.salesystem.datatypes;
 
 import java.math.BigDecimal;
 
 /**
  * Represents a quantity value
- * 
- * @author christopher.vigil
  */
 public class Quantity {
     
@@ -137,13 +130,4 @@ public class Quantity {
         
         return isEqual;
     }
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 37 * hash + (int) (Double.doubleToLongBits(this.value) ^ (Double.doubleToLongBits(this.value) >>> 32));
-        return hash;
-    }
-    
-    
 }

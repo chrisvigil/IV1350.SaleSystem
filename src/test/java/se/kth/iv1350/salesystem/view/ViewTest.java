@@ -2,6 +2,7 @@ package se.kth.iv1350.salesystem.view;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Locale;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,6 +51,12 @@ public class ViewTest {
         String expectedOutput = "started";
         
         assertTrue(printout.contains(expectedOutput), "UI did not start correctly");
+    }
+    
+    @Test
+    public void testLocale(){
+        Locale locale = new Locale("sv", "SE");
+        assertNotNull(locale, "locale is null");
     }
     
 }

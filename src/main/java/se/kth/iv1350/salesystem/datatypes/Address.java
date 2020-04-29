@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.kth.iv1350.salesystem.datatypes;
 
 /**
@@ -52,22 +47,42 @@ public class Address {
         this.country = address.country;
     }
     
+    /**
+     * 
+     * @return the <code>Address</code> street
+     */
     public String getStreet(){
         return street;
     }
     
+    /**
+     * 
+     * @return the <code>Address</code> street number
+     */
     public int getNumber(){
         return number;
     }
     
+    /**
+     * 
+     * @return the <code>Address</code> postal code
+     */
     public int getPostalCode(){
         return postalCode;
     }
     
+    /**
+     * 
+     * @return the <code>Address</code> city
+     */
     public String getCity(){
         return city;
     }
     
+    /**
+     * 
+     * @return the <code>Address</code> country
+     */
     public String getCountry(){
         return country;
     }

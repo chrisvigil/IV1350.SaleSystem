@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.kth.iv1350.salesystem.controller;
 
 import java.util.Locale;
@@ -15,7 +10,7 @@ import se.kth.iv1350.salesystem.dto.ItemDTO;
  * Contains data about the added item and the sales running total
  * @author christopher.vigil
  */
-public class AddItemReturnMessage {
+public class ReturnMessage {
     private final String itemDescription;
     private final String itemQuantity;
     private final String itemPrice;
@@ -26,28 +21,43 @@ public class AddItemReturnMessage {
      * @param itemDTO Contains data describing an item
      * @param runningTotal Contains running total of sale.
      */
-    AddItemReturnMessage(ItemDTO itemDTO, Quantity quantity, MonetaryValue runningTotal, Locale locale){
+    ReturnMessage(ItemDTO itemDTO, Quantity quantity, MonetaryValue runningTotal, Locale locale){
         this.itemDescription = itemDTO.getItemDescription();
         this.itemQuantity = quantity.toString();
         this.itemPrice = itemDTO.getPricePerUnit().includingVAT(itemDTO.getVATRate()).currencyFormat(locale);
         this.runningTotal = runningTotal.currencyFormat(locale);
     }
     
+    /**
+     * @return The item description contained in the <code>ReturnMessage</code> .
+     */
     public String getItemDescription(){
         return itemDescription;
     }
     
+    /**
+     * @return The item quantity contained in the <code>ReturnMessage</code> .
+     */
+    public String getQuantity(){
+        return itemQuantity;
+    }
+    
+    /**
+     * @return The item price contained in the <code>ReturnMessage</code> .
+     */
     public String getItemPrice(){
         return itemPrice;
     }
-    
+    /**
+     * @return The running total contained in the <code>ReturnMessage</code> .
+     */
     public String getRunningTotal(){
         return runningTotal;
     }
     
     @Override
     /**
-     * Returns a <code>String</code> with format "Item: DESCRIPTION, 
+     * Returns a <code>String</code> with format "Item: QUANTITY DESCRIPTION, 
      * Price: PRICE, Running Total: RUNNINGTOTAL"
      */
     public String toString(){

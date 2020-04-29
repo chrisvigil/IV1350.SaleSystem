@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.kth.iv1350.salesystem.dto;
 
 import se.kth.iv1350.salesystem.datatypes.ItemID;
@@ -30,10 +25,19 @@ public class SoldItemDTO extends ItemDTO{
         this.quantity = new Quantity(quantity);
     }
     
+     /**
+     * @return The <code>SoldItemDTO</code> quantity
+     */
     public Quantity getQuantity(){
         return new Quantity(quantity);
     }
     
+    /**
+     * Compares an <code>Object</code> with the  <code>SoldItemDTO</code> and 
+     * determines if they contain identical data.
+     * @param obj The  <code>Object</code> to compare
+     * @return <code>true</code> is identical, otherwise <code>false</code>
+     */
     @Override
     public boolean equals(Object obj){
         boolean isEqual = false;

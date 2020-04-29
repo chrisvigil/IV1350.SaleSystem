@@ -54,7 +54,7 @@ public class ControllerTest {
     public void testAddItemToSaleWithoutQuantity(){
         instance.startNewSale(LOCALE);
         
-        AddItemReturnMessage message = instance.addItemToSale(new ItemID(ITEMID));
+        ReturnMessage message = instance.addItemToSale(new ItemID(ITEMID));
         
         if(message == null)
             fail("Did not create a valid item"); 
@@ -64,7 +64,7 @@ public class ControllerTest {
     public void testAddItemToSaleWithQuantity(){
         instance.startNewSale(LOCALE);
         
-        AddItemReturnMessage message = instance.addItemToSale(new ItemID(ITEMID),new Quantity(QUANTITY));
+        ReturnMessage message = instance.addItemToSale(new ItemID(ITEMID),new Quantity(QUANTITY));
         
         if(message == null)
             fail("Did not create a valid item"); 
@@ -74,7 +74,7 @@ public class ControllerTest {
     public void testAddItemThatAllreadyExists(){
         instance.startNewSale(LOCALE);
         ItemID itemID = new ItemID(ITEMID);
-        AddItemReturnMessage message = instance.addItemToSale(itemID);
+        ReturnMessage message = instance.addItemToSale(itemID);
         
         itemID = new ItemID(ITEMID);
         
@@ -87,7 +87,7 @@ public class ControllerTest {
     public void testAddItemThatDoesNotExist(){
         instance.startNewSale(LOCALE);
         
-        AddItemReturnMessage message = instance.addItemToSale(new ItemID("-1"),new Quantity(QUANTITY));
+        ReturnMessage message = instance.addItemToSale(new ItemID("-1"),new Quantity(QUANTITY));
         
         assertNull(message, "Did not return null");
     }
@@ -96,7 +96,7 @@ public class ControllerTest {
     @Test
     public void testMakeExactCashPayment(){
         instance.startNewSale(LOCALE);
-        AddItemReturnMessage message = instance.addItemToSale(new ItemID(ITEMID),new Quantity(QUANTITY));
+        ReturnMessage message = instance.addItemToSale(new ItemID(ITEMID),new Quantity(QUANTITY));
         
         char[] itemPriceArray = message.getItemPrice().toCharArray();
         StringBuilder sb = new StringBuilder();
@@ -115,7 +115,7 @@ public class ControllerTest {
         payment = payment.roundVaule();
         System.out.println("Payment: " +payment.toBigDecimal().toString());
         
-        String actual = instance.makeCashPayment(payment).currencyFormat(LOCALE);
+        String actual = instance.makeCashPaymentandLogSale(payment).currencyFormat(LOCALE);
         System.out.println("Actual: " + actual);
         
         
@@ -128,7 +128,7 @@ public class ControllerTest {
     @Test
     public void testEndSale(){
         instance.startNewSale(LOCALE);
-        AddItemReturnMessage message = instance.addItemToSale(new ItemID(ITEMID),new Quantity(QUANTITY));
+        ReturnMessage message = instance.addItemToSale(new ItemID(ITEMID),new Quantity(QUANTITY));
         
         char[] itemPriceArray = message.getItemPrice().toCharArray();
         StringBuilder sb = new StringBuilder();

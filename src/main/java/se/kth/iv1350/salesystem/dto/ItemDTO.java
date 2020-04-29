@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.kth.iv1350.salesystem.dto;
 
 import se.kth.iv1350.salesystem.datatypes.ItemID;
@@ -33,18 +28,30 @@ public class ItemDTO {
         this.itemDescription = itemDescription;
     }
     
+    /** 
+     * @return The <code>ItemDTO</code> <code>itemID</code>
+     */
     public ItemID getItemID(){
         return itemID;
     }
     
+    /** 
+     * @return The <code>ItemDTO</code> price per unit
+     */
     public MonetaryValue getPricePerUnit(){
         return pricePerUnit;
     }
     
+    /** 
+     * @return The <code>ItemDTO</code> <code>VATRate</code>
+     */
     public VATRate getVATRate(){
         return vatRate;
     }
     
+    /** 
+     * @return The <code>ItemDTO</code> item description
+     */
     public String getItemDescription(){
         return itemDescription;
     }

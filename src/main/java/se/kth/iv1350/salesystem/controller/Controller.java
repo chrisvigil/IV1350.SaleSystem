@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.kth.iv1350.salesystem.controller;
 
 import java.util.Locale;
@@ -44,7 +39,7 @@ public class Controller {
     
     /**
      * Starts a new sale instance
-     * @param locale Locale for currency formatting.
+     * @param locale <code>Locale</code> for currency formatting.
      */
     public void startNewSale(Locale locale){
         this.locale = locale;
@@ -54,54 +49,55 @@ public class Controller {
     /**
      * Attempts to add an item to the sale
      * @param itemID The item identifier of the item to be added
-     * @param quantity the Quantity of the item to be added
-     * @return A <code>AddItemReturnMessage</code> containing sales data or
+     * @param quantity the <code>Quantity</code> of the item to be added
+     * @return A <code>ReturnMessage</code> containing sales data or
      * <code>null</code> if item was not found.
      */
-    public AddItemReturnMessage addItemToSale(ItemID itemID, Quantity quantity){
+    public ReturnMessage addItemToSale(ItemID itemID, Quantity quantity){
         return internalAddItem(itemID, quantity);
     }
     
     /**
      * Attempts to add an item to the sale. Quantity is assumed to be 1.
      * @param itemID The item identifier of the item to be added
-     * @return A <code>AddItemReturnMessage</code> containing sales data or
+     * @return A <code>ReturnMessage</code> containing sales data or
      * <code>null</code> if item was not found.
      */
-    public AddItemReturnMessage addItemToSale(ItemID itemID){
+    public ReturnMessage addItemToSale(ItemID itemID){
         Quantity quantity = new Quantity(1);
         return internalAddItem(itemID, quantity); 
     }
     
-    private AddItemReturnMessage internalAddItem(ItemID itemID, Quantity quantity){
+    private ReturnMessage internalAddItem(ItemID itemID, Quantity quantity){
         ItemDTO foundItem = dbhandler.getItemData(itemID);
         
-        AddItemReturnMessage returnMessage;
+        ReturnMessage returnMessage;
         if (foundItem == null){
             returnMessage = null;
         }
         else{
             MonetaryValue runningTotal = sale.addItemToBasket(foundItem, quantity);
-            returnMessage = new AddItemReturnMessage(foundItem, quantity, runningTotal, locale);
+            returnMessage = new ReturnMessage(foundItem, quantity, runningTotal, locale);
         }
         
         return returnMessage;
     }
     
     /**
-     * Presents total price of sale including VAT
-     * @return 
+     * Signals that no more items will be added and 
+     * presents total price of sale including VAT
+     * @return The Total price of sale including VAT    
      */
     public String endSale(){
         return sale.endSale().currencyFormat(locale);
     }
     
     /**
-     * Makes a cash payment of sale.
+     * Makes a cash payment and logs sale.
      * @param payment The cash amount made as payment
      * @return The amount in change
      */
-    public MonetaryValue makeCashPayment(MonetaryValue payment){
+    public MonetaryValue makeCashPaymentandLogSale(MonetaryValue payment){
         MonetaryValue cashBack = sale.makeCashPayment(payment);
         logSale();
         updateCashRegister(payment, cashBack);

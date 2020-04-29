@@ -13,7 +13,7 @@ import se.kth.iv1350.salesystem.dto.ItemDTO;
 
 public class AddItemReturnMessageTest {
     private ItemDTO itemDTO;
-    private AddItemReturnMessage instance;
+    private ReturnMessage instance;
     
     private final int ITEMID = 123456;
     private final MonetaryValue ITEMPRICE = new MonetaryValue("15");
@@ -28,7 +28,7 @@ public class AddItemReturnMessageTest {
     @BeforeEach
     public void setUp() {
         itemDTO = new ItemDTO(new ItemID(ITEMID),ITEMPRICE, VAT,DESCRIPTION);
-        instance = new AddItemReturnMessage(itemDTO, QUANTITY, TOTAL, LOCALE);
+        instance = new ReturnMessage(itemDTO, QUANTITY, TOTAL, LOCALE);
     }
     
     @AfterEach

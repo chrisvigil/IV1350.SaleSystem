@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.kth.iv1350.salesystem.model;
 
 import java.time.LocalDateTime;
@@ -138,7 +133,7 @@ public class Sale {
         
         SaleDTO saleLog = new SaleDTO(soldItems, subTotal, saleVAT,
                 saleTotalWithVAT, timeOfSale,store.getName(), store.getAddress(), 
-                payment.getAmmount(), payment.getChange(), payment.getType().name());
+                payment.getAmount(), payment.getChange(), payment.getType().name());
         
         return saleLog;
     }

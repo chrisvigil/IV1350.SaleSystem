@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.kth.iv1350.salesystem.integration;
 
 import se.kth.iv1350.salesystem.datatypes.ItemID;
@@ -11,7 +6,8 @@ import se.kth.iv1350.salesystem.dto.SaleDTO;
 
 /**
  * This class is responsible for coordinating communication to and from 
- * external databases.
+ * external databases. This method is a placeholder and is not meant to be a 
+ * finished implementation.
  */
 public class ExternalDBHandler {
     private final AccountingSystemHandler accountingDBHandler;
@@ -27,9 +23,14 @@ public class ExternalDBHandler {
         saleLogHandler = new SaleLogHandler();
     }
     
-    public ExternalDBHandler(String db){
+    /**
+     * Creates a new ExternalDBHandler instance with a specified
+     * inventory database file
+     * @param inventoryDB The path or name of the Inventory database file
+     */
+    public ExternalDBHandler(String inventoryDB){
         accountingDBHandler = new AccountingSystemHandler();
-        inventoryDBHandler = new InventorySystemHandler(db);
+        inventoryDBHandler = new InventorySystemHandler(inventoryDB);
         saleLogHandler = new SaleLogHandler();
     }
     
@@ -52,7 +53,10 @@ public class ExternalDBHandler {
         accountingDBHandler.LogSale(saleLog);
         inventoryDBHandler.updateInventory(saleLog);
     }
-    
+    /**
+     * Reads a inventory database from a file
+     * @param filename 
+     */
     void readInventoryDBfromFile(String filename){
         inventoryDBHandler.readDBFromFile(filename);
     }

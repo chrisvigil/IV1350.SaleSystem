@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.kth.iv1350.salesystem.model;
 
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
@@ -13,7 +8,7 @@ import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 class Payment {
     enum Type{CASH}
     
-    private final MonetaryValue ammount;
+    private final MonetaryValue amount;
     private final Type type;
     private MonetaryValue change;
     
@@ -23,7 +18,7 @@ class Payment {
      * @param type The type of payment.
      */
     Payment(MonetaryValue payment, Type type){
-        this.ammount = payment;
+        this.amount = payment;
         this.type = type;
     }
     
@@ -34,7 +29,7 @@ class Payment {
      */
     MonetaryValue calculateChange(MonetaryValue saleTotal){
         try{
-            this.change = ammount.subtract(saleTotal);
+            this.change = amount.subtract(saleTotal);
         }
         catch(IllegalArgumentException ex){
             throw new IllegalArgumentException("saleTotal must be less then or equal to payment ammount");
@@ -43,14 +38,23 @@ class Payment {
         return change.roundVaule();
     }
     
-    MonetaryValue getAmmount(){
-        return ammount;
+    /** 
+     * @return The <code>Payment</code> amount
+     */
+    MonetaryValue getAmount(){
+        return amount;
     }
     
+    /** 
+     * @return The <code>Payment</code> change
+     */
     MonetaryValue getChange(){
         return change;
     }
     
+    /** 
+     * @return The <code>Payment</code> type
+     */
     Type getType(){
         return type;
     }
