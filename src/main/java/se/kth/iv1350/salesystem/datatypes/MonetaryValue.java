@@ -137,6 +137,22 @@ public class MonetaryValue {
     }
     
     /**
+     * Formats <code>MonetaryValue</code> as currency depending on local and
+     * returns as <code>String</code>
+     * @param local The local that currency formatting should follow
+     * @return The string as a currency formatted string.
+     */
+    public String currencyFormat(Locale local){
+        //Locale swedish = new Locale("sv", "SE");
+        
+        NumberFormat CostFormat = NumberFormat.getCurrencyInstance(local);
+        CostFormat.setMinimumFractionDigits( 1 );
+        CostFormat.setMaximumFractionDigits( 2 );
+        String formatedValue  = CostFormat.format(value.doubleValue());
+        return formatedValue;
+    }
+    
+    /**
      * Creates <code>String</code> value from <code>MonetaryValue</code>.
      * @return <code>MonetaryValue</code> as <code>String</code>.
      */

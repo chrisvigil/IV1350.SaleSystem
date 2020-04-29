@@ -1,6 +1,7 @@
 package se.kth.iv1350.salesystem.controller;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,8 @@ public class ControllerTest {
     private static final String ITEMID = "0";
     private static final int QUANTITY = 1;
     
+    private static final Locale LOCALE = new Locale("sv", "SE");
+    
     @BeforeEach
     public void setUp() {
         store = new Store(STORE_NAME,ADDRESS);
@@ -40,7 +43,7 @@ public class ControllerTest {
     @Test
     public void testStartNewSale() {
         try{
-            instance.startNewSale();
+            instance.startNewSale(LOCALE);
         }
         catch(Exception exception){
             fail("startNewSale causes " + exception);
@@ -49,7 +52,7 @@ public class ControllerTest {
     
     @Test
     public void testAddItemToSaleWithoutQuantity(){
-        instance.startNewSale();
+        instance.startNewSale(LOCALE);
         
         AddItemReturnMessage message = instance.addItemToSale(new ItemID(ITEMID));
         
@@ -59,7 +62,7 @@ public class ControllerTest {
     
      @Test
     public void testAddItemToSaleWithQuantity(){
-        instance.startNewSale();
+        instance.startNewSale(LOCALE);
         
         AddItemReturnMessage message = instance.addItemToSale(new ItemID(ITEMID),new Quantity(QUANTITY));
         
@@ -69,7 +72,7 @@ public class ControllerTest {
     
     @Test
     public void testAddItemThatDoesNotExist(){
-        instance.startNewSale();
+        instance.startNewSale(LOCALE);
         
         AddItemReturnMessage message = instance.addItemToSale(new ItemID("-1"),new Quantity(QUANTITY));
         
@@ -79,21 +82,31 @@ public class ControllerTest {
     
     @Test
     public void testMakeExactCashPayment(){
-        instance.startNewSale();
+        instance.startNewSale(LOCALE);
         AddItemReturnMessage message = instance.addItemToSale(new ItemID(ITEMID),new Quantity(QUANTITY));
         
-        String itemPriceAsString = message.getItemPrice();
+        char[] itemPriceArray = message.getItemPrice().toCharArray();
+        StringBuilder sb = new StringBuilder();
+        for(char c : itemPriceArray){
+            if (Character.isDigit(c))
+                sb.append(c);
+            if((c == '.') || (c == ','))
+            {
+                sb.append('.');
+            }
+        }
+        String itemPriceAsString = sb.toString();
         
         MonetaryValue payment = new MonetaryValue(itemPriceAsString);
         payment = payment.multiplíedByQuantity(new Quantity(QUANTITY));
         payment = payment.roundVaule();
         System.out.println("Payment: " +payment.toBigDecimal().toString());
         
-        String actual = instance.makeCashPayment(payment).toString();
+        String actual = instance.makeCashPayment(payment).currencyFormat(LOCALE);
         System.out.println("Actual: " + actual);
         
         
-        String expected = new MonetaryValue("0").roundVaule().toString();
+        String expected = new MonetaryValue("0").currencyFormat(LOCALE);
         System.out.println("Expected: " +expected);
         
         assertEquals(expected, actual, "Making an exact payment did not return zero change");
@@ -101,12 +114,22 @@ public class ControllerTest {
     
     @Test
     public void testEndSale(){
-        instance.startNewSale();
+        instance.startNewSale(LOCALE);
         AddItemReturnMessage message = instance.addItemToSale(new ItemID(ITEMID),new Quantity(QUANTITY));
         
-        String itemPriceAsString = message.getItemPrice();
+        char[] itemPriceArray = message.getItemPrice().toCharArray();
+        StringBuilder sb = new StringBuilder();
+        for(char c : itemPriceArray){
+            if (Character.isDigit(c))
+                sb.append(c);
+            if((c == '.') || (c == ','))
+            {
+                sb.append('.');
+            }
+        }
+        String itemPriceAsString = sb.toString();
         
-        String expected = new MonetaryValue(itemPriceAsString).multiplíedByQuantity(new Quantity(QUANTITY)).toString();
+        String expected = new MonetaryValue(itemPriceAsString).multiplíedByQuantity(new Quantity(QUANTITY)).currencyFormat(LOCALE);
         String actual = instance.endSale();
         
         assertEquals(expected, actual, "Did not return expected saleTotal");

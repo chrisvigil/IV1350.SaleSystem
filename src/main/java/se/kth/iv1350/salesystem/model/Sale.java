@@ -7,6 +7,7 @@ package se.kth.iv1350.salesystem.model;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Locale;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 import se.kth.iv1350.salesystem.datatypes.Quantity;
 import se.kth.iv1350.salesystem.datatypes.VATRate;
@@ -31,13 +32,14 @@ public class Sale {
     
     /**
      * Creates a new instance representing one sale.
-     * @param store The store at which the sale takes place 
+     * @param store The store at which the sale takes place
      */
     public Sale(Store store){
         this.store = store;
         this.basket = new Basket();
         this.subTotal = new MonetaryValue();
         this.saleVAT = new MonetaryValue();
+        
         saleOpen = true;
     }
     
@@ -92,12 +94,13 @@ public class Sale {
     /**
      * Generates sale logs
      * 
+     * @param locale Locale for currency formatting.
      * @return The sale log
      */
-    public SaleDTO logSale(){
+    public SaleDTO logSale(Locale locale){
         logTimeOfSale();
         SaleDTO saleLog = generateSaleLog();
-        createReceipt(saleLog);
+        createReceipt(saleLog, locale);
         
         return saleLog;
     }
@@ -140,7 +143,7 @@ public class Sale {
         return saleLog;
     }
     
-    private void createReceipt(SaleDTO saleLog){
-        receipt = new Receipt(saleLog);
+    private void createReceipt(SaleDTO saleLog, Locale locale){
+        receipt = new Receipt(saleLog, locale);
     }
 }

@@ -5,6 +5,7 @@
  */
 package se.kth.iv1350.salesystem.controller;
 
+import java.util.Locale;
 import se.kth.iv1350.salesystem.datatypes.ItemID;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 import se.kth.iv1350.salesystem.datatypes.Quantity;
@@ -24,6 +25,7 @@ public class Controller {
     private final ExternalDBHandler dbhandler;
     private final CashRegister register;
     private final Store store;
+    private Locale locale;
     private Printer printer;
     private Sale sale;
     
@@ -42,8 +44,10 @@ public class Controller {
     
     /**
      * Starts a new sale instance
+     * @param locale Locale for currency formatting.
      */
-    public void startNewSale(){
+    public void startNewSale(Locale locale){
+        this.locale = locale;
         sale = new Sale(store);
     }
     
@@ -78,7 +82,7 @@ public class Controller {
         }
         else{
             MonetaryValue runningTotal = sale.addItemToBasket(foundItem, quantity);
-            returnMessage = new AddItemReturnMessage(foundItem, quantity, runningTotal);
+            returnMessage = new AddItemReturnMessage(foundItem, quantity, runningTotal, locale);
         }
         
         return returnMessage;
@@ -89,7 +93,7 @@ public class Controller {
      * @return 
      */
     public String endSale(){
-        return sale.endSale().toString();
+        return sale.endSale().currencyFormat(locale);
     }
     
     /**
@@ -107,7 +111,7 @@ public class Controller {
     }
     
     private void logSale(){
-        SaleDTO saleLog = sale.logSale();
+        SaleDTO saleLog = sale.logSale(locale);
         dbhandler.logSale(saleLog);
     }
     

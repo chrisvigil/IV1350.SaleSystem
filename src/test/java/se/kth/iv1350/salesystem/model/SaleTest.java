@@ -3,6 +3,7 @@ package se.kth.iv1350.salesystem.model;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Locale;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,6 +29,8 @@ public class SaleTest {
     
     private static final Quantity QUANTITY = new Quantity("1");
     
+    private static final Locale LOCALE = new Locale("sv", "SE");
+    
     private Sale instance;
 
     
@@ -50,7 +53,7 @@ public class SaleTest {
         
         instance.makeCashPayment(PRICE.includingVAT(VATRATE));
         
-        SaleDTO saleDTO = instance.logSale();
+        SaleDTO saleDTO = instance.logSale(LOCALE);
         List<SoldItemDTO> list = saleDTO.getItems();
         
         SoldItemDTO expected = new SoldItemDTO(ITEMID,PRICE,VATRATE, DESC, QUANTITY);
@@ -67,7 +70,7 @@ public class SaleTest {
         
         instance.makeCashPayment(PRICE.includingVAT(VATRATE));
         
-        SaleDTO saleDTO = instance.logSale();
+        SaleDTO saleDTO = instance.logSale(LOCALE);
         
         MonetaryValue expected = new MonetaryValue(PRICE).multiplíedByQuantity(QUANTITY);
         
@@ -83,7 +86,7 @@ public class SaleTest {
         
         instance.makeCashPayment(PRICE.includingVAT(VATRATE));
         
-        SaleDTO saleDTO = instance.logSale();
+        SaleDTO saleDTO = instance.logSale(LOCALE);
         
         MonetaryValue expected = new MonetaryValue(PRICE).multiplíedByQuantity(QUANTITY).calculateVAT(VATRATE);
         
@@ -142,7 +145,7 @@ public class SaleTest {
         instance.makeCashPayment(PRICE.includingVAT(VATRATE));
         
         LocalDateTime expected = LocalDateTime.now();
-        SaleDTO saleDTO = instance.logSale();
+        SaleDTO saleDTO = instance.logSale(LOCALE);
         LocalDateTime actual = saleDTO.getTimeOfSale();
         assertEquals(expected,actual, "Did not log correct localtime");
     }
@@ -154,7 +157,7 @@ public class SaleTest {
         
         instance.makeCashPayment(PRICE.includingVAT(VATRATE));
         
-        SaleDTO saleDTO = instance.logSale();
+        SaleDTO saleDTO = instance.logSale(LOCALE);
         
         MonetaryValue expected = PRICE;
         MonetaryValue actual = saleDTO.getSaleSubTotal();
@@ -170,7 +173,7 @@ public class SaleTest {
         
         instance.makeCashPayment(PRICE.includingVAT(VATRATE));
         
-        SaleDTO saleDTO = instance.logSale();
+        SaleDTO saleDTO = instance.logSale(LOCALE);
         
         Printer printer = new Printer();
         

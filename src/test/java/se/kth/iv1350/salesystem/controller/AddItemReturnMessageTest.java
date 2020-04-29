@@ -1,5 +1,6 @@
 package se.kth.iv1350.salesystem.controller;
 
+import java.util.Locale;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,12 +21,14 @@ public class AddItemReturnMessageTest {
     private final String DESCRIPTION = "Item Description";
     private final Quantity QUANTITY = new Quantity(1);
     
+    private static final Locale LOCALE = new Locale("sv", "SE");
+    
     private final MonetaryValue TOTAL = new MonetaryValue("123");
     
     @BeforeEach
     public void setUp() {
         itemDTO = new ItemDTO(new ItemID(ITEMID),ITEMPRICE, VAT,DESCRIPTION);
-        instance = new AddItemReturnMessage(itemDTO, QUANTITY, TOTAL);
+        instance = new AddItemReturnMessage(itemDTO, QUANTITY, TOTAL, LOCALE);
     }
     
     @AfterEach
@@ -45,14 +48,14 @@ public class AddItemReturnMessageTest {
     @Test
     public void testGetItemPrice() {
         String actual = instance.getItemPrice();
-        String expected = ITEMPRICE.includingVAT(VAT).toString();
+        String expected = ITEMPRICE.includingVAT(VAT).currencyFormat(LOCALE);
         assertEquals(expected, actual, "Item price not as expected");
     }
     
     @Test
     public void testGetRunningTotal() {
         String actual = instance.getRunningTotal();
-        String expected = TOTAL.toString();
+        String expected = TOTAL.currencyFormat(LOCALE);
         assertEquals(expected, actual, "Running total not as expected");
     }
     
@@ -60,8 +63,8 @@ public class AddItemReturnMessageTest {
     public void testToString() {
         String actual = instance.toString();
         String expected = "Item: " + QUANTITY + " " + DESCRIPTION +
-                              ", Price: " + ITEMPRICE.includingVAT(VAT).toString() +
-                              ", Runnning Total: " + TOTAL;
+                              ", Price: " + ITEMPRICE.includingVAT(VAT).currencyFormat(LOCALE) +
+                              ", Runnning Total: " + TOTAL.currencyFormat(LOCALE);
         assertEquals(expected, actual, "String not returned as expected");
     }
     

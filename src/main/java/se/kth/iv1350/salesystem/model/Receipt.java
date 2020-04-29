@@ -7,6 +7,7 @@ package se.kth.iv1350.salesystem.model;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import se.kth.iv1350.salesystem.datatypes.Address;
 import se.kth.iv1350.salesystem.dto.SaleDTO;
 import se.kth.iv1350.salesystem.dto.SoldItemDTO;
@@ -33,17 +34,17 @@ class Receipt {
      * Creates a new instance of a receipt.
      * @param saleDTO The log of completed sale.
      */
-    Receipt(SaleDTO saleDTO){
+    Receipt(SaleDTO saleDTO, Locale locale){
         timeOfSale = saleDTO.getTimeOfSale().toString();
         storeName = saleDTO.getStoreName();
         setAddress(saleDTO.getStoreAddess());
         items = new LinkedList<>();
         addItems(saleDTO.getItems());
-        subTotal = saleDTO.getSaleSubTotal().toString();
-        saleVAT = saleDTO.getSaleVAT().toString();
-        saleTotal = saleDTO.getSaleTotal().toString();
-        payment = saleDTO.getPayment().toString();
-        change = saleDTO.getChange().toString();
+        subTotal = saleDTO.getSaleSubTotal().currencyFormat(locale);
+        saleVAT = saleDTO.getSaleVAT().currencyFormat(locale);
+        saleTotal = saleDTO.getSaleTotal().currencyFormat(locale);
+        payment = saleDTO.getPayment().currencyFormat(locale);
+        change = saleDTO.getChange().currencyFormat(locale);
         paymentType = saleDTO.getPaymentType();
     }
     

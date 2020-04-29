@@ -5,6 +5,7 @@
  */
 package se.kth.iv1350.salesystem.controller;
 
+import java.util.Locale;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 import se.kth.iv1350.salesystem.datatypes.Quantity;
 import se.kth.iv1350.salesystem.dto.ItemDTO;
@@ -25,11 +26,11 @@ public class AddItemReturnMessage {
      * @param itemDTO Contains data describing an item
      * @param runningTotal Contains running total of sale.
      */
-    AddItemReturnMessage(ItemDTO itemDTO, Quantity quantity, MonetaryValue runningTotal){
+    AddItemReturnMessage(ItemDTO itemDTO, Quantity quantity, MonetaryValue runningTotal, Locale locale){
         this.itemDescription = itemDTO.getItemDescription();
         this.itemQuantity = quantity.toString();
-        this.itemPrice = itemDTO.getPricePerUnit().includingVAT(itemDTO.getVATRate()).toString();
-        this.runningTotal = runningTotal.toString();
+        this.itemPrice = itemDTO.getPricePerUnit().includingVAT(itemDTO.getVATRate()).currencyFormat(locale);
+        this.runningTotal = runningTotal.currencyFormat(locale);
     }
     
     public String getItemDescription(){

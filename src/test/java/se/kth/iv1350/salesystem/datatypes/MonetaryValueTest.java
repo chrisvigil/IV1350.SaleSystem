@@ -6,6 +6,7 @@
 package se.kth.iv1350.salesystem.datatypes;
 
 import java.math.BigDecimal;
+import java.util.Locale;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -206,6 +207,16 @@ public class MonetaryValueTest {
        MonetaryValue actual = new MonetaryValue("1000000.000005").roundVaule();
        MonetaryValue expected = new MonetaryValue("1000000.00");
        assertEquals(expected, actual, "Rounding not performed correctly");
+   }
+   
+   @Test
+   public void testCurrencyFormat(){
+       Locale swedish = new Locale("sv", "SE");
+       String actual = instance.currencyFormat(swedish);
+       
+       String expected = INIT_VALUE +",0 kr";
+       
+       assertEquals(expected, actual, "Wrong currency format value");
    }
     
 }

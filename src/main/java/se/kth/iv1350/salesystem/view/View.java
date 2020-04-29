@@ -1,5 +1,6 @@
 package se.kth.iv1350.salesystem.view;
 
+import java.util.Locale;
 import se.kth.iv1350.salesystem.controller.AddItemReturnMessage;
 import se.kth.iv1350.salesystem.controller.Controller;
 import se.kth.iv1350.salesystem.datatypes.ItemID;
@@ -29,19 +30,20 @@ public class View {
     * Simulates a sale by executing all methods in the controller 
     */
    public void runFakeExecution(){
-       contr.startNewSale();
+       Locale locale = new Locale("sv", "SE");
+       contr.startNewSale(locale);
        
        ItemID dummyItem;
        AddItemReturnMessage returnMessage;
        
        System.out.println("A new sale has been started\n");
        
-       /*
+       
        System.out.println("Item is added with id 0:");
        dummyItem = new ItemID("0");
        returnMessage = contr.addItemToSale(dummyItem);
        printReturnMessage(returnMessage);
-       System.out.println();*/
+       System.out.println();
        
        System.out.println("3 items is added with id 3:");
        dummyItem = new ItemID("3");
@@ -70,6 +72,8 @@ public class View {
    void printReturnMessage(AddItemReturnMessage message){
        if (message != null){
            System.out.println(message.toString());
+           //StringBuilder sb = new StringBuilder();
+           //sb.append("Item: ").append(message.)
        }
        else{
            System.out.println("Item id invalid");
