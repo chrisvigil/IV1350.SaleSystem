@@ -8,6 +8,7 @@ import se.kth.iv1350.salesystem.dto.ItemDTO;
 import se.kth.iv1350.salesystem.dto.SaleDTO;
 import se.kth.iv1350.salesystem.model.Store;
 import se.kth.iv1350.salesystem.integration.ExternalDBHandler;
+import se.kth.iv1350.salesystem.integration.InventoryDBException;
 import se.kth.iv1350.salesystem.model.CashRegister;
 import se.kth.iv1350.salesystem.integration.Printer;
 import se.kth.iv1350.salesystem.model.Sale;
@@ -52,24 +53,37 @@ public class Controller {
      * @param quantity the <code>Quantity</code> of the item to be added
      * @return A <code>ReturnMessage</code> containing sales data or
      * <code>null</code> if item was not found.
+     * @throws se.kth.iv1350.salesystem.controller.ItemNotFoundException
      */
-    public ReturnMessage addItemToSale(ItemID itemID, Quantity quantity){
+    public ReturnMessage addItemToSale(ItemID itemID, Quantity quantity) 
+            throws ItemNotFoundException{
         return internalAddItem(itemID, quantity);
     }
     
     /**
-     * Attempts to add an item to the sale. Quantity is assumed to be 1.
+     * Attempts to add an item to the sale.Quantity is assumed to be 1.
      * @param itemID The item identifier of the item to be added
      * @return A <code>ReturnMessage</code> containing sales data or
      * <code>null</code> if item was not found.
+     * @throws se.kth.iv1350.salesystem.controller.ItemNotFoundException
      */
-    public ReturnMessage addItemToSale(ItemID itemID){
+    public ReturnMessage addItemToSale(ItemID itemID) 
+            throws ItemNotFoundException{
         Quantity quantity = new Quantity(1);
         return internalAddItem(itemID, quantity); 
     }
     
-    private ReturnMessage internalAddItem(ItemID itemID, Quantity quantity){
-        ItemDTO foundItem = dbhandler.getItemData(itemID);
+    private ReturnMessage internalAddItem(ItemID itemID, Quantity quantity) 
+            throws ItemNotFoundException{
+        ItemDTO foundItem;
+        
+        try{
+            foundItem = dbhandler.getItemData(itemID);
+        }
+        catch(InventoryDBException invDBex){
+            throw new ItemNotFoundException(itemID);
+        }
+        
         
         ReturnMessage returnMessage;
         if (foundItem == null){

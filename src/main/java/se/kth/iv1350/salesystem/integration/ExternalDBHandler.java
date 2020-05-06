@@ -40,7 +40,7 @@ public class ExternalDBHandler {
      * @return If item is found an itemDTO is returned representing the
      * requested item. If item is not found null is returned.
      */
-    public ItemDTO getItemData(ItemID itemID){
+    public ItemDTO getItemData(ItemID itemID) throws InventoryDBException{
         return inventoryDBHandler.getItemData(itemID);
     }
     

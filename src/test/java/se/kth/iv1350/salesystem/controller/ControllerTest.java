@@ -53,25 +53,42 @@ public class ControllerTest {
     @Test
     public void testAddItemToSaleWithoutQuantity(){
         instance.startNewSale(LOCALE);
-        
-        ReturnMessage message = instance.addItemToSale(new ItemID(ITEMID));
+        ReturnMessage message = null;
+        try{
+            message = instance.addItemToSale(new ItemID(ITEMID));
+        }
+        catch(Exception ex){
+            fail("Attempting to add item without quantity caused " + ex.getMessage());
+        }
         
         if(message == null)
-            fail("Did not create a valid item"); 
+            fail("Return message is null");
+        else if (!message.getQuantity().equals("1")){
+            fail("Quantity of item added not 1");
+        }
     }
     
     @Test
     public void testAddItemToSaleWithQuantity(){
         instance.startNewSale(LOCALE);
-        
-        ReturnMessage message = instance.addItemToSale(new ItemID(ITEMID),new Quantity(QUANTITY));
+        ReturnMessage message = null;
+        try{
+            message = instance.addItemToSale(new ItemID(ITEMID),new Quantity(QUANTITY));
+        }
+        catch(Exception ex){
+            fail("Attempting to add item with quantity caused " + ex.getMessage());
+        }
         
         if(message == null)
-            fail("Did not create a valid item"); 
+            fail("Return message is null");
+        else if (!message.getQuantity().equals(Integer.toString(QUANTITY))){
+            fail("Quantity of item added not 1");
+        }
     }
     
     @Test
-    public void testAddItemThatAllreadyExists(){
+    public void testAddItemThatAllreadyExists() throws ItemNotFoundException{
+        //TODO: needs better testing
         instance.startNewSale(LOCALE);
         ItemID itemID = new ItemID(ITEMID);
         ReturnMessage message = instance.addItemToSale(itemID);
@@ -86,15 +103,22 @@ public class ControllerTest {
     @Test
     public void testAddItemThatDoesNotExist(){
         instance.startNewSale(LOCALE);
+        boolean correctExceptionThrown = false;
         
-        ReturnMessage message = instance.addItemToSale(new ItemID("-1"),new Quantity(QUANTITY));
+        try{
+            ReturnMessage message = instance.addItemToSale(new ItemID("-1"),new Quantity(QUANTITY));
+        }
+        catch (ItemNotFoundException ex){
+            correctExceptionThrown = true;
+        }
         
-        assertNull(message, "Did not return null");
+        assertTrue(correctExceptionThrown, "A correct exception was not thrown when "
+                + "adding nonexistet item");
     }
     
     
     @Test
-    public void testMakeExactCashPayment(){
+    public void testMakeExactCashPayment() throws ItemNotFoundException{
         instance.startNewSale(LOCALE);
         ReturnMessage message = instance.addItemToSale(new ItemID(ITEMID),new Quantity(QUANTITY));
         
@@ -126,7 +150,7 @@ public class ControllerTest {
     }
     
     @Test
-    public void testEndSale(){
+    public void testEndSale() throws ItemNotFoundException{
         instance.startNewSale(LOCALE);
         ReturnMessage message = instance.addItemToSale(new ItemID(ITEMID),new Quantity(QUANTITY));
         

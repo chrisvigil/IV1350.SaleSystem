@@ -43,12 +43,13 @@ class InventorySystemHandler {
      * @return If an item is found then an itemDTO with the items 
      * details is returned. If no item is found return value is null.
      */
-    ItemDTO getItemData(ItemID itemID){
-        ItemDTO foundItem = null;
-        
+    ItemDTO getItemData(ItemID itemID) throws InventoryDBException{
+        ItemDTO foundItem;
         String[] itemArray = findItemInBuffer(itemID.toString());
         
-        if (itemArray != null)
+        if (itemArray == null)
+            throw new InventoryDBException("");
+        else
             foundItem = convertItemAsStringArrayToItemDTO(itemArray);
         
         return foundItem;

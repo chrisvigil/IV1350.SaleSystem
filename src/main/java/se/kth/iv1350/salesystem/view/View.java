@@ -3,6 +3,7 @@ package se.kth.iv1350.salesystem.view;
 import java.util.Locale;
 import se.kth.iv1350.salesystem.controller.ReturnMessage;
 import se.kth.iv1350.salesystem.controller.Controller;
+import se.kth.iv1350.salesystem.controller.ItemNotFoundException;
 import se.kth.iv1350.salesystem.datatypes.ItemID;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 import se.kth.iv1350.salesystem.datatypes.Quantity;
@@ -29,7 +30,7 @@ public class View {
    /**
     * Simulates a sale by executing all methods in the controller 
     */
-   public void runFakeExecution(){
+   public void runFakeExecution() throws ItemNotFoundException{
        Locale locale = new Locale("sv", "SE");
        contr.startNewSale(locale);
        
@@ -122,16 +123,13 @@ public class View {
                    item = new ItemID(id);
                    quantity = new Quantity(input);
                    returnMessage = contr.addItemToSale(item, quantity);
-                   
-                   if (returnMessage != null){
-                       System.out.println(returnMessage.toString());
-                   }
-                   else{
-                       System.out.println("Invalid item identifier, try again");
-                   }
+                   System.out.println(returnMessage.toString());
                }
-               catch(Exception ex){
+               catch(IllegalArgumentException ex){
                    System.out.println("Invalid input, try again");
+               }
+               catch (ItemNotFoundException ex){
+                   System.out.println("Invalid item identifier, try again");
                }
            }
            
@@ -151,7 +149,7 @@ public class View {
                     System.out.println("Payment not sufficient, try again");
                 }
             }
-            catch(Exception ex){
+            catch(IllegalArgumentException ex){
                 System.out.println("Invalid value, try again");
             }
        }

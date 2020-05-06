@@ -70,9 +70,15 @@ public class ExternalDBHandlerTest {
     
     @Test
     public void testGetItemDataNotFound(){
-        ItemDTO actual = instance.getItemData(new ItemID(ITEMID+"3"));
-        ItemDTO expected = null;
-        assertEquals(expected, actual, "Non existent ItemID retured other value then null");
+        boolean correctExceptionThrown = false;
+        try{
+            ItemDTO actual = instance.getItemData(new ItemID(ITEMID+"3"));
+        }
+        catch(InventoryDBException ex){
+            correctExceptionThrown = true;
+        }
+        assertTrue(correctExceptionThrown, "A correct exception was not thrown when "
+                + "adding nonexistet item");
     }
     
     @Test
