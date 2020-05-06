@@ -54,11 +54,15 @@ public class BasketTest {
     public void testAddItemAllreadyInBasket(){
         ItemID itemID = new ItemID("0");
         ItemDTO itemDTO = createDummyItemDTO(itemID);
+        
+        ItemID anotherItemID = new ItemID("0");
+        ItemDTO anotherItemDTO = createDummyItemDTO(anotherItemID);
+        
         Quantity quantity = new Quantity("1");
         
         try{
         instance.addItem(itemDTO, quantity);
-        instance.addItem(itemDTO, quantity);
+        instance.addItem(anotherItemDTO, quantity);
         }
         catch(Exception exception){
            fail("Attempting to add duplicate item produced" + exception);

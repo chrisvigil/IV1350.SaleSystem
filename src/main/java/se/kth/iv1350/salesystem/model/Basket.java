@@ -40,6 +40,7 @@ class Basket {
     
     private boolean itemIsInBasket(ItemID itemID){
         boolean isItemInBasket = contents.containsKey(itemID);
+        
         return isItemInBasket;
     }
     

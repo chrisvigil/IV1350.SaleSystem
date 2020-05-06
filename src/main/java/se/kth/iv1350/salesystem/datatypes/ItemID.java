@@ -43,4 +43,11 @@ public class ItemID {
         
         return isEqual;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 19 * hash + Objects.hashCode(this.id);
+        return hash;
+    }
 }
