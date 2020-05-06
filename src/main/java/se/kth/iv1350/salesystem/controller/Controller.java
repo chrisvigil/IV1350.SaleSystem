@@ -1,5 +1,6 @@
 package se.kth.iv1350.salesystem.controller;
 
+import se.kth.iv1350.salesystem.integration.ItemNotFoundException;
 import java.util.Locale;
 import se.kth.iv1350.salesystem.datatypes.ItemID;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
@@ -53,7 +54,6 @@ public class Controller {
      * @param quantity the <code>Quantity</code> of the item to be added
      * @return A <code>ReturnMessage</code> containing sales data or
      * <code>null</code> if item was not found.
-     * @throws se.kth.iv1350.salesystem.controller.ItemNotFoundException
      */
     public ReturnMessage addItemToSale(ItemID itemID, Quantity quantity) 
             throws ItemNotFoundException{
@@ -65,7 +65,6 @@ public class Controller {
      * @param itemID The item identifier of the item to be added
      * @return A <code>ReturnMessage</code> containing sales data or
      * <code>null</code> if item was not found.
-     * @throws se.kth.iv1350.salesystem.controller.ItemNotFoundException
      */
     public ReturnMessage addItemToSale(ItemID itemID) 
             throws ItemNotFoundException{
@@ -77,13 +76,7 @@ public class Controller {
             throws ItemNotFoundException{
         ItemDTO foundItem;
         
-        try{
-            foundItem = dbhandler.getItemData(itemID);
-        }
-        catch(InventoryDBException invDBex){
-            throw new ItemNotFoundException(itemID);
-        }
-        
+        foundItem = dbhandler.getItemData(itemID);
         
         ReturnMessage returnMessage;
         if (foundItem == null){

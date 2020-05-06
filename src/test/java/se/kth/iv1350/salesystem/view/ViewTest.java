@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import se.kth.iv1350.salesystem.controller.Controller;
-import se.kth.iv1350.salesystem.controller.ItemNotFoundException;
+import se.kth.iv1350.salesystem.integration.ItemNotFoundException;
 import se.kth.iv1350.salesystem.datatypes.Address;
 import se.kth.iv1350.salesystem.model.Store;
 

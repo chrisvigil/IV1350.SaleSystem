@@ -19,7 +19,6 @@ import se.kth.iv1350.salesystem.datatypes.ItemID;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 import se.kth.iv1350.salesystem.datatypes.VATRate;
 import se.kth.iv1350.salesystem.dto.ItemDTO;
-import se.kth.iv1350.salesystem.dto.SaleDTO;
 
 /**
  *
@@ -62,7 +61,15 @@ public class InventorySystemHandlerTest {
 
     @Test
     public void testGetItemDataFound() {
-        ItemDTO actual = instance.getItemData(new ItemID(ITEMID));
+        ItemDTO actual;
+        try{
+            actual = instance.getItemData(new ItemID(ITEMID));
+        }
+        catch(ItemNotFoundException ex){
+            actual = null;
+            fail("Cause ItemNotFoundException");
+        }
+        
         ItemDTO expected = new ItemDTO(new ItemID(ITEMID), new MonetaryValue(ITEMPRICE),
         VATRATE, DESC);
         assertEquals(expected, actual, "Expected item not found");
@@ -74,7 +81,7 @@ public class InventorySystemHandlerTest {
         try{
             ItemDTO actual = instance.getItemData(new ItemID(ITEMID+"3"));
         }
-        catch(InventoryDBException ex){
+        catch(ItemNotFoundException ex){
             correctExceptionThrown = true;
         }
         assertTrue(correctExceptionThrown, "A correct exception was not thrown when "
@@ -83,13 +90,18 @@ public class InventorySystemHandlerTest {
     
     @Test
     public void requestingSameDataTwice(){
-        ItemID itemID = new ItemID(ITEMID);
-        ItemDTO itemDTO = instance.getItemData(itemID);
+        try{
+            ItemID itemID = new ItemID(ITEMID);
+            ItemDTO itemDTO = instance.getItemData(itemID);
         
-        ItemID anotheritemID = new ItemID(ITEMID);
-        ItemDTO actual = instance.getItemData(anotheritemID);
+            ItemID anotheritemID = new ItemID(ITEMID);
+            ItemDTO actual = instance.getItemData(anotheritemID);
         
         assertNotNull(actual, "requesting the same item twice returns null");
+        }
+        catch(ItemNotFoundException ex){
+            fail("Caused ItemNotFoundException");
+        }
     }
 
     @Test

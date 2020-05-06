@@ -1,4 +1,4 @@
-package se.kth.iv1350.salesystem.controller;
+package se.kth.iv1350.salesystem.integration;
 
 import se.kth.iv1350.salesystem.datatypes.ItemID;
 

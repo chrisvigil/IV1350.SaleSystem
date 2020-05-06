@@ -39,8 +39,10 @@ public class ExternalDBHandler {
      * @param itemID The item identifier of the requested item
      * @return If item is found an itemDTO is returned representing the
      * requested item. If item is not found null is returned.
+     * @throws se.kth.iv1350.salesystem.integration.ItemNotFoundException when 
+     * item is not found
      */
-    public ItemDTO getItemData(ItemID itemID) throws InventoryDBException{
+    public ItemDTO getItemData(ItemID itemID) throws ItemNotFoundException{
         return inventoryDBHandler.getItemData(itemID);
     }
     

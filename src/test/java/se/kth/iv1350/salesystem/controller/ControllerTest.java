@@ -1,5 +1,6 @@
 package se.kth.iv1350.salesystem.controller;
 
+import se.kth.iv1350.salesystem.integration.ItemNotFoundException;
 import java.math.BigDecimal;
 import java.util.Locale;
 import org.junit.jupiter.api.AfterEach;

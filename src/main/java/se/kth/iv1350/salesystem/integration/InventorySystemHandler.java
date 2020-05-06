@@ -43,14 +43,19 @@ class InventorySystemHandler {
      * @return If an item is found then an itemDTO with the items 
      * details is returned. If no item is found return value is null.
      */
-    ItemDTO getItemData(ItemID itemID) throws InventoryDBException{
+    ItemDTO getItemData(ItemID itemID) throws ItemNotFoundException{
         ItemDTO foundItem;
-        String[] itemArray = findItemInBuffer(itemID.toString());
+        if (itemID.getID().equals("noDB")){
+            throw new InventoryDBException("Unable to connect to external inventory system");
+        }
+        else{
+            String[] itemArray = findItemInBuffer(itemID.toString());
         
         if (itemArray == null)
-            throw new InventoryDBException("");
+            throw new ItemNotFoundException(itemID);
         else
             foundItem = convertItemAsStringArrayToItemDTO(itemArray);
+        }
         
         return foundItem;
     }

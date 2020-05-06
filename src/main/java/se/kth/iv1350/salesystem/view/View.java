@@ -3,7 +3,7 @@ package se.kth.iv1350.salesystem.view;
 import java.util.Locale;
 import se.kth.iv1350.salesystem.controller.ReturnMessage;
 import se.kth.iv1350.salesystem.controller.Controller;
-import se.kth.iv1350.salesystem.controller.ItemNotFoundException;
+import se.kth.iv1350.salesystem.integration.ItemNotFoundException;
 import se.kth.iv1350.salesystem.datatypes.ItemID;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 import se.kth.iv1350.salesystem.datatypes.Quantity;
