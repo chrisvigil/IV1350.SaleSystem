@@ -25,7 +25,6 @@ class InventorySystemHandler {
      * Creates a new InventorySystemHandler instance.
      */
     InventorySystemHandler(){
-        //readDBFromFile(dummyDB);
     }
     
     /**
@@ -35,7 +34,6 @@ class InventorySystemHandler {
      */
     InventorySystemHandler(String inventoryDB){
         dummyDB = inventoryDB;
-        //readDBFromFile(dummyDB);
     }
     
     /**

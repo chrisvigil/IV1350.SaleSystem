@@ -55,12 +55,5 @@ public class ExternalDBHandler {
         accountingDBHandler.LogSale(saleLog);
         inventoryDBHandler.updateInventory(saleLog);
     }
-    /**
-     * Reads a inventory database from a file
-     * @param filename 
-     *
-    void readInventoryDBfromFile(String filename) throws FileNotFoundException{
-        inventoryDBHandler.readDBFromFile(filename);
-    }*/
 }
 
