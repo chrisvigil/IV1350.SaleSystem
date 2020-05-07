@@ -1,5 +1,6 @@
 package se.kth.iv1350.salesystem.startup;
 
+import java.io.IOException;
 import se.kth.iv1350.salesystem.model.Store;
 import se.kth.iv1350.salesystem.controller.Controller;
 import se.kth.iv1350.salesystem.datatypes.Address;
@@ -19,11 +20,10 @@ public class Main {
      * 
      * @param args does not take any command line parameters.
      */
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException{
         Store store = setupStore();
         Controller contr = new Controller(store);
         View view = new View(contr);
-        //view.runFakeExecution(); // no longer used
         view.fakeInteractiveSale();
     }
     

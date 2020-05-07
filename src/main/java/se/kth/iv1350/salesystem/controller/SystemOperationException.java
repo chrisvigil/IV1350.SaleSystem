@@ -9,7 +9,7 @@ package se.kth.iv1350.salesystem.controller;
  *
  * @author christopher.vigil
  */
-public class SystemOperationException extends Exception{
+public class SystemOperationException extends RuntimeException{
     
     SystemOperationException(String message, Exception cause){
         super(message, cause);

@@ -1,6 +1,7 @@
 package se.kth.iv1350.salesystem.view;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Locale;
 import org.junit.jupiter.api.AfterEach;
@@ -23,7 +24,7 @@ public class ViewTest {
     private static final Address PLACEHOLDER_ADDRESS = new Address("Somestreet",42,11122,"SomeCity", "SomeCountry");
     
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws IOException {
         Store store = new Store(PLACEHOLDER_STORENAME,PLACEHOLDER_ADDRESS);
         Controller contr = new Controller(store);
         instanceToTest = new View(contr);

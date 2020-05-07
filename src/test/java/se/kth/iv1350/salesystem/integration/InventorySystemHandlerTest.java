@@ -103,7 +103,25 @@ public class InventorySystemHandlerTest {
             fail("Caused ItemNotFoundException");
         }
     }
-
+    
+    @Test
+    public void testUnableToAccessDatabase(){
+        boolean expectedExcpetionThrown = false;
+        try{
+            ItemID itemID = new ItemID("noDB");
+            ItemDTO itemDTO = instance.getItemData(itemID);
+        }
+        catch(InventoryDBException ex){
+            expectedExcpetionThrown = true;
+        }
+        catch(Exception ex){
+            fail("Unexpected exception thrown");
+        }
+        
+        assertTrue(expectedExcpetionThrown, "Expected excpetion was not thrown");
+        
+    }
+    
     @Test
     public void testUpdateInventory() {
         // nothing yet to test
@@ -119,7 +137,7 @@ public class InventorySystemHandlerTest {
             bufferedWriter.close();
             
         }
-        catch(IOException ex){
+        catch(IOException ex){  
         }
     }
 }

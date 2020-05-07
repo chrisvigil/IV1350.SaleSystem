@@ -1,7 +1,8 @@
 package se.kth.iv1350.salesystem.integration;
 
 /**
- * Thrown when an error occurs while calling the <code>InventorySystemHandler</code>
+ * Thrown when an unexpected error occurs while calling 
+ * the <code>InventorySystemHandler</code>
  */
 public class InventoryDBException extends RuntimeException{
     

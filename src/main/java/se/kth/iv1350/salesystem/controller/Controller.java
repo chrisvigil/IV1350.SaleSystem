@@ -54,6 +54,9 @@ public class Controller {
      * @param quantity the <code>Quantity</code> of the item to be added
      * @return A <code>ReturnMessage</code> containing sales data or
      * <code>null</code> if item was not found.
+     * @throws se.kth.iv1350.salesystem.integration.ItemNotFoundException If
+     * the requested item was not found in database.
+     * 
      */
     public ReturnMessage addItemToSale(ItemID itemID, Quantity quantity) 
             throws ItemNotFoundException, SystemOperationException{
@@ -65,6 +68,8 @@ public class Controller {
      * @param itemID The item identifier of the item to be added
      * @return A <code>ReturnMessage</code> containing sales data or
      * <code>null</code> if item was not found.
+     * @throws se.kth.iv1350.salesystem.integration.ItemNotFoundException If
+     * the requested item was not found in database.
      */
     public ReturnMessage addItemToSale(ItemID itemID) 
             throws ItemNotFoundException, SystemOperationException{
