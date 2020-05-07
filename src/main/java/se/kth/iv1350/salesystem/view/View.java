@@ -100,24 +100,34 @@ public class View {
        
        System.out.println("A new sale has been started\n");
        boolean saleOpen = true;
-       System.out.println("Type 'end' to end sale");
+       System.out.println("--------------------------------------------");
+       System.out.println("Type 'end' to end sale.");
+       System.out.println("Enter a quantity after the id separated by\n "
+               + "a space to add more then one item at once.");
+       System.out.println("--------------------------------------------\n");
        
        String input;
        String id;
        Quantity quantity;
        while (saleOpen){
            System.out.print("Enter an item id to add to sale: ");
-           input = in.next();
+           input = in.nextLine();
+           String[] parameters = input.split(" ");
            
-           if (input.equals("end")){
+           if (parameters[0].equals("end")){
                saleOpen = false;
                String finalTotal = contr.endSale();
                System.out.println("Sale Total: " + finalTotal);
            }
            else{
-               id = input;
-               System.out.print("Enter a quantity: ");
-               input = in.next();
+               id = parameters[0];
+               
+               if (parameters.length > 1){
+                   input = parameters[1];
+               }
+               else{
+                   input = "1";
+               }
                try{
                    item = new ItemID(id);
                    quantity = new Quantity(input);
@@ -144,7 +154,8 @@ public class View {
             try{
                 MonetaryValue payment = new MonetaryValue(input);
                 try{
-                    contr.makeCashPaymentandLogSale(payment);
+                    MonetaryValue change = contr.makeCashPaymentandLogSale(payment);
+                    System.out.println("Change: " + change.currencyFormat(locale));
                     paymentMade = true;
                 }
                 catch(Exception ex){
