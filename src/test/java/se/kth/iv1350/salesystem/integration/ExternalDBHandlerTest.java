@@ -45,7 +45,6 @@ public class ExternalDBHandlerTest {
     @BeforeEach
     public void setUp() {
         instance = new ExternalDBHandler(DBNAME);
-        instance.readInventoryDBfromFile(DBNAME);
     }
     
     @AfterEach

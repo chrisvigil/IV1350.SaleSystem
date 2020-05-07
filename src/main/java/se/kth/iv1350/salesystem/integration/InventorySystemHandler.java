@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import se.kth.iv1350.salesystem.datatypes.ItemID;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 import se.kth.iv1350.salesystem.datatypes.VATRate;
@@ -23,7 +25,7 @@ class InventorySystemHandler {
      * Creates a new InventorySystemHandler instance.
      */
     InventorySystemHandler(){
-        readDBFromFile(dummyDB);
+        //readDBFromFile(dummyDB);
     }
     
     /**
@@ -33,7 +35,7 @@ class InventorySystemHandler {
      */
     InventorySystemHandler(String inventoryDB){
         dummyDB = inventoryDB;
-        readDBFromFile(dummyDB);
+        //readDBFromFile(dummyDB);
     }
     
     /**
@@ -49,7 +51,12 @@ class InventorySystemHandler {
             throw new InventoryDBException("Unable to connect to external inventory system");
         }
         else{
-            String[] itemArray = findItemInBuffer(itemID.toString());
+            String[] itemArray;
+            try {
+                itemArray = findItemInBuffer(itemID.toString());
+            } catch (FileNotFoundException ex) {
+                throw new InventoryDBException("Unable to find DB file");
+            }
         
         if (itemArray == null)
             throw new ItemNotFoundException(itemID);
@@ -73,19 +80,15 @@ class InventorySystemHandler {
      * Reads an inventory database from a file
      * @param filename The path or name to the file
      */
-    void readDBFromFile(String filename){
-        try{
-            FileReader fileReader = new FileReader(filename);
+    BufferedReader readDBFromFile(String filename) throws FileNotFoundException{
+        FileReader fileReader = new FileReader(filename);
             
-            bufferedReader = new BufferedReader(fileReader);
-        }
-        catch(FileNotFoundException ex){
-            System.out.println("File not found");
-        }
+        return bufferedReader = new BufferedReader(fileReader);
     }
     
-    private String[] findItemInBuffer(String id){
-        readDBFromFile(dummyDB);
+    private String[] findItemInBuffer(String id) throws FileNotFoundException{
+        bufferedReader = readDBFromFile(dummyDB);
+        
         String line = null;
         
         try{

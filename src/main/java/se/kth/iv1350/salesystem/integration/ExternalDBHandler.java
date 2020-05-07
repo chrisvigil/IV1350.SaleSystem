@@ -58,9 +58,9 @@ public class ExternalDBHandler {
     /**
      * Reads a inventory database from a file
      * @param filename 
-     */
-    void readInventoryDBfromFile(String filename){
+     *
+    void readInventoryDBfromFile(String filename) throws FileNotFoundException{
         inventoryDBHandler.readDBFromFile(filename);
-    }
+    }*/
 }
 
