@@ -17,6 +17,7 @@ import se.kth.iv1350.salesystem.datatypes.Quantity;
 public class View {
 
     private final Controller contr;
+    Locale locale = new Locale("sv", "SE");
 
     /**
      * Create a new controller
@@ -32,7 +33,7 @@ public class View {
      * A simple placeholder CLI to test program
      */
     public void fakeInteractiveSale() {
-        Locale locale = new Locale("sv", "SE");
+        
 
         java.util.Scanner in;
         String input;
@@ -87,13 +88,13 @@ public class View {
                         item = new ItemID(id);
                         quantity = new Quantity(input);
                         returnMessage = contr.addItemToSale(item, quantity);
-                        System.out.println(returnMessage.toString());
+                        printReturnMessage(returnMessage);
                     } catch (IllegalArgumentException ex) {
-                        System.out.println("Invalid input, try again");
+                        handleException("Invalid input, try again", ex);
                     } catch (ItemNotFoundException ex) {
-                        System.out.println("Invalid item identifier, try again");
+                        handleException("Invalid item identifier, try again", ex);
                     } catch (SystemOperationException ex) {
-                        System.out.println("System error, try again");
+                        handleException("System error, try again", ex);
                     }
                 }
 
@@ -108,11 +109,11 @@ public class View {
                         MonetaryValue change = contr.makeCashPaymentandLogSale(payment);
                         System.out.println("Change: " + change.currencyFormat(locale));
                         paymentNeeded = false;
-                    } catch (Exception ex) {
-                        System.out.println("Payment not sufficient, try again");
+                    } catch (IllegalArgumentException ex) {
+                        handleException("Payment not sufficient, try again", ex);
                     }
                 } catch (IllegalArgumentException ex) {
-                    System.out.println("Invalid value, try again");
+                    handleException("Invalid value, try again", ex);
                 }
             }
 
@@ -129,7 +130,23 @@ public class View {
                 }
             }
         }
-
+    }
+    
+    private void printReturnMessage(ReturnMessage message){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Item: ");
+        sb.append(message.getQuantity()).append(" ");
+        sb.append(message.getItemDescription());
+        sb.append(", Price; ");
+        sb.append(message.getItemPrice());
+        sb.append(", Running Total: ");
+        sb.append(message.getItemPrice());
+        
+        System.out.println(sb);
+    }
+    
+    private void handleException(String message, Exception ex){
+        System.out.println(message);
     }
 
 }

@@ -80,6 +80,7 @@ class Receipt {
     
     private String createStringForPrinting(){
         StringBuilder sb = new StringBuilder();
+        sb.append("\n--------------------------\n");
         sb.append("RECIEPT\n");
         sb.append(storeName).append("\n");
         sb.append(storeAddressLineOne).append("\n");
@@ -96,6 +97,7 @@ class Receipt {
         sb.append("Payed: ").append(payment).append(" ");
         sb.append(paymentType).append("\n");
         sb.append("Change: ").append(change);
+        sb.append("\n--------------------------\n");
         
         return sb.toString();
     }
