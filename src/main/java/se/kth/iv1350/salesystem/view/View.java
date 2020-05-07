@@ -153,7 +153,8 @@ public class View {
             try{
                 MonetaryValue payment = new MonetaryValue(input);
                 try{
-                    contr.makeCashPaymentandLogSale(payment);
+                    MonetaryValue change = contr.makeCashPaymentandLogSale(payment);
+                    System.out.println("Change: " + change.currencyFormat(locale));
                     paymentMade = true;
                 }
                 catch(Exception ex){
