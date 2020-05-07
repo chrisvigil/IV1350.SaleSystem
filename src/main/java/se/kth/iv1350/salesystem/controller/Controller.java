@@ -56,7 +56,7 @@ public class Controller {
      * <code>null</code> if item was not found.
      */
     public ReturnMessage addItemToSale(ItemID itemID, Quantity quantity) 
-            throws ItemNotFoundException{
+            throws ItemNotFoundException, SystemOperationException{
         return internalAddItem(itemID, quantity);
     }
     
@@ -67,16 +67,21 @@ public class Controller {
      * <code>null</code> if item was not found.
      */
     public ReturnMessage addItemToSale(ItemID itemID) 
-            throws ItemNotFoundException{
+            throws ItemNotFoundException, SystemOperationException{
         Quantity quantity = new Quantity(1);
         return internalAddItem(itemID, quantity); 
     }
     
     private ReturnMessage internalAddItem(ItemID itemID, Quantity quantity) 
-            throws ItemNotFoundException{
+            throws ItemNotFoundException, SystemOperationException{
         ItemDTO foundItem;
         
-        foundItem = dbhandler.getItemData(itemID);
+        try{
+            foundItem = dbhandler.getItemData(itemID);
+        }catch(InventoryDBException ex){
+            throw new SystemOperationException("Unable to connect to item database",ex);
+            
+        }
         
         ReturnMessage returnMessage;
         if (foundItem == null){
