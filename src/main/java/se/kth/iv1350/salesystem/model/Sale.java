@@ -1,6 +1,7 @@
 package se.kth.iv1350.salesystem.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
@@ -24,6 +25,7 @@ public class Sale {
     private Receipt receipt;
     private LocalDateTime timeOfSale;
     private boolean saleOpen;
+    private List<RevenueObserver> totalRevenueObservers = new ArrayList<>();
     
     /**
      * Creates a new instance representing one sale.
@@ -36,6 +38,16 @@ public class Sale {
         this.saleVAT = new MonetaryValue();
         
         saleOpen = true;
+    }
+    
+    /**
+     * All the specified observers will be notified of the sale total 
+     * including VAT when this sale is logged
+     * 
+     * @param observers The observers to notify.
+     */
+    public void addRevenueObservers(List<RevenueObserver> observers){
+        totalRevenueObservers.addAll(observers);
     }
     
     
@@ -97,6 +109,8 @@ public class Sale {
         SaleDTO saleLog = generateSaleLog();
         createReceipt(saleLog, locale);
         
+        notifyRevenueObservers(saleLog.getSaleTotal());
+        
         return saleLog;
     }
     
@@ -140,5 +154,11 @@ public class Sale {
     
     private void createReceipt(SaleDTO saleLog, Locale locale){
         receipt = new Receipt(saleLog, locale);
+    }
+    
+    private void notifyRevenueObservers(MonetaryValue saleTotal){
+        for (RevenueObserver obs : totalRevenueObservers){
+            obs.newSale(saleTotal);
+        }
     }
 }

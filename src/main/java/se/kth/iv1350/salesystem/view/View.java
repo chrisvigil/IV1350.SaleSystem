@@ -13,8 +13,6 @@ import se.kth.iv1350.salesystem.util.ErrorLogger;
 
 /**
  * Placeholder view class
- *
- * @author christopher.vigil
  */
 public class View {
 
@@ -31,6 +29,7 @@ public class View {
     public View(Controller contr) throws IOException {
         this.logger = new ErrorLogger();
         this.contr = contr;
+        this.contr.addTotalRevenueObserver(new TotalRevenueView(locale));
     }
 
     /**
@@ -52,6 +51,7 @@ public class View {
                 in.useLocale(locale);
 
                 contr.startNewSale(locale);
+                
                 boolean basketOpen = true;
                 boolean paymentNeeded = true;
 

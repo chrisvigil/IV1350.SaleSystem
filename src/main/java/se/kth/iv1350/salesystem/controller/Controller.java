@@ -1,5 +1,7 @@
 package se.kth.iv1350.salesystem.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import se.kth.iv1350.salesystem.integration.ItemNotFoundException;
 import java.util.Locale;
 import se.kth.iv1350.salesystem.datatypes.ItemID;
@@ -13,6 +15,7 @@ import se.kth.iv1350.salesystem.integration.InventoryDBException;
 import se.kth.iv1350.salesystem.model.CashRegister;
 import se.kth.iv1350.salesystem.integration.Printer;
 import se.kth.iv1350.salesystem.model.Sale;
+import se.kth.iv1350.salesystem.model.RevenueObserver;
 
 /**
  * This is the application's controller class, all calls from view to the model
@@ -25,6 +28,7 @@ public class Controller {
     private Locale locale;
     private Printer printer;
     private Sale sale;
+    private List<RevenueObserver> revenueObservers = new ArrayList<>();
     
     /**
      * Creates a new controller
@@ -40,12 +44,22 @@ public class Controller {
     }
     
     /**
+     * The specified observer will be notified of the sale total including VAT
+     * when the sale is logged.
+     * @param revenueObserver The observer to notify.
+     */
+    public void addTotalRevenueObserver(RevenueObserver revenueObserver){
+        revenueObservers.add(revenueObserver);
+    }
+    
+    /**
      * Starts a new sale instance
      * @param locale <code>Locale</code> for currency formatting.
      */
     public void startNewSale(Locale locale){
         this.locale = locale;
         sale = new Sale(store);
+        sale.addRevenueObservers(revenueObservers);
     }
     
     /**
