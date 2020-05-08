@@ -149,7 +149,7 @@ public class View {
         sb.append(", Price; ");
         sb.append(message.getItemPrice());
         sb.append(", Running Total: ");
-        sb.append(message.getItemPrice());
+        sb.append(message.getRunningTotal());
 
         System.out.println(sb);
     }
