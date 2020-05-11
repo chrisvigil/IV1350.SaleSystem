@@ -22,6 +22,11 @@ class Payment {
         this.type = type;
     }
     
+    /**
+     * Calculates change and updates the <code>CashRegister</code>
+     * @param saleTotal The sale total including VAT to pay
+     * @return The change to return to the customer.
+     */
     MonetaryValue makePayment(MonetaryValue saleTotal){
         if (type.equals(Type.CASH)){
             calculateChange(saleTotal);
@@ -38,11 +43,6 @@ class Payment {
         CashRegister.getCashRegister().addToBalance(netCashToRegister);
     }
     
-    /**
-     * Calculates change for cash payment
-     * @param saleTotal
-     * @return 
-     */
     private void calculateChange(MonetaryValue saleTotal){
         try{
             this.change = amount.subtract(saleTotal).roundVaule();

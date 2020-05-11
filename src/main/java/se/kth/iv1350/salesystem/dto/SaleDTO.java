@@ -20,6 +20,7 @@ public class SaleDTO {
     private final MonetaryValue payment;
     private final MonetaryValue change;
     private final String paymentType;
+    private final MonetaryValue discountAmount;
     
     /**
      * Creates a new instance representing a particular sale.
@@ -47,6 +48,37 @@ public class SaleDTO {
         this.payment = payment;
         this.change = change;
         this.paymentType = paymentType;
+        this.discountAmount = new MonetaryValue();
+    }
+    
+    /**
+     * Creates a new instance representing a particular sale.
+     * @param items A list of sold items.
+     * @param subTotal The total cost of the sale excluding VAT.
+     * @param saleVAT The total VAT of the sale.
+     * @param saleTotal The sale total including VAT.
+     * @param timeOfSale The time the sale was completed.
+     * @param storeName The name of the store where the sale occurred.
+     * @param storeAddress The address of the store where the sale occurred.
+     * @param payment The amount payed
+     * @param change The change customer received
+     * @param paymentType The type of payment
+     * @param discountAmount The discount applied
+     */
+    public SaleDTO(List<SoldItemDTO> items, MonetaryValue subTotal, MonetaryValue saleVAT,
+            MonetaryValue saleTotal, LocalDateTime timeOfSale, String storeName, Address storeAddress,
+            MonetaryValue payment, MonetaryValue change, String paymentType, MonetaryValue discountAmount){
+        this.items = new LinkedList<>(items);
+        this.subTotal = subTotal;
+        this.saleVAT = saleVAT;
+        this.saleTotal = saleTotal;
+        this.timeOfSale = timeOfSale;
+        this.storeName = storeName;
+        this.storeAddress = new Address(storeAddress);
+        this.payment = payment;
+        this.change = change;
+        this.paymentType = paymentType;
+        this.discountAmount = discountAmount;
     }
     
     /**
@@ -117,5 +149,12 @@ public class SaleDTO {
      */
     public String getPaymentType(){
         return paymentType;
+    }
+    
+    /**
+     * @return The <code>SaleDTO</code>  discounted amount
+     */
+    public MonetaryValue getDiscountAmount(){
+        return discountAmount;
     }
 }

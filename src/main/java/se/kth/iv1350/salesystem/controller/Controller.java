@@ -7,6 +7,7 @@ import java.util.Locale;
 import se.kth.iv1350.salesystem.datatypes.ItemID;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 import se.kth.iv1350.salesystem.datatypes.Quantity;
+import se.kth.iv1350.salesystem.dto.CustomerIdDTO;
 import se.kth.iv1350.salesystem.dto.ItemDTO;
 import se.kth.iv1350.salesystem.dto.SaleDTO;
 import se.kth.iv1350.salesystem.model.Store;
@@ -128,9 +129,25 @@ public class Controller {
     public MonetaryValue makeCashPaymentandLogSale(MonetaryValue payment){
         MonetaryValue cashBack = sale.makeCashPayment(payment);
         logSale();
-        printRecipt();
+        printReceipt();
         
         return cashBack;
+    }
+    
+    /**
+     * Adds a new customer to the Sale
+     * @param customerID the customer id of the customer to be added
+     */
+    public void addCusomer(CustomerIdDTO customerID){
+        sale.addCustomer(customerID);
+    }
+    
+    /**
+     * Applies discount, if any, to the sale total.
+     * @return The sale total including VAT after discounts have been applied
+     */
+    public MonetaryValue applyDiscounts(){
+        return sale.applyDiscounts();
     }
     
     private void logSale(){
@@ -138,8 +155,8 @@ public class Controller {
         dbhandler.logSale(saleLog);
     }
     
-    private void printRecipt(){
-        sale.printRepeict(printer);
+    private void printReceipt(){
+        sale.printReceipt(printer);
     }
             
 }

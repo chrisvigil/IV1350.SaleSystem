@@ -13,6 +13,8 @@ public class MonetaryValue {
     private final BigDecimal value;
     
     private final BigDecimal ONEHUNDRED = new BigDecimal("100");
+    private final BigDecimal ZERO = new BigDecimal("0");
+    private final BigDecimal ONE = new BigDecimal("1");
     
     
     /**
@@ -123,6 +125,23 @@ public class MonetaryValue {
     }
     
     /**
+     * Takes a percentage rate and applies it to the <code>MonetaryValue</code>.
+     * @param rate The percentage rate, must be between 0 and 100.
+     * @return 
+     */
+    public MonetaryValue calculatePercentage(String rate){
+        BigDecimal rateAsDecimal = new BigDecimal(rate).divide(ONEHUNDRED);
+        if(rateAsDecimal.compareTo(ONE) == 1 
+                || rateAsDecimal.compareTo(ZERO) == -1 ){
+            throw new IllegalArgumentException("Rate but be equal or greater "
+                    + "then 0 and equal or less then 1");
+        }
+        BigDecimal percentage = this.value.multiply(rateAsDecimal);
+        
+        return new MonetaryValue(percentage);
+    }
+    
+    /**
      * Rounds the <code>MonetaryValue</code> to 2 decimal places, rounding up.
      * @return The rounded value.
      */
@@ -168,7 +187,7 @@ public class MonetaryValue {
         if (this.getClass() == obj.getClass())
         {
             MonetaryValue monetaryValue = (MonetaryValue) obj;
-            if ((monetaryValue.value).equals(this.value))
+            if ((monetaryValue.value).compareTo(this.value) == 0)
                 isEqual = true;
         }
         

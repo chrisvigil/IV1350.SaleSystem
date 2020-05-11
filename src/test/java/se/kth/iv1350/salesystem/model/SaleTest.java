@@ -178,7 +178,7 @@ public class SaleTest {
         Printer printer = new Printer();
         
         try{
-            instance.printRepeict(printer);
+            instance.printReceipt(printer);
         }
         catch(Exception ex){
             fail("cuased exception");

@@ -7,6 +7,7 @@ import java.util.Locale;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 import se.kth.iv1350.salesystem.datatypes.Quantity;
 import se.kth.iv1350.salesystem.datatypes.VATRate;
+import se.kth.iv1350.salesystem.dto.CustomerIdDTO;
 import se.kth.iv1350.salesystem.dto.ItemDTO;
 import se.kth.iv1350.salesystem.dto.SaleDTO;
 import se.kth.iv1350.salesystem.dto.SoldItemDTO;
@@ -21,9 +22,11 @@ public class Sale {
     private final Basket basket;
     private MonetaryValue subTotal;
     private MonetaryValue saleVAT;
+    private MonetaryValue discountAmount;
     private Payment payment;
     private Receipt receipt;
     private LocalDateTime timeOfSale;
+    private Customer customer;
     private boolean saleOpen;
     private List<RevenueObserver> totalRevenueObservers = new ArrayList<>();
     
@@ -36,6 +39,7 @@ public class Sale {
         this.basket = new Basket();
         this.subTotal = new MonetaryValue();
         this.saleVAT = new MonetaryValue();
+        this.discountAmount = new MonetaryValue();
         
         saleOpen = true;
     }
@@ -117,11 +121,47 @@ public class Sale {
     }
     
     /**
+     * @return A list of sold items
+     */
+     List<SoldItemDTO> getSoldItems(){
+        return basket.getSoldItems();
+    }
+    
+    /**
      * Prints a receipt
      * @param printer The printer where the receipt is sent.
      */
-    public void printRepeict(Printer printer){
+    public void printReceipt(Printer printer){
         receipt.print(printer);
+    }
+    
+    /**
+     * Adds a customer to the sale
+     * @param customerID The ID of the customer to add.
+     */
+    public void addCustomer(CustomerIdDTO customerID){
+        this.customer = new Customer(customerID);
+    }
+    
+    /**
+     * Apply discounts, if any, to the sale.
+     * @return The sale total including VAT after discounts have been applied
+     */
+    public MonetaryValue applyDiscounts(){
+        if (customer != null){
+            discountAmount = customer.calculateDiscount(this);
+        }
+        
+        return calculateSaleTotalWithVAT();
+    }
+    
+    /**
+     * @return The sale total including VAT and discounts (if any).
+     */
+    MonetaryValue calculateSaleTotalWithVAT(){
+        MonetaryValue saleTotalwithVAT = subTotal.add(saleVAT).subtract(discountAmount);
+        
+        return saleTotalwithVAT;
     }
     
     private void addItemsVATtoSaleVAT(MonetaryValue itemTotal , VATRate vatRate){
@@ -133,12 +173,6 @@ public class Sale {
         return itemTotal;
     }
     
-    private MonetaryValue calculateSaleTotalWithVAT(){
-        MonetaryValue saleTotalwithVAT = subTotal.add(saleVAT);
-        
-        return saleTotalwithVAT;
-    }
-    
     private void logTimeOfSale(){
         timeOfSale = LocalDateTime.now();
     }
@@ -146,11 +180,18 @@ public class Sale {
     private SaleDTO generateSaleLog(){
         List<SoldItemDTO> soldItems = basket.getSoldItems();
         MonetaryValue saleTotalWithVAT = calculateSaleTotalWithVAT();
-        
-        SaleDTO saleLog = new SaleDTO(soldItems, subTotal, saleVAT,
+        SaleDTO saleLog;
+        if (discountAmount.equals(new MonetaryValue())){
+            saleLog = new SaleDTO(soldItems, subTotal, saleVAT,
                 saleTotalWithVAT, timeOfSale,store.getName(), store.getAddress(), 
                 payment.getAmount(), payment.getChange(), payment.getType().name());
-        
+        }
+        else{
+            saleLog = new SaleDTO(soldItems, subTotal, saleVAT,
+                saleTotalWithVAT, timeOfSale,store.getName(), store.getAddress(), 
+                payment.getAmount(), payment.getChange(), payment.getType().name()
+                ,discountAmount);
+        }
         return saleLog;
     }
     

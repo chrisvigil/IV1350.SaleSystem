@@ -9,6 +9,7 @@ import se.kth.iv1350.salesystem.integration.ItemNotFoundException;
 import se.kth.iv1350.salesystem.datatypes.ItemID;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 import se.kth.iv1350.salesystem.datatypes.Quantity;
+import se.kth.iv1350.salesystem.dto.CustomerIdDTO;
 import se.kth.iv1350.salesystem.util.ErrorLogger;
 
 /**
@@ -51,7 +52,7 @@ public class View {
                 in.useLocale(locale);
 
                 contr.startNewSale(locale);
-                
+
                 boolean basketOpen = true;
                 boolean paymentNeeded = true;
 
@@ -96,11 +97,27 @@ public class View {
                         } catch (IllegalArgumentException ex) {
                             handleException("Invalid input, try again", ex);
                         } catch (ItemNotFoundException ex) {
-                            handleException(ex.getItemIDNotFound().toString() + 
-                                    " is an invalid item identifier, try again", ex);
+                            handleException(ex.getItemIDNotFound().toString()
+                                    + " is an invalid item identifier, try again", ex);
                         }
                     }
 
+                }
+
+                boolean choiceMade = false;
+                while (!choiceMade) {
+                    System.out.print("Would you like to apply a discount? (Y/N): ");
+                    input = in.next();
+                    if (input.equals("y") || input.equals("Y")) {
+                        System.out.print("Enter customer ID: ");
+                        input = in.next();
+                        contr.addCusomer(new CustomerIdDTO(input));
+                        MonetaryValue totalAfterDiscount = contr.applyDiscounts();
+                        System.out.println("Sale total after discounts have been applied: " + totalAfterDiscount.currencyFormat(locale));
+                        choiceMade = true;
+                    } else if (input.equals("n") || input.equals("N")) {
+                        choiceMade = true;
+                    }
                 }
 
                 while (paymentNeeded) {
@@ -120,7 +137,7 @@ public class View {
                     }
                 }
 
-                boolean choiceMade = false;
+                choiceMade = false;
                 while (!choiceMade) {
                     System.out.print("Start new sale? (Y/N): ");
                     input = in.next();
@@ -135,8 +152,7 @@ public class View {
             }
         } catch (SystemOperationException ex) {
             handleException("Nonrecoverable exception occured", ex);
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             handleException("Nonrecoverable exception occured", ex);
         }
     }
