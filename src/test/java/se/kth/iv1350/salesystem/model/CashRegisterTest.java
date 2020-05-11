@@ -22,7 +22,7 @@ public class CashRegisterTest {
     
     @BeforeEach
     public void setUp() {
-        instance = new CashRegister();
+        instance = CashRegister.getCashRegister();
     }
     
     @AfterEach

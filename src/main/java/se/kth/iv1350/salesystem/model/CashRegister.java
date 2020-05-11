@@ -8,14 +8,20 @@ import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
  * is only a placeholder.
  */
 public class CashRegister {
+    private static final CashRegister CASH_REGISTER = new CashRegister();
+    
     private MonetaryValue registerCash;
     private final MonetaryValue PLACEHOLDER_CASH = new MonetaryValue("100");
     
-    /**
-     * creates a new CashRegister instance
-     */
-    public CashRegister(){
+   private CashRegister(){
         registerCash = PLACEHOLDER_CASH;
+    }
+    
+    /**
+     * @return The only instance of the CashRegister
+     */
+    public static CashRegister getCashRegister(){
+        return CASH_REGISTER;
     }
     
     /**

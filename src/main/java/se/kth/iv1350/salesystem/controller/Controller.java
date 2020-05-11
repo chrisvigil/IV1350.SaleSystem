@@ -23,7 +23,7 @@ import se.kth.iv1350.salesystem.model.RevenueObserver;
  */
 public class Controller {
     private final ExternalDBHandler dbhandler;
-    private final CashRegister register;
+    //private final CashRegister register;
     private final Store store;
     private Locale locale;
     private Printer printer;
@@ -39,7 +39,7 @@ public class Controller {
     public Controller(Store store){
         this.store = store;
         dbhandler = new ExternalDBHandler();
-        register = new CashRegister(); 
+        //register = new CashRegister(); 
         printer = new Printer();
     }
     
@@ -144,7 +144,7 @@ public class Controller {
     
     private void updateCashRegister(MonetaryValue payment, MonetaryValue cashBack){
         MonetaryValue netCashToRegister = new MonetaryValue(payment.subtract(cashBack));
-        register.addToBalance(netCashToRegister);
+        CashRegister.getCashRegister().addToBalance(netCashToRegister);
     }
     
     private void printRecipt(){
