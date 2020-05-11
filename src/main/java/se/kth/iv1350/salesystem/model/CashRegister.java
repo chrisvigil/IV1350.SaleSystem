@@ -7,7 +7,7 @@ import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
  * where physical cash is kept. This class has not been implemented yet and
  * is only a placeholder.
  */
-public class CashRegister {
+class CashRegister {
     private static final CashRegister CASH_REGISTER = new CashRegister();
     
     private MonetaryValue registerCash;
@@ -20,7 +20,7 @@ public class CashRegister {
     /**
      * @return The only instance of the CashRegister
      */
-    public static CashRegister getCashRegister(){
+    static CashRegister getCashRegister(){
         return CASH_REGISTER;
     }
     
@@ -28,7 +28,7 @@ public class CashRegister {
      * Adds cash in register.
      * @param netCashToAdd The amount added to register.
      */
-    public void addToBalance(MonetaryValue netCashToAdd){
+    void addToBalance(MonetaryValue netCashToAdd){
         registerCash = registerCash.add(netCashToAdd);
     }
     
@@ -36,14 +36,14 @@ public class CashRegister {
      * Removes cash from register.
      * @param netCashToRemove The amount removed from register.
      */
-    public void removedFromBalance(MonetaryValue netCashToRemove){
+    void removedFromBalance(MonetaryValue netCashToRemove){
         registerCash = registerCash.subtract(netCashToRemove);
     }
     
     /**
      * @return The <code>CashRegister</code> balance.
      */
-    public MonetaryValue getBalance(){
+    MonetaryValue getBalance(){
         return registerCash;
     }
 }

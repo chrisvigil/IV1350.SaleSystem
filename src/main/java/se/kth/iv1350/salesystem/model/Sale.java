@@ -80,20 +80,22 @@ public class Sale {
     
     /**
      * Makes a payment of the sale with cash amount
-     * @param payment The amount payed
+     * @param cashPayment The amount payed
      * @return payment The amount to return in change
      */
-    public MonetaryValue makeCashPayment(MonetaryValue payment){
+    public MonetaryValue makeCashPayment(MonetaryValue cashPayment){
         MonetaryValue saleTotalWithVAT = calculateSaleTotalWithVAT();
+        
         try{
-            payment.subtract(saleTotalWithVAT);
+            cashPayment.subtract(saleTotalWithVAT);
         }
         catch(IllegalArgumentException ex){
             throw new IllegalArgumentException("Payment value insufficient");
         }
-        this.payment = new Payment(payment,CASH);
         
-        MonetaryValue change = this.payment.calculateChange(saleTotalWithVAT);
+        this.payment = new Payment(cashPayment,CASH);
+        
+        MonetaryValue change = this.payment.makePayment(saleTotalWithVAT);
         
         return change;
     }

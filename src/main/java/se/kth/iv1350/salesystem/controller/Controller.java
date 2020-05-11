@@ -12,7 +12,6 @@ import se.kth.iv1350.salesystem.dto.SaleDTO;
 import se.kth.iv1350.salesystem.model.Store;
 import se.kth.iv1350.salesystem.integration.ExternalDBHandler;
 import se.kth.iv1350.salesystem.integration.InventoryDBException;
-import se.kth.iv1350.salesystem.model.CashRegister;
 import se.kth.iv1350.salesystem.integration.Printer;
 import se.kth.iv1350.salesystem.model.Sale;
 import se.kth.iv1350.salesystem.model.RevenueObserver;
@@ -23,7 +22,6 @@ import se.kth.iv1350.salesystem.model.RevenueObserver;
  */
 public class Controller {
     private final ExternalDBHandler dbhandler;
-    //private final CashRegister register;
     private final Store store;
     private Locale locale;
     private Printer printer;
@@ -39,7 +37,6 @@ public class Controller {
     public Controller(Store store){
         this.store = store;
         dbhandler = new ExternalDBHandler();
-        //register = new CashRegister(); 
         printer = new Printer();
     }
     
@@ -131,7 +128,6 @@ public class Controller {
     public MonetaryValue makeCashPaymentandLogSale(MonetaryValue payment){
         MonetaryValue cashBack = sale.makeCashPayment(payment);
         logSale();
-        updateCashRegister(payment, cashBack);
         printRecipt();
         
         return cashBack;
@@ -140,11 +136,6 @@ public class Controller {
     private void logSale(){
         SaleDTO saleLog = sale.logSale(locale);
         dbhandler.logSale(saleLog);
-    }
-    
-    private void updateCashRegister(MonetaryValue payment, MonetaryValue cashBack){
-        MonetaryValue netCashToRegister = new MonetaryValue(payment.subtract(cashBack));
-        CashRegister.getCashRegister().addToBalance(netCashToRegister);
     }
     
     private void printRecipt(){

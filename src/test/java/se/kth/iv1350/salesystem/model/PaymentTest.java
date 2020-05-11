@@ -31,20 +31,33 @@ public class PaymentTest {
     }
 
     @Test
-    public void testCalculateChange() {
+    public void testMakePayment() {
         instance = new Payment(AMMOUNT, Type.CASH);
-        MonetaryValue actual = instance.calculateChange(LESSTHENAMMOUNT);
+        
+        MonetaryValue actual = instance.makePayment(LESSTHENAMMOUNT);
         MonetaryValue expected = AMMOUNT.subtract(LESSTHENAMMOUNT).roundVaule();
         
         assertEquals(expected, actual, "Change not correctly calculated");
     }
+     @Test
+     public void testMakePaymentUpdatesRegister(){
+        instance = new Payment(AMMOUNT, Type.CASH);
+        
+        MonetaryValue balance = CashRegister.getCashRegister().getBalance();
+        MonetaryValue change = instance.makePayment(LESSTHENAMMOUNT);
+        
+        MonetaryValue expected = balance.add(AMMOUNT.subtract(change));
+        MonetaryValue actual = CashRegister.getCashRegister().getBalance();
+        
+        assertEquals(expected, actual, "CashRegister did not update correctly");
+     }
     
     @Test
-    public void testCalculateChangeForInsufficientPayment(){
+    public void testMakePaymentForInsufficientPayment(){
         instance = new Payment(AMMOUNT, Type.CASH);
         boolean causedException = false;
         try{
-            MonetaryValue actual = instance.calculateChange(AMMOUNT.add(AMMOUNT));
+            MonetaryValue actual = instance.makePayment(AMMOUNT.add(AMMOUNT));
         }
         catch(Exception ex){
             causedException = true;

@@ -22,20 +22,34 @@ class Payment {
         this.type = type;
     }
     
+    MonetaryValue makePayment(MonetaryValue saleTotal){
+        if (type.equals(Type.CASH)){
+            calculateChange(saleTotal);
+            updateCashRegister(amount.subtract(change));
+        }
+        else{
+            change = null;
+        }
+        
+        return change;
+    }
+    
+    private void updateCashRegister(MonetaryValue netCashToRegister ){
+        CashRegister.getCashRegister().addToBalance(netCashToRegister);
+    }
+    
     /**
      * Calculates change for cash payment
      * @param saleTotal
      * @return 
      */
-    MonetaryValue calculateChange(MonetaryValue saleTotal){
+    private void calculateChange(MonetaryValue saleTotal){
         try{
-            this.change = amount.subtract(saleTotal);
+            this.change = amount.subtract(saleTotal).roundVaule();
         }
         catch(IllegalArgumentException ex){
             throw new IllegalArgumentException("saleTotal must be less then or equal to payment ammount");
         }
-        
-        return change.roundVaule();
     }
     
     /** 
