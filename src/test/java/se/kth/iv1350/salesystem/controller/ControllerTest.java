@@ -2,6 +2,8 @@ package se.kth.iv1350.salesystem.controller;
 
 import se.kth.iv1350.salesystem.integration.ItemNotFoundException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +14,9 @@ import se.kth.iv1350.salesystem.datatypes.ItemID;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 import se.kth.iv1350.salesystem.datatypes.Quantity;
 import se.kth.iv1350.salesystem.datatypes.VATRate;
+import se.kth.iv1350.salesystem.model.RevenueObserver;
 import se.kth.iv1350.salesystem.model.Store;
+import se.kth.iv1350.salesystem.view.TotalRevenueView;
 
 public class ControllerTest {
     private Controller instance;
@@ -39,6 +43,16 @@ public class ControllerTest {
     public void tearDown() {
         instance = null;
         store = null;
+    }
+    
+    @Test
+    public void TestAddTotalRevenueObserver(){
+        RevenueObserver revenueObserver = new TotalRevenueView(LOCALE);
+        try {
+            instance.addTotalRevenueObserver(revenueObserver);
+        } catch (Exception ex) {
+            fail("Adding revenueObserver caused " + ex.toString());
+        }
     }
     
     @Test

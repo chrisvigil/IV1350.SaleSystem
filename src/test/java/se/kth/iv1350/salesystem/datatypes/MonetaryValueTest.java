@@ -1,16 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.kth.iv1350.salesystem.datatypes;
 
 import java.math.BigDecimal;
 import java.util.Locale;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,6 +11,8 @@ public class MonetaryValueTest {
     private static final String INIT_VALUE = "10";
     private static final Quantity QUANTITY = new Quantity(INIT_VALUE);
     private MonetaryValue instance;
+    
+    private final BigDecimal ONEHUNDRED = new BigDecimal("100");
     
     @BeforeEach
     public void setUp() {
@@ -200,6 +195,53 @@ public class MonetaryValueTest {
        MonetaryValue equalValue = new MonetaryValue("100");
        boolean isEqual = instance.equals(equalValue);
        assertFalse(isEqual, "Unequal MonetaryValues appear equal");
+   }
+   
+   @Test
+   public void testCalculatePrecentage(){
+       String rate = "5";
+       BigDecimal bdRate = new BigDecimal(rate).divide(ONEHUNDRED);
+       MonetaryValue expected = new MonetaryValue(new BigDecimal(INIT_VALUE).multiply(bdRate));
+       
+       MonetaryValue actual = instance.calculatePercentage(rate);
+       
+       assertEquals(expected, actual, "Percentage not calculated properly");
+   }
+   
+   @Test
+   public void testCalculatePrecentageValueToLarge(){
+       String rate = "101";
+       boolean causedCorrectException = false;
+       
+       try{
+        MonetaryValue actual = instance.calculatePercentage(rate);
+       }
+       catch(IllegalArgumentException ex){
+           causedCorrectException = true;
+       }
+       catch(Exception ex){
+           fail("Caused wrong exception " + ex.toString());
+       }
+       
+       assertTrue(causedCorrectException, "Did not caused expected exception");
+   }
+   
+   @Test
+   public void testCalculatePrecentageValueToLow(){
+       String rate = "-1";
+       boolean causedCorrectException = false;
+       
+       try{
+        MonetaryValue actual = instance.calculatePercentage(rate);
+       }
+       catch(IllegalArgumentException ex){
+           causedCorrectException = true;
+       }
+       catch(Exception ex){
+           fail("Caused wrong exception " + ex.toString());
+       }
+       
+       assertTrue(causedCorrectException, "Did not caused expected exception");
    }
    
    @Test

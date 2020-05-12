@@ -88,4 +88,27 @@ public class BasketTest {
         return itemDTO;
     }
     
+    @Test
+    public void testGetSoldItems(){
+       ItemID itemID = new ItemID("0");
+       ItemDTO itemDTO = createDummyItemDTO(itemID);
+       Quantity quantity = new Quantity("1");
+       instance.addItem(itemDTO, quantity);
+       
+       itemID = new ItemID("1");
+       itemDTO = createDummyItemDTO(itemID);
+       quantity = new Quantity("2");
+       instance.addItem(itemDTO, quantity);
+       
+       List<SoldItemDTO> dtoList = instance.getSoldItems();
+       
+       int expectedLength = 2;
+       int actualLength = dtoList.size();
+       assertEquals(expectedLength, actualLength, "List lengths did not match");
+       
+       ItemID expectedItemID = itemID;
+       ItemID actualItemID = dtoList.get(1).getItemID();
+       assertEquals(expectedItemID, actualItemID, "Did not get expected itemID");
+    }
+    
 }
