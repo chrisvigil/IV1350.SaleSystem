@@ -2,6 +2,7 @@ package se.kth.iv1350.salesystem.model;
 
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 import se.kth.iv1350.salesystem.dto.CustomerIdDTO;
+import se.kth.iv1350.salesystem.dto.SaleDTO;
 
 /**
  * Represents a customer
@@ -23,9 +24,9 @@ class Customer {
      * @param sale The sale for which the discounts should be calculated.
      * @return The total discount to deduct from the sale after applying VAT.
      */
-    MonetaryValue calculateDiscount(Sale sale){
+    MonetaryValue calculateDiscount(SaleDTO saleDTO){
         addDiscounts();
-        MonetaryValue discountAmmount = discount.calculateDiscount(sale);
+        MonetaryValue discountAmmount = discount.calculateDiscount(saleDTO);
         
         return discountAmmount;
     }
@@ -34,6 +35,9 @@ class Customer {
         discount = DiscountFactory.getDiscounts(this);
     }
     
+    /**
+     * @return The customer Id
+     */
     String getID(){
         return customerID;
     }

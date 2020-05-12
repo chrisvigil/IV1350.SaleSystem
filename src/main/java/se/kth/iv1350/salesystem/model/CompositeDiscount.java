@@ -3,6 +3,7 @@ package se.kth.iv1350.salesystem.model;
 import java.util.LinkedList;
 import java.util.List;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
+import se.kth.iv1350.salesystem.dto.SaleDTO;
 
 /**
  * A <code>Discount</code> that can apply multiple discounts. Any discount 
@@ -21,14 +22,14 @@ class CompositeDiscount implements Discount {
      * @return The total discounted amount to deduct from the sale.
      */
     @Override
-    public MonetaryValue calculateDiscount(Sale sale) {
+    public MonetaryValue calculateDiscount(SaleDTO saleDTO) {
         MonetaryValue totalDiscountAmmount = new MonetaryValue();
         MonetaryValue discountAmmount;
         
         for (Discount discount : discounts){
-            discountAmmount = discount.calculateDiscount(sale);
+            discountAmmount = discount.calculateDiscount(saleDTO);
             if (discountAmmount != null){
-                totalDiscountAmmount = totalDiscountAmmount.add(discount.calculateDiscount(sale));
+                totalDiscountAmmount = totalDiscountAmmount.add(discount.calculateDiscount(saleDTO));
             }
         }
         

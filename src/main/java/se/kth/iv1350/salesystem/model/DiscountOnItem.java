@@ -3,6 +3,7 @@ package se.kth.iv1350.salesystem.model;
 import java.util.List;
 import se.kth.iv1350.salesystem.datatypes.ItemID;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
+import se.kth.iv1350.salesystem.dto.SaleDTO;
 import se.kth.iv1350.salesystem.dto.SoldItemDTO;
 
 /**
@@ -28,10 +29,10 @@ class DiscountOnItem implements Discount{
      * @return The amount to deduct from the sale after applying discount
      */
     @Override
-    public MonetaryValue calculateDiscount(Sale sale) {
+    public MonetaryValue calculateDiscount(SaleDTO saleDTO) {
         MonetaryValue discountAmount;
         
-        List<SoldItemDTO> soldItems = sale.getSoldItems();
+        List<SoldItemDTO> soldItems = saleDTO.getItems();
         for (SoldItemDTO item : soldItems){
             if (item.getItemID().equals(itemID)){
                 discountAmount = calculateDiscountAmount(item);

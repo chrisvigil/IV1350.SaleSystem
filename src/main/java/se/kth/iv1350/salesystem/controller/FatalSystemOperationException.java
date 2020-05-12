@@ -9,9 +9,9 @@ package se.kth.iv1350.salesystem.controller;
  *
  * @author christopher.vigil
  */
-public class SystemOperationException extends RuntimeException{
+public class FatalSystemOperationException extends RuntimeException{
     
-    SystemOperationException(String message, Exception cause){
+    FatalSystemOperationException(String message, Exception cause){
         super(message, cause);
     }
 }

@@ -149,7 +149,8 @@ public class Sale {
      */
     public MonetaryValue applyDiscounts(){
         if (customer != null){
-            discountAmount = customer.calculateDiscount(this);
+            SaleDTO saleDTO= generateSaleLog();
+            discountAmount = customer.calculateDiscount(saleDTO);
         }
         
         return calculateSaleTotalWithVAT();
@@ -181,7 +182,12 @@ public class Sale {
         List<SoldItemDTO> soldItems = basket.getSoldItems();
         MonetaryValue saleTotalWithVAT = calculateSaleTotalWithVAT();
         SaleDTO saleLog;
-        if (discountAmount.equals(new MonetaryValue())){
+        
+        if(payment == null){
+            saleLog = new SaleDTO(soldItems, subTotal, saleVAT, saleTotalWithVAT,
+                    store.getName(), store.getAddress());
+        }
+        else if (discountAmount.equals(new MonetaryValue())){
             saleLog = new SaleDTO(soldItems, subTotal, saleVAT,
                 saleTotalWithVAT, timeOfSale,store.getName(), store.getAddress(), 
                 payment.getAmount(), payment.getChange(), payment.getType().name());

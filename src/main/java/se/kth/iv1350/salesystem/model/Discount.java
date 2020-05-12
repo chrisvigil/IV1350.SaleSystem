@@ -1,6 +1,7 @@
 package se.kth.iv1350.salesystem.model;
 
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
+import se.kth.iv1350.salesystem.dto.SaleDTO;
 
 /**
  * Defines the a to calculate a discount applied to a sale and return the 
@@ -14,5 +15,5 @@ interface Discount {
      * @param sale The sale which to calculate the discount for
      * @return The amount to deduct from the sale.
      */
-    MonetaryValue calculateDiscount(Sale sale);
+    MonetaryValue calculateDiscount(SaleDTO saleDTO);
 }

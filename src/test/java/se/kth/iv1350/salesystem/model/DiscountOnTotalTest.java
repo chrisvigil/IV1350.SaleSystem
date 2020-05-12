@@ -1,5 +1,6 @@
 package se.kth.iv1350.salesystem.model;
 
+import java.util.Locale;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 import se.kth.iv1350.salesystem.datatypes.Quantity;
 import se.kth.iv1350.salesystem.datatypes.VATRate;
 import se.kth.iv1350.salesystem.dto.ItemDTO;
+import se.kth.iv1350.salesystem.dto.SaleDTO;
 
 public class DiscountOnTotalTest {
     private DiscountOnTotal instance;
@@ -46,9 +48,17 @@ public class DiscountOnTotalTest {
         MonetaryValue totalBeforDiscount = sale.calculateSaleTotalWithVAT();
         MonetaryValue expected = totalBeforDiscount.calculatePercentage(RATE);
         
-        MonetaryValue actual = instance.calculateDiscount(sale);
+        MonetaryValue actual = instance.calculateDiscount(generateSaleDTO());
         
         assertEquals(expected, actual, "Discount was not propperly calculated");
     }
     
+    private SaleDTO generateSaleDTO(){
+        MonetaryValue zero = new MonetaryValue();
+        String storeName = "";
+        Address address = new Address("",0,0,"");
+        SaleDTO saleDTO = new SaleDTO(sale.getSoldItems(), zero, zero, 
+                sale.calculateSaleTotalWithVAT(),storeName,address);
+        return saleDTO;
+    }
 }

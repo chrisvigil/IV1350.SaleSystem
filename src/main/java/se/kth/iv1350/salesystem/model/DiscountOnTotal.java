@@ -1,6 +1,7 @@
 package se.kth.iv1350.salesystem.model;
 
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
+import se.kth.iv1350.salesystem.dto.SaleDTO;
 
 /**
  * Defines a discount on the sale total
@@ -22,8 +23,8 @@ class DiscountOnTotal implements Discount{
      * @return The amount to deduct from the sale after applying discount
      */
     @Override
-    public MonetaryValue calculateDiscount(Sale sale) {
-        MonetaryValue discountAmount = sale.calculateSaleTotalWithVAT().calculatePercentage(rate);
+    public MonetaryValue calculateDiscount(SaleDTO saleDTO) {
+        MonetaryValue discountAmount = saleDTO.getSaleTotal().calculatePercentage(rate);
         
         return discountAmount;
     }

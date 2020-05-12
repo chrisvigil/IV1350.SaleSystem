@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.kth.iv1350.salesystem.integration;
 
 import java.io.BufferedWriter;
@@ -20,13 +15,10 @@ import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 import se.kth.iv1350.salesystem.datatypes.VATRate;
 import se.kth.iv1350.salesystem.dto.ItemDTO;
 
-/**
- *
- * @author christopher.vigil
- */
 public class ExternalDBHandlerTest {
+
     private static final String DBNAME = "db.txt";
-    
+
     private static final String ITEMID = "0";
     private static final String ITEMPRICE = "10.34";
     private static final String VAT = "25";
@@ -34,26 +26,26 @@ public class ExternalDBHandlerTest {
     private static final String DESC = "Item description";
     private static final String DBSTRING = ITEMID + "###" + ITEMPRICE + "###"
             + VAT + "###" + DESC;
-    
+
     ExternalDBHandler instance;
-    
+
     @BeforeAll
-    public static void init(){
+    public static void init() {
         createDB(DBSTRING);
     }
-    
+
     @BeforeEach
     public void setUp() {
         instance = new ExternalDBHandler(DBNAME);
     }
-    
+
     @AfterEach
     public void tearDown() {
         instance = null;
     }
-    
-     @AfterAll
-    public static void cleanUp(){
+
+    @AfterAll
+    public static void cleanUp() {
         File file = new File(DBNAME);
         file.delete();
     }
@@ -61,66 +53,60 @@ public class ExternalDBHandlerTest {
     @Test
     public void testGetItemDataFound() {
         ItemDTO actual;
-        try{
+        try {
             actual = instance.getItemData(new ItemID(ITEMID));
-            ItemDTO expected = new ItemDTO(new ItemID(ITEMID), new MonetaryValue(ITEMPRICE),
-                                            VATRATE, DESC);
+            ItemDTO expected = new ItemDTO(new ItemID(ITEMID),
+                    new MonetaryValue(ITEMPRICE), VATRATE, DESC);
             assertEquals(expected, actual, "Expected item not found");
+        } catch (ItemNotFoundException ex) {
+            fail("Caused " + ex.toString());
         }
-        catch(ItemNotFoundException ex){
-            fail ("Cuased ItemNotFoundException" );
-        }
-         
-        
+
     }
-    
+
     @Test
-    public void testGetItemDataNotFound(){
+    public void testGetItemDataNotFound() {
         boolean correctExceptionThrown = false;
-        try{
-            ItemDTO actual = instance.getItemData(new ItemID(ITEMID+"3"));
-        }
-        catch(ItemNotFoundException ex){
+        try {
+            ItemDTO actual = instance.getItemData(new ItemID(ITEMID + "3"));
+        } catch (ItemNotFoundException ex) {
             correctExceptionThrown = true;
         }
         assertTrue(correctExceptionThrown, "A correct exception was not thrown when "
                 + "adding nonexistet item");
     }
-    
+
     @Test
-    public void requestingSameDataTwice(){
-        try{
+    public void requestingSameDataTwice() {
+        try {
             ItemID itemID = new ItemID(ITEMID);
             ItemDTO itemDTO = instance.getItemData(itemID);
-        
+
             ItemID anotheritemID = new ItemID(ITEMID);
             ItemDTO actual = instance.getItemData(anotheritemID);
-        
-        assertNotNull(actual, "requesting the same item twice returns null");
-        }
-        catch(ItemNotFoundException ex){
+
+            assertNotNull(actual, "requesting the same item twice returns null");
+        } catch (ItemNotFoundException ex) {
             fail("Caused ItemNotFoundException");
         }
-        
+
     }
 
-    
     @Test
     public void testLogSale() {
         //Nothing yet to test
     }
-    
-    private static void createDB(String dbtext){
-        
-        try{
+
+    private static void createDB(String dbtext) {
+
+        try {
             FileWriter fileWriter = new FileWriter(DBNAME);
-            
+
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             bufferedWriter.write(dbtext);
             bufferedWriter.close();
-            
-        }
-        catch(IOException ex){
+
+        } catch (IOException ex) {
         }
     }
 }

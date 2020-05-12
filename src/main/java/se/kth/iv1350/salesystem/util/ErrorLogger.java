@@ -11,11 +11,17 @@ import java.time.format.FormatStyle;
  *
  */
 public class ErrorLogger {
-    private static final String LOG_FILE_NAME = "error_log.txt";
+    private final String logFileName;
     
     private PrintWriter logFile;
     
     public ErrorLogger() throws IOException{
+        this.logFileName  = "error_log.txt";
+        logFile = openLogFile();
+    }
+    
+    public ErrorLogger(String logFileName) throws IOException{
+        this.logFileName  = logFileName;
         logFile = openLogFile();
     }
     
@@ -41,6 +47,6 @@ public class ErrorLogger {
     }
     
     private PrintWriter openLogFile() throws IOException{
-        return new PrintWriter( new FileWriter(LOG_FILE_NAME, true));
+        return new PrintWriter( new FileWriter(logFileName, true));
     }
 }

@@ -21,6 +21,7 @@ public class SaleDTO {
     private final MonetaryValue change;
     private final String paymentType;
     private final MonetaryValue discountAmount;
+    private final boolean saleCompleated;
     
     /**
      * Creates a new instance representing a particular sale.
@@ -49,6 +50,7 @@ public class SaleDTO {
         this.change = change;
         this.paymentType = paymentType;
         this.discountAmount = new MonetaryValue();
+        this.saleCompleated = true;
     }
     
     /**
@@ -79,6 +81,23 @@ public class SaleDTO {
         this.change = change;
         this.paymentType = paymentType;
         this.discountAmount = discountAmount;
+        this.saleCompleated = true;
+    }
+    
+    public SaleDTO(List<SoldItemDTO> items, MonetaryValue subTotal, MonetaryValue saleVAT,
+            MonetaryValue saleTotal, String storeName, Address storeAddress){
+        this.items = new LinkedList<>(items);
+        this.subTotal = subTotal;
+        this.saleVAT = saleVAT;
+        this.saleTotal = saleTotal;
+        this.timeOfSale = null;
+        this.storeName = storeName;
+        this.storeAddress = new Address(storeAddress);
+        this.payment = null;
+        this.change = null;
+        this.paymentType = null;
+        this.discountAmount = null;
+        this.saleCompleated = false;
     }
     
     /**
