@@ -16,13 +16,15 @@ public class ErrorLogger {
     private PrintWriter logFile;
     
     public ErrorLogger() throws IOException{
-        this.logFileName  = "error_log.txt";
+        this.logFileName  = "mainErrorLog.txt";
         logFile = openLogFile();
+        logFile.close();
     }
     
     public ErrorLogger(String logFileName) throws IOException{
         this.logFileName  = logFileName;
         logFile = openLogFile();
+        logFile.close();
     }
     
     public void logException(Exception ex) throws IOException{

@@ -36,14 +36,12 @@ public class Controller {
     /**
      * Creates a new controller
      *
-     * @param store Contains information about the store in which the sale takes
-     * place.
      * @throws java.io.IOException if log file could not be found or created.
      */
     public Controller() throws IOException {
         dbhandler = new ExternalDBHandler();
         printer = new Printer();
-        logger = new ErrorLogger("controllerErrorLog.txt");
+        logger = new ErrorLogger();
     }
 
     /**

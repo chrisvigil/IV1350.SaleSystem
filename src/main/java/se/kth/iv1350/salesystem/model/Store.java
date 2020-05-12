@@ -4,9 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import se.kth.iv1350.salesystem.datatypes.Address;
+import se.kth.iv1350.salesystem.util.ErrorLogger;
 
 /**
  * Container for store name and address.
@@ -20,8 +19,14 @@ class Store {
     private final String STORENAMEID = "StoreName";
     private final String ADDRESSID = "StoreAddress";
     private BufferedReader reader;
+    private ErrorLogger logger;
 
-    private Store() {
+    private Store(){
+        try{
+        logger = new ErrorLogger();
+        }catch(IOException ex){
+            ex.printStackTrace();
+        }
         this.name = readStoreNameFromConfig();
         this.address = readStoreAddressFromConfig();
     }
@@ -50,10 +55,18 @@ class Store {
     private String readStoreNameFromConfig() {
         String[] storeName = readLineFromConfig(STORENAMEID);
         if (storeName != null) {
-            return storeName[1];
-        } else {
-            return "";
+            try{
+                return storeName[1];
+            }catch(Exception ex){
+               try{
+                logger.logException(ex);
+                }
+                catch(IOException ex1){
+                    ex1.printStackTrace();
+                }
+            }
         }
+        return "";
     }
 
     private Address readStoreAddressFromConfig() {
@@ -70,7 +83,12 @@ class Store {
                             Integer.parseInt(line[3]), line[4], line[5]);
                 }
             } catch (Exception ex) {
-                //Error should be logged
+                try{
+                logger.logException(ex);
+                }
+                catch(IOException ex1){
+                    ex1.printStackTrace();
+                }
             }
         }
 
@@ -89,10 +107,20 @@ class Store {
                 }
             }
         } catch (FileNotFoundException ex) {
-            // This error should be logged
+            try{
+                logger.logException(ex);
+                }
+                catch(IOException ex1){
+                    ex1.printStackTrace();
+                }
             return null;
         } catch (IOException ex) {
-            // This error should be logged
+            try{
+                logger.logException(ex);
+                }
+                catch(IOException ex1){
+                    ex1.printStackTrace();
+                }
             return null;
         }
         return null;
