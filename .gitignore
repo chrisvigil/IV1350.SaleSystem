@@ -1,3 +1,5 @@
 /target/
 /nbproject/
 /error_log.txt
+/controllerErrorLog.txt
+/viewErrorLog.txt
