@@ -24,9 +24,6 @@ import se.kth.iv1350.salesystem.view.TotalRevenueView;
 
 public class ControllerTest {
     private Controller instance;
-    private Store store;
-    private static final String STORE_NAME = "Store Name";
-    private static final Address ADDRESS = new Address("Somestreet",42,11122,"SomeCity", "SomeCountry");
 
     private static final String ITEMPRICE = "10.34";
     private static final String VAT = "25";
@@ -39,14 +36,12 @@ public class ControllerTest {
 
     @BeforeEach
     public void setUp() throws IOException {
-        store = new Store(STORE_NAME,ADDRESS);
-        instance = new Controller(store);
+        instance = new Controller();
     }
 
     @AfterEach
     public void tearDown() {
         instance = null;
-        store = null;
     }
 
     @Test

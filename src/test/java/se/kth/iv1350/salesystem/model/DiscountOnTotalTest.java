@@ -31,8 +31,7 @@ public class DiscountOnTotalTest {
     public void setUp() {
         instance = new DiscountOnTotal(RATE);
         
-        Store store = new Store(PLACEHOLDER_STORENAME, PLACEHOLDER_ADDRESS);
-        sale = new Sale(store);
+        sale = new Sale();
     }
     
     @AfterEach

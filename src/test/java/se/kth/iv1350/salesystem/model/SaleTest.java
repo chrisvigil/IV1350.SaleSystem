@@ -39,8 +39,7 @@ public class SaleTest {
 
     @BeforeEach
     public void setUp() {
-        Store store = new Store(PLACEHOLDER_STORENAME, PLACEHOLDER_ADDRESS);
-        instance = new Sale(store);
+        instance = new Sale();
     }
 
     @AfterEach

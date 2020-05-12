@@ -19,8 +19,6 @@ public class DiscountOnItemTest {
     private final String RATE = "12";
     
     private Sale sale;
-    private static final String PLACEHOLDER_STORENAME = "Some Store";
-    private static final Address PLACEHOLDER_ADDRESS = new Address("Somestreet", 42, 11122, "SomeCity", "SomeCountry");
     
     private static final MonetaryValue PRICE = new MonetaryValue("10.59");
     private static final VATRate VATRATE = VATRate.TWENTYFIVE;
@@ -31,8 +29,7 @@ public class DiscountOnItemTest {
     public void setUp() {
         instance = new DiscountOnItem(ITEMID, RATE);
         
-        Store store = new Store(PLACEHOLDER_STORENAME, PLACEHOLDER_ADDRESS);
-        sale = new Sale(store);
+        sale = new Sale();
     }
     
     @AfterEach

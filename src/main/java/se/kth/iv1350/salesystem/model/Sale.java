@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import se.kth.iv1350.salesystem.datatypes.Address;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 import se.kth.iv1350.salesystem.datatypes.Quantity;
 import se.kth.iv1350.salesystem.datatypes.VATRate;
@@ -18,7 +19,6 @@ import static se.kth.iv1350.salesystem.model.Payment.Type.*;
  * Represents a compleat sale
  */
 public class Sale {
-    private final Store store;
     private final Basket basket;
     private MonetaryValue subTotal;
     private MonetaryValue saleVAT;
@@ -32,10 +32,8 @@ public class Sale {
     
     /**
      * Creates a new instance representing one sale.
-     * @param store The store at which the sale takes place
      */
-    public Sale(Store store){
-        this.store = store;
+    public Sale(){
         this.basket = new Basket();
         this.subTotal = new MonetaryValue();
         this.saleVAT = new MonetaryValue();
@@ -182,19 +180,21 @@ public class Sale {
         List<SoldItemDTO> soldItems = basket.getSoldItems();
         MonetaryValue saleTotalWithVAT = calculateSaleTotalWithVAT();
         SaleDTO saleLog;
+        String storeName = Store.getStore().getName();
+        Address storeAddress = Store.getStore().getAddress();
         
         if(payment == null){
             saleLog = new SaleDTO(soldItems, subTotal, saleVAT, saleTotalWithVAT,
-                    store.getName(), store.getAddress());
+                    storeName, storeAddress);
         }
         else if (discountAmount.equals(new MonetaryValue())){
             saleLog = new SaleDTO(soldItems, subTotal, saleVAT,
-                saleTotalWithVAT, timeOfSale,store.getName(), store.getAddress(), 
+                saleTotalWithVAT, timeOfSale,storeName, storeAddress, 
                 payment.getAmount(), payment.getChange(), payment.getType().name());
         }
         else{
             saleLog = new SaleDTO(soldItems, subTotal, saleVAT,
-                saleTotalWithVAT, timeOfSale,store.getName(), store.getAddress(), 
+                saleTotalWithVAT, timeOfSale,storeName, storeAddress, 
                 payment.getAmount(), payment.getChange(), payment.getType().name()
                 ,discountAmount);
         }

@@ -28,7 +28,6 @@ import se.kth.iv1350.salesystem.util.ErrorLogger;
 public class Controller {
 
     private final ExternalDBHandler dbhandler;
-    private final Store store;
     private Locale locale;
     private Printer printer;
     private Sale sale;
@@ -42,8 +41,7 @@ public class Controller {
      * place.
      * @throws java.io.IOException if log file could not be found or created.
      */
-    public Controller(Store store) throws IOException {
-        this.store = store;
+    public Controller() throws IOException {
         dbhandler = new ExternalDBHandler();
         printer = new Printer();
         logger = new ErrorLogger("controllerErrorLog.txt");
@@ -66,7 +64,7 @@ public class Controller {
      */
     public void startNewSale(Locale locale) {
         this.locale = locale;
-        sale = new Sale(store);
+        sale = new Sale();
         sale.addRevenueObservers(revenueObservers);
     }
 
