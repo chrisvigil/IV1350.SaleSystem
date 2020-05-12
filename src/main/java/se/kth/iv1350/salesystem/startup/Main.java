@@ -1,7 +1,6 @@
 package se.kth.iv1350.salesystem.startup;
 
 import java.io.IOException;
-import se.kth.iv1350.salesystem.model.Store;
 import se.kth.iv1350.salesystem.controller.Controller;
 import se.kth.iv1350.salesystem.datatypes.Address;
 import se.kth.iv1350.salesystem.view.View;

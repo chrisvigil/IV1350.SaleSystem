@@ -11,7 +11,7 @@ import se.kth.iv1350.salesystem.datatypes.Address;
 /**
  * Container for store name and address.
  */
-public class Store {
+class Store {
 
     private static final Store STORE = new Store();
     private final String name;
@@ -25,22 +25,25 @@ public class Store {
         this.name = readStoreNameFromConfig();
         this.address = readStoreAddressFromConfig();
     }
-
-    static public Store getStore() {
+    
+    /**
+     * @return The only instance of the store
+     */
+    static Store getStore() {
         return STORE;
     }
 
     /**
      * @return The <code>Store</code> name
      */
-    public String getName() {
+    String getName() {
         return name;
     }
 
     /**
      * @return The <code>Store</code> address
      */
-    public Address getAddress() {
+    Address getAddress() {
         return new Address(address);
     }
 

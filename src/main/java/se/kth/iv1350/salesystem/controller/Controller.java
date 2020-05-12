@@ -13,7 +13,6 @@ import se.kth.iv1350.salesystem.datatypes.Quantity;
 import se.kth.iv1350.salesystem.dto.CustomerIdDTO;
 import se.kth.iv1350.salesystem.dto.ItemDTO;
 import se.kth.iv1350.salesystem.dto.SaleDTO;
-import se.kth.iv1350.salesystem.model.Store;
 import se.kth.iv1350.salesystem.integration.ExternalDBHandler;
 import se.kth.iv1350.salesystem.integration.InventoryDBException;
 import se.kth.iv1350.salesystem.integration.Printer;

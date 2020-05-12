@@ -2,24 +2,16 @@ package se.kth.iv1350.salesystem.controller;
 
 import java.io.IOException;
 import se.kth.iv1350.salesystem.integration.ItemNotFoundException;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
-import se.kth.iv1350.salesystem.datatypes.Address;
 import se.kth.iv1350.salesystem.datatypes.ItemID;
 import se.kth.iv1350.salesystem.datatypes.MonetaryValue;
 import se.kth.iv1350.salesystem.datatypes.Quantity;
 import se.kth.iv1350.salesystem.datatypes.VATRate;
-import se.kth.iv1350.salesystem.integration.InventoryDBException;
 import se.kth.iv1350.salesystem.model.RevenueObserver;
-import se.kth.iv1350.salesystem.model.Store;
 import se.kth.iv1350.salesystem.view.TotalRevenueView;
 
 public class ControllerTest {
