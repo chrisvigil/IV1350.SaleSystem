@@ -84,6 +84,7 @@ public class Sale {
      * Makes a payment of the sale with cash amount
      * @param cashPayment The amount payed
      * @return payment The amount to return in change
+     * @throws IllegalArgumentException is payment is not sufficient.
      */
     public MonetaryValue makeCashPayment(MonetaryValue cashPayment){
         MonetaryValue saleTotalWithVAT = calculateSaleTotalWithVAT();

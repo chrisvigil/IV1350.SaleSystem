@@ -19,9 +19,9 @@ public class Quantity {
     /**
      * Creates a new quantity from an int primitive data type.
      * @param value Initial value of quantity
-     * .
+     * @throws IllegalArgumentException if specified quantity is 0 or less
      */
-    public Quantity(int value) throws IllegalArgumentException{
+    public Quantity(int value){
         if (value <= 0){
             throw new IllegalArgumentException("Quantities must be greater then 0");
         }
@@ -31,8 +31,9 @@ public class Quantity {
     /**
      *  Creates a new quantity from a float primitive data type.
      * @param value Initial value of quantity
+     * @throws IllegalArgumentException if specified quantity is 0 or less
      */
-    public Quantity(double value) throws IllegalArgumentException{
+    public Quantity(double value){
         if (value <= 0){
             throw new IllegalArgumentException("Quantities must be greater then 0");
         }

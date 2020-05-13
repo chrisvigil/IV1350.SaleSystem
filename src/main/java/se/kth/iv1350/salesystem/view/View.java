@@ -29,7 +29,7 @@ public class View {
      * @throws java.io.IOException if error log file could not be found or created.
      */
     public View(Controller contr) throws IOException {
-        this.logger = new ErrorLogger("viewErrorLog.txt");
+        this.logger = new ErrorLogger();
         this.contr = contr;
         this.contr.addTotalRevenueObserver(new TotalRevenueView(locale));
     }
@@ -152,7 +152,7 @@ public class View {
                 }
             }
         } catch (FatalSystemOperationException ex) {
-            handleException("Nonrecoverable exception occured", ex);
+            handleException("Nonrecoverable exception occured: " + ex.getMessage(), ex);
         } catch (Exception ex) {
             handleException("Nonrecoverable exception occured", ex);
         }

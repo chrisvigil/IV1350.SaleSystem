@@ -28,8 +28,9 @@ public class MonetaryValue {
      * Creates a new <code>MonetaryValue</code> form a string.
      * 
      * @param value The <code>MonetaryValue</code>'s initial value as a string.
+     * @throws IllegalArgumentException is value is less then 0.
      */
-    public MonetaryValue(String value) throws IllegalArgumentException{
+    public MonetaryValue(String value){
         if (Double.parseDouble(value) < 0){
             throw new IllegalArgumentException("Monetary Values may not be less then 0");
         }
@@ -40,8 +41,9 @@ public class MonetaryValue {
      * Creates a new <code>MonetaryValue</code> from a BigDecimal value.
      * 
      * @param value The <code>MonetaryValue</code>'s initial value as a BigDecimal.
+     * @throws IllegalArgumentException is value is less then 0.
      */
-    public MonetaryValue(BigDecimal value) throws IllegalArgumentException{
+    public MonetaryValue(BigDecimal value){
         if (value.compareTo(BigDecimal.ZERO) < 0){
             throw new IllegalArgumentException("Monetary Values may not be less then 0");
         }

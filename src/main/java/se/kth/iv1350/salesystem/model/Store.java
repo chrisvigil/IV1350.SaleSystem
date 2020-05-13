@@ -61,8 +61,8 @@ class Store {
                try{
                 logger.logException(ex);
                 }
-                catch(IOException ex1){
-                    ex1.printStackTrace();
+                catch(IOException ioEx){
+                    ioEx.printStackTrace();
                 }
             }
         }
@@ -86,8 +86,8 @@ class Store {
                 try{
                 logger.logException(ex);
                 }
-                catch(IOException ex1){
-                    ex1.printStackTrace();
+                catch(IOException ioEx){
+                    ioEx.printStackTrace();
                 }
             }
         }
@@ -118,8 +118,8 @@ class Store {
             try{
                 logger.logException(ex);
                 }
-                catch(IOException ex1){
-                    ex1.printStackTrace();
+                catch(IOException ioEx){
+                    ioEx.printStackTrace();
                 }
             return null;
         }

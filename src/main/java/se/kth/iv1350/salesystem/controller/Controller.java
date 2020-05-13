@@ -105,13 +105,6 @@ public class Controller {
         try {
             foundItem = dbhandler.getItemData(itemID);
         } catch (InventoryDBException ex) {
-
-            try {
-                logger.logException(ex);
-            } catch (IOException ioEx) {
-                ioEx.printStackTrace();
-            }
-
             throw new FatalSystemOperationException("Unable to connect to item database", ex);
         }
 
